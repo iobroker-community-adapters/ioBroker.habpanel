@@ -1,20 +1,15 @@
-# HABPanel
+![Logo](admin/habpanel.png)
+# ioBroker.habpanel
+=================
 
-HABPanel is a lightweight dashboard interface for openHAB.
+[![NPM version](http://img.shields.io/npm/v/iobroker.habpanel.svg)](https://www.npmjs.com/package/iobroker.habpanel)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.habpanel.svg)](https://www.npmjs.com/package/iobroker.habpanel)
+
+[![NPM](https://nodei.co/npm/iobroker.habpanel.png?downloads=true)](https://nodei.co/npm/iobroker.habpanel/)
+
+HABPanel is a lightweight dashboard interface for ioBroker based on OpenHAB HABpanel.
 
 It notably features an embedded dashboard designer allowing to build interfaces easily right on the target device.
-
-## Configuration
-
-Unlike Basic UI and other interfaces, HABPanel doesn't use pre-configured sitemaps.
-
-It can however store all its configuration (called panel configurations, including sets of dashboards, custom widgets definitions, and other settings)
-on the server as openHAB 2 service configuration variables.
-
-You can access this server-side configuration in Paper UI, _Configuration > Services > UI > HABPanel_.
-From there, you can also lock down the embedded editing features globally to prevent accidental changes by end users.
-You can also specify the name of a known panel configuration to load immediately when starting to configure a brand new HABPanel instance;
-otherwise, the local browser's storage will be used only until you save a new panel configuration as detailed below.
 
 ## Getting started
 
@@ -45,3 +40,9 @@ otherwise, the local browser's storage will be used only until you save a new pa
 ![](doc/screenshot5.png)
 
 ![](doc/screenshot6.png)
+
+
+## Changelog
+
+### 0.0.1 (2015-12-12)
+* (bluefox) initial commit

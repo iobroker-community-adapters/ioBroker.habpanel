@@ -1,0 +1,45 @@
+{
+    "common": {
+        "name":                     "habpanel",
+        "version": "0.1.0",
+        "news": {
+            "0.1.0": {
+                "en": "update version number",
+                "de": "update version number",
+                "ru": "update version number"
+            }
+        },
+        "title":                    "HABpanel",
+        "desc":                     {
+            "en": "HABpanel based ioBroker user interface",
+            "de": "ioBroker GUI mit HABpanel",
+            "ru": "ioBroker визуализация c HABpanel"
+        },
+        "platform":                 "javascript/Node.js",
+        "onlyWWW":                  "true",
+        "loglevel":                 "info",
+        "dependencies":             ["web"],
+        "icon":                     "habpanel.png",
+        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.habpanel/master/admin/habpanel.png",
+        "keywords":                 ["user", "interface", "webapp", "jquerymobile", "ui"],
+        "readme":                   "https://github.com/ioBroker/ioBroker.habpanel/blob/master/README.md",
+        "singleton":                true,
+        "preserveSettings":         "habpanel",
+        "authors": [
+            "Yannick Schaus <habpanel@schaus.net>",
+            "Kuba Wolanin <hi@kubawolanin.com>",
+            "Sam Turner <sam@digi.ltd.uk>",
+            "Ingo Sigmund <ingo.sigmund@web.de>",
+            "Andreas Gebauer <an.ge.ber.81@gmail.com>",
+            "bluefox <dogafox@gmail.com>"
+        ],
+        "localLink":                "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
+        "type":                     "visualisation",
+        "license":                  "EPL-1.0",
+        "noConfig":                 true
+    },
+    "native": {
+    },
+    "objects": [
+    ]
+}
