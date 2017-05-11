@@ -13,15 +13,16 @@ var sassGlob = require('gulp-sass-glob');
 var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
-
+var src = './www/';
+var dst = './www/';
 gulp.task('lint', function () {
-    return gulp.src(['src/app/**/*.js'])
+    return gulp.src([src + 'app/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format());
 });
 
 gulp.task('web-server', function() {
-  gulp.src('./src/')
+  gulp.src(src)
     .pipe(webserver({
       livereload: true,
       directoryListing: false,
@@ -31,9 +32,9 @@ gulp.task('web-server', function() {
 
 gulp.task('watch', function () {
     gulp.watch([
-        './src/app/widgets/**/[^_]*.scss', // omit internal styles starting with "_"
-        './src/assets/styles/**/*.scss',
-        './src/vendor/**/*.scss'
+        src + 'app/widgets/**/[^_]*.scss', // omit internal styles starting with "_"
+        src + 'assets/styles/**/*.scss',
+        src + 'vendor/**/*.scss'
     ], ['sass']);
 });
 
@@ -43,7 +44,7 @@ gulp.task('server', [
 ], function () {});
 
 gulp.task('sass-themes', function () {
-    gulp.src('./src/assets/styles/themes/**/*.scss')
+    gulp.src(src + 'assets/styles/themes/**/*.scss')
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass())
@@ -51,18 +52,18 @@ gulp.task('sass-themes', function () {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./src/assets/styles/themes'));
+        .pipe(gulp.dest(dst + 'assets/styles/themes'));
 });
 
 gulp.task('sass-vendor', function () {
-    gulp.src('./src/vendor/vendor.scss')
+    gulp.src(src + 'vendor/vendor.scss')
         .pipe(plumber())
         .pipe(sass())
         .pipe(cssmin())
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./src/vendor'));
+        .pipe(gulp.dest(dst + 'vendor'));
 });
 
 gulp.task('sass', [
@@ -74,7 +75,7 @@ gulp.task('vendor-fonts', function() {
     return gulp.src([
         'bower_components/bootstrap-sass/assets/fonts/*/**',
         'bower_components/roboto-fontface/fonts/*/Roboto-Regular.*'
-    ]).pipe(gulp.dest('fonts'));
+    ]).pipe(gulp.dest(dst + 'fonts'));
 });
 
 gulp.task('uglify-timeline', function () {
@@ -115,43 +116,70 @@ gulp.task('vendor-js', ['uglify-timeline'], function() {
         'bower_components/angular-ui-clock/dist/angular-clock.min.js',
         'bower_components/angular-ui-select/dist/select.min.js',
         'bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js',
-        'bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js',
         'bower_components/snapjs/snap.min.js',
         'bower_components/angular-snap/angular-snap.min.js',
         'bower_components/event-source-polyfill/eventsource.min.js',
         'bower_components/d3-timeline/dist/d3-timeline.js',
         'bower_components/aCKolor/dist/js/aCKolor.min.js',
         'node_modules/n3-charts/build/LineChart.min.js',
-        'vendor/angular-web-colorpicker.js'
-    ]).pipe(concat('vendor.js')).pipe(gulp.dest('vendor'));
-
+        src + 'vendor/angular-web-colorpicker.js'
+    ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
 });
 
-
-
-
+gulp.task('vendor-dev-js', function() {
+    return gulp.src([
+        'bower_components/angular/angular.js',
+        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-touch/angular-touch.js',
+        'bower_components/d3/d3.js',
+        'bower_components/sprintf/src/sprintf.js',
+        'bower_components/angular-gridster/src/angular-gridster.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'bower_components/angular-sanitize/angular-sanitize.js',
+        'bower_components/angular-fullscreen/src/angular-fullscreen.js',
+        'bower_components/sprintf/src/angular-sprintf.js',
+        'bower_components/angular-prompt/dist/angular-prompt.js',
+        'bower_components/angular-local-storage/dist/angular-local-storage.js',
+        'bower_components/angular-ui-codemirror/ui-codemirror.js',
+        'bower_components/angularjs-slider/src/rzslider.js',
+        'bower_components/angular-clipboard/angular-clipboard.js',
+        'bower_components/ng-knob/dist/ng-knob.js',
+        'bower_components/inobounce/inobounce.js',
+        'bower_components/oclazyload/dist/ocLazyLoad.js',
+        'bower_components/angular-ui-clock/dist/angular-clock.js',
+        'bower_components/angular-ui-select/dist/select.js',
+        'bower_components/angular-file-saver/dist/angular-file-saver.bundle.js',
+        'bower_components/snapjs/snap.js',
+        'bower_components/angular-snap/angular-snap.js',
+        'bower_components/event-source-polyfill/eventsource.js',
+        'bower_components/d3-timeline/src/d3-timeline.js',
+        'bower_components/aCKolor/dist/js/aCKolor.min.js',
+        'node_modules/n3-charts/build/LineChart.js',
+        src + 'vendor/angular-web-colorpicker.js'
+    ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
+});
 gulp.task('codemirror-lib', function () {
     return gulp.src([
         'bower_components/codemirror/lib/codemirror.js'
-    ]).pipe(uglify()).pipe(gulp.dest('vendor/cm/lib'));
+    ]).pipe(uglify()).pipe(gulp.dest(dst + 'vendor/cm/lib'));
 });
 
 gulp.task('codemirror-css', function () {
     return gulp.src([
         'bower_components/codemirror/lib/codemirror.css'
-    ]).pipe(gulp.dest('vendor/cm/lib'));
+    ]).pipe(gulp.dest(dst + 'vendor/cm/lib'));
 });
 
 gulp.task('codemirror-addon-fold', function () {
     return gulp.src([
-        'bower_components/codemirror/addon/fold/xml-fold.js',
-    ]).pipe(uglify()).pipe(gulp.dest('vendor/cm/addon/fold'));
+        'bower_components/codemirror/addon/fold/xml-fold.js'
+    ]).pipe(uglify()).pipe(gulp.dest(dst + 'vendor/cm/addon/fold'));
 });
 
 gulp.task('codemirror-addon-mode', function () {
     return gulp.src([
-        'bower_components/codemirror/addon/mode/overlay.js',
-    ]).pipe(uglify()).pipe(gulp.dest('vendor/cm/addon/mode'));
+        'bower_components/codemirror/addon/mode/overlay.js'
+    ]).pipe(uglify()).pipe(gulp.dest(dst + '/vendor/cm/addon/mode'));
 });
 
 gulp.task('codemirror-addon-edit', function () {
@@ -161,25 +189,25 @@ gulp.task('codemirror-addon-edit', function () {
         'bower_components/codemirror/addon/edit/closebrackets.js',
         'bower_components/codemirror/addon/edit/closetag.js',
         'bower_components/codemirror/mode/xml/xml.js'
-    ]).pipe(uglify()).pipe(gulp.dest('vendor/cm/addon/edit'));
+    ]).pipe(uglify()).pipe(gulp.dest(dst + 'vendor/cm/addon/edit'));
 });
 
 gulp.task('codemirror-mode-xml', function () {
     return gulp.src([
         'bower_components/codemirror/mode/xml/xml.js'
-    ]).pipe(uglify()).pipe(gulp.dest('vendor/cm/mode/xml'));
+    ]).pipe(uglify()).pipe(gulp.dest(dst + 'vendor/cm/mode/xml'));
 });
 
 gulp.task('codemirror-mode-javascript', function () {
     return gulp.src([
         'bower_components/codemirror/mode/javascript/javascript.js'
-    ]).pipe(uglify()).pipe(gulp.dest('vendor/cm/mode/javascript'));
+    ]).pipe(uglify()).pipe(gulp.dest(dst + 'vendor/cm/mode/javascript'));
 });
 
 gulp.task('codemirror-theme', function () {
     return gulp.src([
         'bower_components/codemirror/theme/rubyblue.css'
-    ]).pipe(gulp.dest('vendor/cm/theme'));
+    ]).pipe(gulp.dest(dst + 'vendor/cm/theme'));
 });
 
 gulp.task('codemirror', [
@@ -195,7 +223,8 @@ gulp.task('codemirror', [
 
 gulp.task('vendor', [
     'vendor-js',
+    //'vendor-dev-js',
     'vendor-fonts'
 ], function () {});
 
-gulp.task('default', ['vendor', 'codemirror' ], function () {});
+gulp.task('default', ['vendor', 'codemirror'], function () {});
