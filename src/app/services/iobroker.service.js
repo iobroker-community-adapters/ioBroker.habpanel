@@ -36,7 +36,7 @@
 
         function loadItems() {
             connect().then(function () {
-                servConn.getStates(function (err, _states) {
+                servConn.getStates(null, function (err, _states) {
                     var count = 0;
                     var items = [];
                     for (var id in _states) {
@@ -55,25 +55,6 @@
                     $rootScope.$emit('iobroker-update');
                 });
             });
-
-            /*$http.get('/rest/items')
-                .then(function (data) {
-                        if (angular.isArray(data.data)) {
-                            console.log("Loaded " + data.data.length + " openHAB items");
-                            $rootScope.items = data.data;
-                        } else {
-                            console.warn("Items not found? Retrying in 5 seconds");
-                            $rootScope.reconnecting = true;
-                            $rootScope.items = [];
-                            $timeout(loadItems, 5000);
-                        }
-                        $rootScope.$emit('openhab-update');
-                    },
-                    function (err) {
-                        console.warn("Error loading openHAB items... retrying in 5 seconds");
-                        $rootScope.reconnecting = true;
-                        $timeout(loadItems, 5000);
-                    });*/
         }
 
         function getItem(name) {
@@ -91,18 +72,6 @@
          * @param  {string} cmd  Command
          */
         function sendCmd(item, cmd) {
-            /*$http({
-                method : 'POST',
-                url    : '/rest/items/' + item,
-                data   : cmd,
-                headers: { 'Content-Type': 'text/plain' }
-            }).then(function (data) {
-                console.log('Command sent: ' + item + '=' + cmd);
-
-                // should be handled by server push messages but their delivery is erratic
-                // so perform a full refresh every time a command is sent
-                //loadItems();
-            });*/
             connect().then(function () {
                 var f = parseFloat(cmd);
                 if (f.toString() === cmd) {
@@ -198,20 +167,14 @@
                     },
                     onUpdate: function (id, state) {
                         setTimeout(function () {
-                            //console.log('NEW VALUE of ' + id + ': ' + JSON.stringify(state));
-                            //states[id] = state;
                             if (!id  || !state || !$rootScope.items) return;
 
-                            var newstate = state.val;
+                            var newstate = (state.val !== null && state.val !== undefined) ? state.val.toString() : '';
                             var item = $filter('filter')($rootScope.items, {name: id}, true)[0];
-
-                            if (id.indexOf('update') !== -1) {
-                                console.log('AAA');
-                            }
 
                             if (item && item.state !== newstate) {
                                 $rootScope.$apply(function () {
-                                    console.log("Updating " + item.name + " state from " + item.state + " to " + newstate);
+                                    //console.log("Updating " + item.name + " state from " + item.state + " to " + newstate);
                                     item.state = newstate;
                                     $rootScope.$emit('iobroker-update', item);
 
@@ -254,34 +217,34 @@
             var deferred = $q.defer();
 
             /*$http.get('/rest/services/' + SERVICE_NAME + '/config').then(function (resp) {
-                console.log('openHAB 2 service configuration loaded');
-                OH2ServiceConfiguration = resp.data;
-                if (!OH2ServiceConfiguration.panelsRegistry) {
-                    $rootScope.panelsRegistry = OH2ServiceConfiguration.panelsRegistry = {};
-                } else {
-                    $rootScope.panelsRegistry = JSON.parse(resp.data.panelsRegistry);
-                }
-                if (OH2ServiceConfiguration.lockEditing === true) {
-                    $rootScope.lockEditing = true;
-                }
-                // iterate over the config to find widgets added there
-                $rootScope.configWidgets = {};
+             console.log('openHAB 2 service configuration loaded');
+             OH2ServiceConfiguration = resp.data;
+             if (!OH2ServiceConfiguration.panelsRegistry) {
+             $rootScope.panelsRegistry = OH2ServiceConfiguration.panelsRegistry = {};
+             } else {
+             $rootScope.panelsRegistry = JSON.parse(resp.data.panelsRegistry);
+             }
+             if (OH2ServiceConfiguration.lockEditing === true) {
+             $rootScope.lockEditing = true;
+             }
+             // iterate over the config to find widgets added there
+             $rootScope.configWidgets = {};
 
-                angular.forEach(OH2ServiceConfiguration, function (value, key) {
-                    if (key.indexOf("widget.") === 0) {
-                        var widgetname = key.replace("widget.", "");
-                        console.log("Adding widget from configuration: " + widgetname);
-                        $rootScope.configWidgets[widgetname] = JSON.parse(value);
-                    }
-                });
+             angular.forEach(OH2ServiceConfiguration, function (value, key) {
+             if (key.indexOf("widget.") === 0) {
+             var widgetname = key.replace("widget.", "");
+             console.log("Adding widget from configuration: " + widgetname);
+             $rootScope.configWidgets[widgetname] = JSON.parse(value);
+             }
+             });
 
-                deferred.resolve();
+             deferred.resolve();
 
-            }, function (err) {
-                console.error('Cannot load openHAB 2 service configuration: ' + JSON.stringify(err));
+             }, function (err) {
+             console.error('Cannot load openHAB 2 service configuration: ' + JSON.stringify(err));
 
-                deferred.reject();
-            });*/
+             deferred.reject();
+             });*/
             setTimeout(function () {
                 OH2ServiceConfiguration = {}; //data
                 if (!OH2ServiceConfiguration.panelsRegistry) {
@@ -316,17 +279,17 @@
             }
 
             /*$http({
-                method: 'PUT',
-                url: '/rest/services/' + SERVICE_NAME + '/config',
-                data: OH2ServiceConfiguration,
-                headers: { 'Content-Type': 'application/json' }
-            }).then (function (resp) {
-                console.log('openHAB 2 service configuration saved');
-                deferred.resolve();
-            }, function (err) {
-                console.error('Error while saving openHAB 2 service configuration: ' + JSON.stringify(err));
-                deferred.reject();
-            });*/
+             method: 'PUT',
+             url: '/rest/services/' + SERVICE_NAME + '/config',
+             data: OH2ServiceConfiguration,
+             headers: { 'Content-Type': 'application/json' }
+             }).then (function (resp) {
+             console.log('openHAB 2 service configuration saved');
+             deferred.resolve();
+             }, function (err) {
+             console.error('Error while saving openHAB 2 service configuration: ' + JSON.stringify(err));
+             deferred.reject();
+             });*/
             setTimeout(function () {
                 deferred.resolve();
             }, 1000);
