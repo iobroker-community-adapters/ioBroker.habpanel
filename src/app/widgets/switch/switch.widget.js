@@ -108,7 +108,20 @@
             icon            : widget.icon,
             icon_size       : widget.icon_size
         };
-
+        
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                }
+            });
+        });
+        
         $scope.dismiss = function() {
             $modalInstance.dismiss();
         };

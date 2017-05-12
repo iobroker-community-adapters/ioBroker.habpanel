@@ -12,19 +12,21 @@
         .service('OH2StorageService', OH2StorageService);
 
     IOBService.$inject = ['$rootScope', '$http', '$q', '$timeout', '$interval', '$filter', '$location', 'SpeechService'];
+    var connectPromise = null;
+    var connecting = false;
+
     function IOBService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService) {
         this.getItem = getItem;
         this.getItems = getItems;
+        this.getObjects = getObjects;
+        this.getObject = getObject;
         this.getLocale = getLocale;
         this.onUpdate = onUpdate;
         this.sendCmd = sendCmd;
         this.sendVoice = sendVoice;
         this.reloadItems = reloadItems;
 
-
-        var prevAudioUrl = '';
         var locale = null;
-        var connectPromise = null;
         var timeout;
 
         ////////////////
@@ -56,7 +58,7 @@
                 });
             });
         }
-
+        
         function getItem(name) {
             var item = $filter('filter')($rootScope.items, {name: name}, true);
             return (item) ? item[0] : null;
@@ -66,8 +68,47 @@
             return $rootScope.items;
         }
 
+        function getObject(id) {
+            var deferred = $q.defer();
+
+            if ($rootScope.objects) {
+                deferred.resolve($rootScope.objects[id]);
+            } else {
+                connect().then(function () {
+                    servConn.getObjects(false, function (err, data) {
+                        if (err) {
+                            $rootScope.objects = {};
+                        } else {
+                            $rootScope.objects = data;
+                        }
+                        deferred.resolve($rootScope.objects[id]);
+                    });
+                });
+            }
+            return deferred.promise;
+        }
+        
+        function getObjects() {
+            var deferred = $q.defer();
+            if ($rootScope.objects) {
+                deferred.resolve($rootScope.objects);
+            } else {
+                connect().then(function () {
+                    servConn.getObjects(false, function (err, data) {
+                        if (err) {
+                            $rootScope.objects = {};
+                        } else {
+                            $rootScope.objects = data;
+                        }
+                        deferred.resolve($rootScope.objects);
+                    });
+                });
+            }
+
+            return deferred.promise;
+        }
         /**
-         * Sends command to openHAB
+         * Sends command to ioBroker
          * @param  {string} item Item's id
          * @param  {string} cmd  Command
          */
@@ -116,20 +157,14 @@
         }
 
         /**
-         * Sends POST request to openHAB REST
+         * Sends request to ioBroker REST
          * voice interpreters
          * @param  {string} text - STT output
          */
         function sendVoice(text) {
-            $http({
-                method : 'POST',
-                url    : '/rest/voice/interpreters',
-                data   : text,
-                headers: { 'Content-Type': 'text/plain' }
-            }).then(function (data) {
-                console.log('Voice command sent: "' + text + '"');
-            }, function(error) {
-                console.error('Error occured while sending voice command.');
+            connect().then(function () {
+                // todo
+                servConn.setState('text2command.0.text', text);
             });
         }
 
@@ -142,10 +177,11 @@
             timeout = null;
             $rootScope.reconnecting = true;
         }, 2000);
-
         function connect() {
-            if (!connectPromise) {
-                connectPromise = $q.defer();
+            if (!connecting) {
+                connecting = true;
+
+                connectPromise = connectPromise || $q.defer();
 
                 servConn.init(null, {
                     onConnChange: function (isConnected) {
@@ -200,6 +236,7 @@
             }
             return connectPromise.promise;
         }
+
         connect();
     }
 
@@ -214,10 +251,41 @@
         this.useLocalStorage = useLocalStorage;
 
         function tryGetServiceConfiguration() {
+            connectPromise = connectPromise || $q.defer();
             var deferred = $q.defer();
 
+            connectPromise.promise.then(function () {
+                servConn.getObject(servConn.namespace + '.config', function (err, obj) {
+                    OH2ServiceConfiguration = obj ? obj.native : null;
+                    OH2ServiceConfiguration = OH2ServiceConfiguration || {
+                        initialPanelConfig: 'Demo',
+                        lockEditing: false,
+                        panelsRegistry: {
+                            'Demo': {}
+                        }
+
+                    };
+                    $rootScope.panelsRegistry = OH2ServiceConfiguration.panelsRegistry;
+
+                    if (OH2ServiceConfiguration.lockEditing === true) {
+                        $rootScope.lockEditing = true;
+                    }
+                    // iterate over the config to find widgets added there
+                    $rootScope.configWidgets = {};
+
+                    angular.forEach(OH2ServiceConfiguration, function (value, key) {
+                        if (key.match(/^widget\./)) {
+                            var widgetname = key.replace('widget.', '');
+                            console.log('Adding widget from configuration: ' + widgetname);
+                            $rootScope.configWidgets[widgetname] = JSON.parse(value);
+                        }
+                    });
+                    deferred.resolve();
+                })
+            });
+            //connect()
             /*$http.get('/rest/services/' + SERVICE_NAME + '/config').then(function (resp) {
-             console.log('openHAB 2 service configuration loaded');
+             console.log('service configuration loaded');
              OH2ServiceConfiguration = resp.data;
              if (!OH2ServiceConfiguration.panelsRegistry) {
              $rootScope.panelsRegistry = OH2ServiceConfiguration.panelsRegistry = {};
@@ -241,55 +309,43 @@
              deferred.resolve();
 
              }, function (err) {
-             console.error('Cannot load openHAB 2 service configuration: ' + JSON.stringify(err));
+             console.error('Cannot load service configuration: ' + JSON.stringify(err));
 
              deferred.reject();
              });*/
-            setTimeout(function () {
-                OH2ServiceConfiguration = {}; //data
-                if (!OH2ServiceConfiguration.panelsRegistry) {
-                    $rootScope.panelsRegistry = OH2ServiceConfiguration.panelsRegistry = {};
-                } else {
-                    $rootScope.panelsRegistry = JSON.parse(resp.data.panelsRegistry);
-                }
-                if (OH2ServiceConfiguration.lockEditing === true) {
-                    $rootScope.lockEditing = true;
-                }
-                // iterate over the config to find widgets added there
-                $rootScope.configWidgets = {};
-
-                angular.forEach(OH2ServiceConfiguration, function (value, key) {
-                    if (key.indexOf("widget.") === 0) {
-                        var widgetname = key.replace("widget.", "");
-                        console.log("Adding widget from configuration: " + widgetname);
-                        $rootScope.configWidgets[widgetname] = JSON.parse(value);
-                    }
-                });
-                deferred.resolve();
-            }, 500);
 
             return deferred.promise;
         }
 
         function saveServiceConfiguration() {
             var deferred = $q.defer();
+            connectPromise = connectPromise || $q.defer();
 
             if ($rootScope.panelsRegistry) {
-                OH2ServiceConfiguration.panelsRegistry = JSON.stringify($rootScope.panelsRegistry, null, 4);
+                OH2ServiceConfiguration.panelsRegistry = $rootScope.panelsRegistry;
             }
+            connectPromise.promise.then(function () {
+                servConn.getObject(servConn.namespace + '.config', function (err, obj) {
+                    obj = obj || {
+                            _id: servConn.namespace + '.config',
+                            common: {
+                                name: 'habpanel configuration'
+                            },
+                            type: 'config',
+                            native: OH2ServiceConfiguration.initialPanelConfig
+                        };
+                    obj.native = OH2ServiceConfiguration;
+                    servConn._socket.emit('setObject', servConn.namespace + '.config', obj, function (err, res) {
+                        if (err) {
+                            console.error('Error while saving service configuration: ' + JSON.stringify(err));
+                            deferred.reject();
+                        } else {
+                            deferred.resolve();
+                        }
+                    });
+                });
+            });
 
-            /*$http({
-             method: 'PUT',
-             url: '/rest/services/' + SERVICE_NAME + '/config',
-             data: OH2ServiceConfiguration,
-             headers: { 'Content-Type': 'application/json' }
-             }).then (function (resp) {
-             console.log('openHAB 2 service configuration saved');
-             deferred.resolve();
-             }, function (err) {
-             console.error('Error while saving openHAB 2 service configuration: ' + JSON.stringify(err));
-             deferred.reject();
-             });*/
             setTimeout(function () {
                 deferred.resolve();
             }, 1000);
@@ -332,23 +388,30 @@
 
         function useLocalStorage() {
             $rootScope.currentPanelConfig = undefined;
-            localStorageService.set("currentPanelConfig", $rootScope.currentPanelConfig);
+            localStorageService.set('currentPanelConfig', $rootScope.currentPanelConfig);
         }
 
         function getCurrentPanelConfig() {
             if (!$rootScope.currentPanelConfig) {
-                $rootScope.currentPanelConfig = localStorageService.get("currentPanelConfig");
+                $rootScope.currentPanelConfig = localStorageService.get('currentPanelConfig');
 
                 if (!$rootScope.currentPanelConfig) {
                     // if it's still not set and we have an initial panel config, switch to it
                     var initialPanelConfig = OH2ServiceConfiguration.initialPanelConfig;
+                    if (!$rootScope.panelsRegistry[initialPanelConfig]) {
+                        for (var panel in $rootScope.panelsRegistry) {
+                            initialPanelConfig = panel;
+                            break;
+                        }
+                    }
+
+
                     if (initialPanelConfig && $rootScope.panelsRegistry[initialPanelConfig]) {
                         $rootScope.currentPanelConfig = initialPanelConfig;
-                        localStorageService.set("currentPanelConfig", initialPanelConfig);
+                        localStorageService.set('currentPanelConfig', initialPanelConfig);
                     }
                 }
             }
-
             return $rootScope.currentPanelConfig;
         }
 

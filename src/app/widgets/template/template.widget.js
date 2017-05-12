@@ -66,7 +66,7 @@
                 if (!item) return "N/A";
 
                 return item;
-            }
+            };
 
             scope.itemState = function(itemname) {
                 if (!itemname) return "N/A";
@@ -75,7 +75,7 @@
 
                 var value = item.state;
                 return value;
-            }
+            };
  
             scope.itemValue = scope.itemState;
 
@@ -85,7 +85,7 @@
                         return (item.groupNames && item.groupNames.indexOf(group) !== -1);
                     }
                 );
-            }
+            };
 
             scope.itemsWithTag = function(tag) {
                 return $filter('filter')(OHService.getItems(),
@@ -93,7 +93,7 @@
                         return (item.tagNames && item.tagNames.indexOf(tag) !== -1);
                     }
                 );
-            }
+            };
 
             scope.sendCmd = function(item, cmd) {
                 var item = OHService.getItem(item);
@@ -102,7 +102,7 @@
                 }
 
                 OHService.sendCmd(item.name, cmd);
-            }
+            };
 
             scope.$on("refreshTemplate", function () {
                 render();
@@ -190,7 +190,7 @@
 
         $scope.showImportDialog = function () {
             document.getElementById('template-file-select').click();
-        }
+        };
 
         $scope.importFile = function(file) {
             if (!file) return;

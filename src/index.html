@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>HABPanel</title>
-    <meta name="description" content="Dashboard user interface for openHAB" />
+    <meta name="description" content="Dashboard user interface" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-5hvlzGKhlKhafFjW6G/cRVpM/e+JewYxe/pLpQ5Kj9M='">
@@ -14,17 +14,21 @@
     <link rel="stylesheet" href="vendor/vendor.min.css" />
     <link rel="stylesheet" ng-href="assets/styles/themes/{{settings.theme || 'default'}}/{{settings.theme || 'default'}}.min.css" />
     <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/custom-light/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/custom-light/jquery-ui.structure.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/custom-light/jquery-ui.theme.min.css"/>
 
     <script>
         window.addEventListener('load', function() {
             if (navigator.serviceWorker) {
                 navigator.serviceWorker.register('service-worker.js', { scope: './' })
-                .then(function(r) {
-                    console.log('Service worker registered');
-                })
-                .catch(function(what) {
-                    console.info('Service worker not registered (not using HTTPS?): ' + what);
-                });
+                        .then(function(r) {
+                            console.log('Service worker registered');
+                        })
+                        .catch(function(what) {
+                            console.info('Service worker not registered (not using HTTPS?): ' + what);
+                        });
             }
         });
         if (!Function.prototype.bind) {
@@ -36,14 +40,14 @@
                 }
 
                 var aArgs = Array.prototype.slice.call(arguments, 1),
-                    fToBind = this,
-                    fNOP = function () { },
-                    fBound = function () {
-                        return fToBind.apply(this instanceof fNOP
-                            ? this
-                            : oThis,
-                            aArgs.concat(Array.prototype.slice.call(arguments)));
-                    };
+                        fToBind = this,
+                        fNOP = function () { },
+                        fBound = function () {
+                            return fToBind.apply(this instanceof fNOP
+                                            ? this
+                                            : oThis,
+                                    aArgs.concat(Array.prototype.slice.call(arguments)));
+                        };
 
                 if (this.prototype) {
                     // Function.prototype doesn't have a prototype property
@@ -57,7 +61,13 @@
     </script>
 
     <script type="text/javascript" src="_socket/info.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-ui-1.11.4.full.min.js"></script>
     <script src="vendor/vendor.js"></script>
+    <script type="text/javascript" src="../../lib/js/selectID.js"></script>
+    <script type="text/javascript" src="../../lib/js/socket.io.js"></script>
+    <script type="text/javascript" src="../../lib/js/colResizable-1.5.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery.fancytree-all.min.js"></script>
 
     <!-- Register widgets here -->
     <script src="app/widgets/widgets.module.js"></script>
@@ -95,20 +105,20 @@
 </head>
 
 <body>
-    <aside class="drawer" snap-drawer style="display: none" ng-controller="DrawerController" ng-include="'app/menu/drawer.tpl.html'">
-    </aside>
-    <div class="reconnecting" ng-if="reconnecting">
-        &nbsp;<i class="glyphicon glyphicon-ban-circle"></i>&nbsp;Connection lost! Trying to reconnect...&nbsp;
-    </div>
-    <div class="container"
-         snap-content
-         snap-opt-disable="'right'"
-         snap-opt-hyperextensible="false"
-         ng-view
-         ng-class="{ 'image-bg': settings.background_image }"
-         ng-style="{ 'background-image': (settings.background_image) ? 'url(' + settings.background_image +')' : '',
+<aside class="drawer" snap-drawer style="display: none" ng-controller="DrawerController" ng-include="'app/menu/drawer.tpl.html'">
+</aside>
+<div class="reconnecting" ng-if="reconnecting">
+    &nbsp;<i class="glyphicon glyphicon-ban-circle"></i>&nbsp;Connection lost! Trying to reconnect...&nbsp;
+</div>
+<div class="container"
+     snap-content
+     snap-opt-disable="'right'"
+     snap-opt-hyperextensible="false"
+     ng-view
+     ng-class="{ 'image-bg': settings.background_image }"
+     ng-style="{ 'background-image': (settings.background_image) ? 'url(' + settings.background_image +')' : '',
                       'padding-top': kioskMode ? 0 : 'auto' }">
-    </div>
+</div>
 </body>
 
 </html>

@@ -10,7 +10,7 @@
                 type: 'knob',
                 displayName: 'Knob',
                 icon: 'dashboard',
-                description: 'A knob for setting numerical openHAB items'
+                description: 'A knob for setting numerical items'
             });
         });
 
@@ -170,7 +170,7 @@
 
         $scope.colorPopover = {
             barColorTemplateUrl: 'barColorpopoverTemplate.html',
-            textColorTemplateUrl: 'textColorpopoverTemplate.html',
+            textColorTemplateUrl: 'textColorpopoverTemplate.html'
         };
 
         $scope.form = {
@@ -215,9 +215,33 @@
             ranges: widget.ranges || []
         };
 
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                    if (obj.common.write === false || obj.common.write === true) {
+                        $scope.form.readOnly = obj.common.write;
+                    }
+                    if (obj.common.unit) {
+                        $scope.form.unit = obj.common.unit;
+                    }
+                    if (obj.common.min !== undefined) {
+                        $scope.form.floor = obj.common.min;
+                    }
+                    if (obj.common.max !== undefined) {
+                        $scope.form.ceil = obj.common.max;
+                    }
+                }
+            });
+        });
 
         $scope.removeRange = function(rangeIndex){
-            $scope.form.ranges.splice( rangeIndex, 1);
+            $scope.form.ranges.splice(rangeIndex, 1);
         };
 
 

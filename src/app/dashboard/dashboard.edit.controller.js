@@ -86,7 +86,7 @@ angular.module('app')
                     type: "template",
                     customwidget: id
                 })
-            }
+            };
 
             $scope.save = function() {
                 PersistenceService.saveDashboards().then(function () {

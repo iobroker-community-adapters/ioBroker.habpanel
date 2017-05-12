@@ -10,7 +10,7 @@
                 type: 'label',
                 displayName: 'Label',
                 icon: 'font',
-                description: 'A fixed label used for headers etc. (no openHAB item binding)'
+                description: 'A fixed label used for headers etc. (no item binding)'
             });
         });
 
@@ -61,7 +61,20 @@
             foreground: widget.foreground,
             font_size: widget.font_size
         };
-
+        
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                }
+            });
+        });
+        
         $scope.dismiss = function() {
             $modalInstance.dismiss();
         };

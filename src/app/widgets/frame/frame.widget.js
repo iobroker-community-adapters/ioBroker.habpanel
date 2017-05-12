@@ -10,7 +10,7 @@
                 type: 'frame',
                 displayName: 'Frame',
                 icon: 'globe',
-                description: 'Embedded website from predefined URL or openHAB item.'
+                description: 'Embedded website from predefined URL or item.'
             });
         });
 
@@ -81,8 +81,21 @@
             frameless : widget.frameless,
             hidelabel : widget.hidelabel,
             background: widget.background
-        };    
-
+        };
+        
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                }
+            });
+        });
+        
         $scope.dismiss = function() {
             $modalInstance.dismiss();
         };

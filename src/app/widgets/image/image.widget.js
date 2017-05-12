@@ -10,7 +10,7 @@
                 type: 'image',
                 displayName: 'Image',
                 icon: 'picture',
-                description: 'Displays an image (not necessarily from openHAB)'
+                description: 'Displays an image (not necessarily from own server)'
             });
         });
 
@@ -96,7 +96,20 @@
             refresh     : widget.refresh,
             intervaltype: widget.intervaltype || 'seconds'
         };
-
+        
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                }
+            });
+        });
+        
         $scope.dismiss = function() {
             $modalInstance.dismiss();
         };

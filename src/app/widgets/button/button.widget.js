@@ -10,7 +10,7 @@
                 type: 'button',
                 displayName: 'Button',
                 icon: 'download-alt',
-                description: 'A button sending a specific value to an openHAB item'
+                description: 'A button sending a specific value to an item'
             });
         });
 
@@ -103,7 +103,7 @@
             col: widget.col,
             row: widget.row,
             item: widget.item,
-            action_type: widget.action_type || 'command',
+            action_type: widget.action_type,
             command: widget.command,
             command_alt: widget.command_alt,
             navigate_dashboard: widget.navigate_dashboard,
@@ -121,6 +121,28 @@
             icon_nolinebreak: widget.icon_nolinebreak,
             icon_replacestext: widget.icon_replacestext
         };
+        
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                    if (obj.common.type === 'boolean' && ($scope.form.command === undefined || $scope.form.command_alt === undefined)) {
+                        $scope.form.command = true;
+                        $scope.form.command_alt = false;
+                    }
+                    if (obj.common.role && obj.common.role.match(/^switch/)) {
+                        $scope.form.action_type = 'toggle';
+                    } else if (obj.common.role && obj.common.role.match(/^button/)) {
+                        $scope.form.action_type = 'command';
+                    }
+                }
+            });
+        });
 
         $scope.dismiss = function() {
             $modalInstance.dismiss();

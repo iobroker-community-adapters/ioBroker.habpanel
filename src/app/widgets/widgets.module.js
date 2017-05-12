@@ -97,7 +97,7 @@
             });
         }
     }
-
+    
     ItemPicker.$inject = ['$filter', 'OHService'];
 
     function ItemPicker($filter, OHService) {
@@ -108,13 +108,9 @@
             controllerAs: 'vm',
             restrict: 'AE',
             template:
-                '<ui-select ng-model="vm.selectedItem" theme="selectize" title="Choose an openHAB item">' +
-                '  <ui-select-match placeholder="Search or select an openHAB item">{{$select.selected.name}}</ui-select-match>' +
-                '  <ui-select-choices repeat="item in vm.itemlist | filter: $select.search">' +
-                '    <div ng-bind-html="item.name | highlight: $select.search"></div>' +
-                '    <small ng-bind-html="item.label | highlight: $select.search"></small>' +
-                '  </ui-select-choices>' +
-                '</ui-select>',
+                '<div><input type="text" ng-model="vm.selectedItem" ng-model-options="{updateOn: \'keyup\'}" theme="selectize" title="Choose an item" ng-disabled="vm.loading" style="width: calc(100% - 60px)"/>' +
+                '<button type="button" ng-click="showDialog()" class="btn pull-right" style="height: 31px;" ng-disabled="vm.loading"><i class="glyphicon glyphicon-list"></i>...</button></div>' +
+                '<span style="font-size: 10px" ng-bind="vm.selectedName"></span>',
             scope: {
                 ngModel: '=',
                 filterType: '@',
@@ -127,25 +123,82 @@
         }
     }
     ItemPickerController.$inject = ['$scope', '$filter', 'OHService'];
+
+    function _(a) {return a;}
+
     function ItemPickerController ($scope, $filter, OHService) {
         var vm = this;
-        vm.selectedItem = OHService.getItem(this.ngModel);
-        vm.itemlist = OHService.getItems();
-        if (this.filterType) {
-            vm.itemlist = $filter('filter')(vm.itemlist, function (item) {
-                if (vm.includeGroups) {
-                    return item.type.startsWith(vm.filterType) || item.type.startsWith('Group');
-                } else {
-                    return item.type.startsWith(vm.filterType);
-                }
-            });
-        }
+        vm.loading = true;
+
+        OHService.getObject(this.ngModel).then(function (obj) {
+            vm.loading = false;
+            obj = obj || {common: {}};
+            if (vm.selectedItem !== (obj._id || '')) {
+                vm.selectedItem = obj._id || '';
+            }
+            vm.selectedName = obj.common.name || obj._id || '';
+        });
 
         $scope.$watch('vm.selectedItem', function (newitem, oldvalue) {
-            if (newitem && newitem.name)
-                $scope.vm.ngModel = newitem.name;
+            if (newitem === oldvalue) return;
+            $scope.vm.ngModel = newitem || '';
+            if (newitem) {
+                OHService.getObject(newitem).then(function (obj) {
+                    vm.selectedName = obj && obj.common ? obj.common.name || '' : '';
+                });
+            } else {
+                vm.selectedName = '';
+            }
         });
-        
+
+        $scope.showDialog = function() {
+            vm.loading = true;
+            return OHService.getObjects().then(function (objs) {
+                vm.loading = false;
+                if (!window.sid) {
+                    var $dialog = $('#dialog-select-member');
+                    if (!$dialog.length) {
+                        $('body').append('<div id="dialog-select-member" style="display: none; z-index: 1100"></div>');
+                        $dialog = $('#dialog-select-member');
+                    }
+
+                    window.sid = $dialog.selectId('init', {
+                        objects: objs,
+                        noMultiselect: true,
+                        imgPath: '../../lib/css/fancytree/',
+                        filter: {type: 'state'},
+                        name: 'rules-select-state',
+                        zindex: 1100,
+                        texts: {
+                            select: _('Select'),
+                            cancel: _('Cancel'),
+                            all: _('All'),
+                            id: _('ID'),
+                            name: _('Name'),
+                            role: _('Role'),
+                            room: _('Room'),
+                            value: _('Value'),
+                            selectid: _('Select ID'),
+                            from: _('From'),
+                            lc: _('Last changed'),
+                            ts: _('Time stamp'),
+                            wait: _('Processing...'),
+                            ack: _('Acknowledged'),
+                            selectAll: _('Select all'),
+                            unselectAll: _('Deselect all'),
+                            invertSelection: _('Invert selection')
+                        },
+                        columns: ['image', 'name', 'role', 'functions', 'room', 'value']
+                    });
+                }
+                window.sid.selectId('option', 'filterPresets', {role: ''});
+
+                window.sid.selectId('show', vm.selectedItem, function (newId, oldId, obj) {
+                    obj = obj || {common: {}};
+                    vm.selectedItem = obj._id || '';
+                    vm.selectedName = obj.common.name || obj._id || '';
+                });
+            });
+        };
     }
-    
 })();

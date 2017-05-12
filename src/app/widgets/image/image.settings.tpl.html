@@ -17,7 +17,7 @@
                 <div class="col-lg-9 col-md-9">
                     <select ng-model="form.image_source" class="form-control">
                         <option value="static">Static image URL</option>
-                        <option value="item">openHAB String Item</option>
+                        <option value="item">String Item</option>
                     </select>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div ng-if="form.image_source === 'item'" class="form-group" ng-class="{error: _form.item.$error && _form.submitted}">
-                <label class="control-label col-lg-3 col-md-3">openHAB String Item</label>
+                <label class="control-label col-lg-3 col-md-3">String Item</label>
                 <div class="col-lg-9 col-md-9">
                     <item-picker ng-model="form.item" filter-type="String"></item-picker>
                 </div>

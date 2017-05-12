@@ -105,10 +105,10 @@
             saveConfigurationToLocalStorage();
             if ($rootScope.useRegistry && OH2StorageService.getCurrentPanelConfig()) {
                 OH2StorageService.saveCurrentPanelConfig().then(function (data) {
-                    console.log('Saved to openHAB 2 service configuration');
+                    console.log('Saved to service configuration');
                     deferred.resolve();
                 }, function (err) {
-                    console.log('Error while saving to openHAB 2 configuration');
+                    console.log('Error while saving to service configuration');
                     deferred.reject(err);
                 });
             } else {

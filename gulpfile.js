@@ -89,50 +89,6 @@ gulp.task('vendor-js', ['uglify-timeline'], function() {
         throw new Error('No Bower files found: please write "bower i".');
     }
 
-    // var filterJS = gulpFilter('**/*.js', { restore: true });
-    // return gulp.src('./bower.json')
-    //            .pipe(mainBowerFiles({debugging: true}))
-    //            .pipe(filterJS)
-    //            .pipe(concat('vendor.js'))
-    //            .pipe(uglify())
-    //            .pipe(filterJS.restore)
-    //            .pipe(gulp.dest('lib'));
-
-    return gulp.src([
-        'bower_components/angular/angular.min.js',
-        'bower_components/angular-route/angular-route.min.js',
-        'bower_components/angular-touch/angular-touch.min.js',
-        'bower_components/d3/d3.min.js',
-        'bower_components/sprintf/dist/sprintf.min.js',
-        'bower_components/angular-gridster/dist/angular-gridster.min.js',
-        'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-        'bower_components/angular-sanitize/angular-sanitize.min.js',
-        'bower_components/angular-fullscreen/src/angular-fullscreen.js',
-        'bower_components/sprintf/dist/angular-sprintf.min.js',
-        'bower_components/angular-prompt/dist/angular-prompt.min.js',
-        'bower_components/angular-local-storage/dist/angular-local-storage.min.js',
-        'bower_components/angular-ui-codemirror/ui-codemirror.min.js',
-        'bower_components/angularjs-slider/dist/rzslider.min.js',
-        'bower_components/angular-clipboard/angular-clipboard.js',
-        'bower_components/ng-knob/dist/ng-knob.min.js',
-        'bower_components/inobounce/inobounce.min.js',
-        'bower_components/oclazyload/dist/ocLazyLoad.min.js',
-        'bower_components/angular-ui-clock/dist/angular-clock.min.js',
-        'bower_components/angular-ui-select/dist/select.min.js',
-        'bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js',
-        'bower_components/snapjs/snap.min.js',
-        'bower_components/angular-snap/angular-snap.min.js',
-        'bower_components/event-source-polyfill/eventsource.min.js',
-        'bower_components/d3-timeline/dist/d3-timeline.js',
-        'bower_components/aCKolor/dist/js/aCKolor.min.js',
-        'node_modules/n3-charts/build/LineChart.min.js',
-        src + 'vendor/angular-web-colorpicker.js',
-        src + 'vendor/conn.js',
-        src + 'vendor/socket.io.js'
-    ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
-});
-
-gulp.task('vendor-dev-js', function() {
     return gulp.src([
         'bower_components/angular/angular.js',
         'bower_components/angular-route/angular-route.js',
@@ -161,8 +117,43 @@ gulp.task('vendor-dev-js', function() {
         'bower_components/d3-timeline/src/d3-timeline.js',
         'bower_components/aCKolor/dist/js/aCKolor.min.js',
         'node_modules/n3-charts/build/LineChart.js',
-        src + 'vendor/angular-web-colorpicker.js'
+        src + 'vendor/angular-web-colorpicker.js',
+        src + 'vendor/conn.js'
     ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
+});
+
+gulp.task('vendor-edit-js', ['uglify-timeline'], function() {
+    return gulp.src([
+        'bower_components/angular/angular.js',
+        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-touch/angular-touch.js',
+        'bower_components/d3/d3.js',
+        'bower_components/sprintf/src/sprintf.js',
+        'bower_components/angular-gridster/src/angular-gridster.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'bower_components/angular-sanitize/angular-sanitize.js',
+        'bower_components/angular-fullscreen/src/angular-fullscreen.js',
+        'bower_components/sprintf/src/angular-sprintf.js',
+        'bower_components/angular-prompt/dist/angular-prompt.js',
+        'bower_components/angular-local-storage/dist/angular-local-storage.js',
+        'bower_components/angular-ui-codemirror/ui-codemirror.js',
+        'bower_components/angularjs-slider/src/rzslider.js',
+        'bower_components/angular-clipboard/angular-clipboard.js',
+        'bower_components/ng-knob/dist/ng-knob.js',
+        'bower_components/inobounce/inobounce.js',
+        'bower_components/oclazyload/dist/ocLazyLoad.js',
+        'bower_components/angular-ui-clock/dist/angular-clock.js',
+        'bower_components/angular-ui-select/dist/select.js',
+        'bower_components/angular-file-saver/dist/angular-file-saver.bundle.js',
+        'bower_components/snapjs/snap.js',
+        'bower_components/angular-snap/angular-snap.js',
+        'bower_components/event-source-polyfill/eventsource.js',
+        'bower_components/d3-timeline/src/d3-timeline.js',
+        'bower_components/aCKolor/dist/js/aCKolor.min.js',
+        'node_modules/n3-charts/build/LineChart.js',
+        src + 'vendor/angular-web-colorpicker.js',
+        src + 'vendor/conn.js'
+    ]).pipe(concat('vendor.edit.js')).pipe(gulp.dest(dst + 'vendor'));
 });
 
 gulp.task('codemirror-lib', function () {
@@ -243,7 +234,7 @@ gulp.task('codemirror', [
 
 gulp.task('vendor', [
     'vendor-js',
-    //'vendor-dev-js',
+//    'vendor-edit-js',
     'vendor-fonts',
     'src-copy'
 ], function () {});

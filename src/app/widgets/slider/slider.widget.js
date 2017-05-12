@@ -10,7 +10,7 @@
                 type: 'slider',
                 displayName: 'Slider',
                 icon: 'resize-horizontal',
-                description: 'A slider for setting numerical openHAB items'
+                description: 'A slider for setting numerical items'
             });
         });
 
@@ -143,7 +143,29 @@
             backdrop_icon: widget.backdrop_icon,
             backdrop_center: widget.backdrop_center
         };
-
+        
+        $scope.$watch('form.item', function (item, oldItem) {
+            if (item === oldItem) {
+                return;
+            }
+            OHService.getObject(item).then(function (obj) {
+                if (obj && obj.common) {
+                    if (obj.common.name) {
+                        $scope.form.name = obj.common.name;
+                    }
+                    if (obj.common.unit) {
+                        $scope.form.unit = obj.common.unit;
+                    }
+                    if (obj.common.min !== undefined) {
+                        $scope.form.floor = obj.common.min;
+                    }
+                    if (obj.common.max !== undefined) {
+                        $scope.form.ceil = obj.common.max;
+                    }
+                }
+            });
+        });
+        
         $scope.dismiss = function() {
             $modalInstance.dismiss();
         };

@@ -142,7 +142,7 @@
             });
 
             return partitions;
-        }
+        };
 
         var startTime = function () {
             var startDate = new Date();
@@ -163,7 +163,7 @@
                 default: startDate.setTime(startDate.getTime() - 24*60*60*1000); break;
             }
             return startDate;
-        }
+        };
         var startDate = startTime();
 
         if (!vm.widget.series || !vm.widget.series.length)
@@ -256,7 +256,7 @@
 
         $scope.removeColorMap = function (colorMap) {
             $scope.form.colorMaps.splice($scope.form.colorMaps.indexOf(colorMap), 1);
-        }
+        };
 
         $scope.addSeries = function () {
             $scope.form.series.push({ });
@@ -265,8 +265,7 @@
 
         $scope.removeSeries = function (series) {
             $scope.form.series.splice($scope.form.series.indexOf(series), 1);
-        }
-        
+        };
 
         $scope.dismiss = function() {
             $modalInstance.dismiss();
