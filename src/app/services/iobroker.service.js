@@ -32,8 +32,6 @@
         function onUpdate(scope, name, callback) {
             var handler = $rootScope.$on('iobroker-update', callback);
             scope.$on('$destroy', handler);
-            //watchItem(name);
-            //longPollUpdates(name);
         }
 
         function loadItems() {
@@ -180,11 +178,7 @@
             if (!connectPromise) {
                 connectPromise = $q.defer();
 
-                servConn.init({
-                    name:          servConn.namespace,  // optional - default 'vis.0'
-                    connLink:      'http://localhost:8084',  // optional URL of the socket.io adapter
-                    socketSession: ''           // optional - used by authentication
-                }, {
+                servConn.init(null, {
                     onConnChange: function (isConnected) {
                         if (timeout) {
                             clearTimeout(timeout);

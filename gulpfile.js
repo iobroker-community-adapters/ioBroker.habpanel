@@ -13,7 +13,7 @@ var sassGlob = require('gulp-sass-glob');
 var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
-var src = './www/';
+var src = './src/';
 var dst = './www/';
 gulp.task('lint', function () {
     return gulp.src([src + 'app/**/*.js'])
@@ -85,6 +85,10 @@ gulp.task('uglify-timeline', function () {
 });
 
 gulp.task('vendor-js', ['uglify-timeline'], function() {
+    if (!require('fs').existsSync(__dirname + '/bower_components')) {
+        throw new Error('No Bower files found: please write "bower i".');
+    }
+
     // var filterJS = gulpFilter('**/*.js', { restore: true });
     // return gulp.src('./bower.json')
     //            .pipe(mainBowerFiles({debugging: true}))
@@ -122,7 +126,9 @@ gulp.task('vendor-js', ['uglify-timeline'], function() {
         'bower_components/d3-timeline/dist/d3-timeline.js',
         'bower_components/aCKolor/dist/js/aCKolor.min.js',
         'node_modules/n3-charts/build/LineChart.min.js',
-        src + 'vendor/angular-web-colorpicker.js'
+        src + 'vendor/angular-web-colorpicker.js',
+        src + 'vendor/conn.js',
+        src + 'vendor/socket.io.js'
     ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
 });
 
@@ -158,6 +164,7 @@ gulp.task('vendor-dev-js', function() {
         src + 'vendor/angular-web-colorpicker.js'
     ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
 });
+
 gulp.task('codemirror-lib', function () {
     return gulp.src([
         'bower_components/codemirror/lib/codemirror.js'
@@ -210,6 +217,19 @@ gulp.task('codemirror-theme', function () {
     ]).pipe(gulp.dest(dst + 'vendor/cm/theme'));
 });
 
+gulp.task('src-copy', function () {
+    return gulp.src([
+        src + 'app/**/*.*',
+        '!' + src + 'app/**/openhab.service.js',
+        src + 'assets/**/*.*',
+        src + 'fonts/**/*.*',
+        src + '*.*',
+        src + '!.csscomb.json',
+        src + 'vendor/vendor.js',
+        src + 'vendor/vendor.min.css'
+    ], {base: src}).pipe(gulp.dest(dst));
+});
+
 gulp.task('codemirror', [
         'codemirror-lib', 
         'codemirror-css', 
@@ -224,7 +244,8 @@ gulp.task('codemirror', [
 gulp.task('vendor', [
     'vendor-js',
     //'vendor-dev-js',
-    'vendor-fonts'
+    'vendor-fonts',
+    'src-copy'
 ], function () {});
 
 gulp.task('default', ['vendor', 'codemirror'], function () {});

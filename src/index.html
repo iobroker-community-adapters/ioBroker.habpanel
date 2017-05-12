@@ -16,7 +16,7 @@
     <link rel="manifest" href="manifest.json" />
 
     <script>
-        /*window.addEventListener('load', function() {
+        window.addEventListener('load', function() {
             if (navigator.serviceWorker) {
                 navigator.serviceWorker.register('service-worker.js', { scope: './' })
                 .then(function(r) {
@@ -26,7 +26,7 @@
                     console.info('Service worker not registered (not using HTTPS?): ' + what);
                 });
             }
-        });*/
+        });
         if (!Function.prototype.bind) {
             Function.prototype.bind = function (oThis) {
                 if (typeof this !== 'function') {
@@ -56,11 +56,8 @@
         }
     </script>
 
+    <script type="text/javascript" src="_socket/info.js"></script>
     <script src="vendor/vendor.js"></script>
-    <script src="vendor/vendor.js"></script>
-    <script src="vendor/socket.io.js"></script>
-    <script src="vendor/conn.js"></script>
-
 
     <!-- Register widgets here -->
     <script src="app/widgets/widgets.module.js"></script>
