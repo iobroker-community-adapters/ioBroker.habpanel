@@ -35,7 +35,7 @@
 
         function link(scope, element, attrs) {
 
-            scope.$watch("data", function (data) {
+            scope.$watch('data', function (data) {
                 if (!data) return;
 
                 var el = element[0].firstElementChild.firstElementChild;
@@ -87,8 +87,6 @@
 
             });
 
-
-
         }
     }
     TimelineController.$inject = ['$rootScope', '$scope', '$timeout', '$http', '$q', 'OHService'];
@@ -113,11 +111,10 @@
             var metrics = context.measureText(text);
             return metrics.width;
         }
-        
 
         var partitionData = function (raw) {
             var partitions = [];
-            if (!raw.datapoints || raw.datapoints == 0) return;
+            if (!raw.datapoints) return;
 
             var currentState = raw.data[0].state;
             var currentStartTime = raw.data[0].time;
@@ -171,7 +168,8 @@
         
         vm.rawdata = [];
         for (var i = 0; i < vm.widget.series.length; i++) {
-            vm.rawdata[i] = $http.get('/rest/persistence/items/' + vm.widget.series[i].item + '?serviceId=' + vm.widget.service + "&boundary=true&starttime=" + startDate.toISOString());
+            vm.rawdata[i] = OHService.getTimeSeries(vm.widget.service, vm.widget.series[i].item, startDate.toISOString());
+                //$http.get('/rest/persistence/items/' + vm.widget.series[i].item + '?serviceId=' + vm.widget.service + "&boundary=true&starttime=" + startDate.toISOString());
         }
 
         $scope.colorScale = { states: [], colors: [] };
@@ -196,7 +194,7 @@
                 }
 
                 var label = vm.widget.series[i].name || vm.widget.series[i].item;
-                var textWidth = getTextWidth(label, "normal 1.5em Roboto");
+                var textWidth = getTextWidth(label, 'normal 1.5em Roboto');
                 if ($scope.margin_left < textWidth) {
                     $scope.margin_left = textWidth;
                 }
@@ -219,7 +217,7 @@
 
     function WidgetSettingsCtrlTimeline($scope, $timeout, $rootScope, $modalInstance, widget, OHService) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
         $scope.form = {
             name: widget.name,

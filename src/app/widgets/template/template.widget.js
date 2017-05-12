@@ -80,31 +80,33 @@
             scope.itemValue = scope.itemState;
 
             scope.itemsInGroup = function(group) {
-                return $filter('filter')(OHService.getItems(),
+                return false;
+                /*return $filter('filter')(OHService.getItems(),
                     function (item) {
                         return (item.groupNames && item.groupNames.indexOf(group) !== -1);
                     }
-                );
+                );*/
             };
 
             scope.itemsWithTag = function(tag) {
-                return $filter('filter')(OHService.getItems(),
+                return null;
+                /*return $filter('filter')(OHService.getItems(),
                     function (item) {
                         return (item.tagNames && item.tagNames.indexOf(tag) !== -1);
                     }
-                );
+                );*/
             };
 
             scope.sendCmd = function(item, cmd) {
-                var item = OHService.getItem(item);
-                if (!item) {
+                var _item = OHService.getItem(item);
+                if (!_item) {
                     return;
                 }
 
-                OHService.sendCmd(item.name, cmd);
+                OHService.sendCmd(_item.name, cmd);
             };
 
-            scope.$on("refreshTemplate", function () {
+            scope.$on('refreshTemplate', function () {
                 render();
             });
 
@@ -114,9 +116,9 @@
 
     TemplateWidgetController.$inject = ['$rootScope', '$scope', '$filter', 'OHService'];
     function TemplateWidgetController ($rootScope, $scope, $filter, OHService) {
-        var vm = this;
+        // var vm = this;
         this.widget = this.ngModel;
-        this.items = OHService.getItems();
+        // this.items = OHService.getItems();
     }
 
 
@@ -125,7 +127,7 @@
 
     function WidgetSettingsCtrlTemplate($scope, $timeout, $rootScope, $modalInstance, widget, OHService, FileSaver, LocalFileReader) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
 
         if ($scope.widget.preview) {
@@ -194,7 +196,7 @@
 
         $scope.importFile = function(file) {
             if (!file) return;
-            if (file.name.indexOf(".html") == -1) {
+            if (file.name.indexOf(".html") === -1) {
                 alert("The file must have a .html extension!");
                 delete $scope.file;
                 return;
@@ -222,20 +224,20 @@
                     if (stream.match("itemState(") || stream.match("sendCmd(")
                      || stream.match("itemsInGroup(") || stream.match("itemsWithTag(")
                      || stream.match("itemValue(") ||  stream.match("getItem(")) {
-                         while ((ch = stream.next()) != null)
-                         if (ch == ")") {
+                         while ((ch = stream.next()) !== null)
+                         if (ch === ")") {
                              stream.eat(")");
                              return "habpanel-function"
                          }
                     }
                     if (stream.match("{{")) {
-                        while ((ch = stream.next()) != null)
-                        if (ch == "}" && stream.next() == "}") {
+                        while ((ch = stream.next()) !== null)
+                        if (ch === "}" && stream.next() === "}") {
                             stream.eat("}");
                             return "template-expression";
                         }
                     }
-                    while (stream.next() != null
+                    while (stream.next() !== null
                         && (!stream.match("{{", false)) && !stream.match("itemState", false) && !stream.match("itemValue", false)
                             && !stream.match("sendCmd", false) && !stream.match("itemsInGroup", false)
                             && !stream.match("itemsWithTag", false) && !stream.match("getItem", false)) {}

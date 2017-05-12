@@ -188,7 +188,7 @@
                             unselectAll: _('Deselect all'),
                             invertSelection: _('Invert selection')
                         },
-                        columns: ['image', 'name', 'role', 'functions', 'room', 'value']
+                        columns: ['image', 'name', 'role', 'function', 'room', 'value']
                     });
                 }
                 window.sid.selectId('option', 'filterPresets', {role: ''});

@@ -38,9 +38,8 @@
     }
     LabelController.$inject = ['$rootScope', '$scope', 'OHService'];
     function LabelController ($rootScope, $scope, OHService) {
-        var vm = this;
+        // var vm = this;
         this.widget = this.ngModel;
-
     }
 
 
@@ -49,7 +48,7 @@
 
     function WidgetSettingsCtrlLabel($scope, $timeout, $rootScope, $modalInstance, widget, OHService) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
         $scope.form = {
             name: widget.name,

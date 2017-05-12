@@ -17,7 +17,6 @@
 
     function IOBService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService) {
         this.getItem = getItem;
-        this.getItems = getItems;
         this.getObjects = getObjects;
         this.getObject = getObject;
         this.getLocale = getLocale;
@@ -25,9 +24,11 @@
         this.sendCmd = sendCmd;
         this.sendVoice = sendVoice;
         this.reloadItems = reloadItems;
+        this.getTimeSeries = getTimeSeries;
 
         var locale = null;
         var timeout;
+        var subscribes = [];
 
         ////////////////
 
@@ -38,18 +39,15 @@
 
         function loadItems() {
             connect().then(function () {
-                servConn.getStates(null, function (err, _states) {
+                servConn.getStates(null, function (err, items) {
                     var count = 0;
-                    var items = [];
-                    for (var id in _states) {
-                        if (_states.hasOwnProperty(id)) {
+                    for (var id in items) {
+                        if (items.hasOwnProperty(id)) {
                             count++;
-                            _states[id] = _states[id] || {};
-                            _states[id].label = id;
-                            _states[id].name = id;
-                            _states[id].state = (_states[id].val !== null && _states[id].val !== undefined) ? _states[id].val.toString() : '';
-
-                            items.push(_states[id])
+                            items[id] = items[id] || {};
+                            items[id].label = id;
+                            items[id].name = id;
+                            items[id].state = (items[id].val !== null && items[id].val !== undefined) ? items[id].val.toString() : '';
                         }
                     }
                     console.log('Received ' + count + ' states.');
@@ -60,12 +58,12 @@
         }
         
         function getItem(name) {
-            var item = $filter('filter')($rootScope.items, {name: name}, true);
-            return (item) ? item[0] : null;
-        }
+            if (name && subscribes.indexOf(name) === -1) {
+                subscribes.push(name);
+                servConn.subscribe(name);
+            }
 
-        function getItems() {
-            return $rootScope.items;
+            return $rootScope.items ? $rootScope.items[name] || {state: ''} : {state: ''};
         }
 
         function getObject(id) {
@@ -104,6 +102,22 @@
                     });
                 });
             }
+
+            return deferred.promise;
+        }
+
+        function getTimeSeries(service, item, start, end) {
+            var deferred = $q.defer();
+
+            connect().then(function () {
+                servConn.getHistory(item, {
+                    instance: service,
+                    start:    start,
+                    aggregate: 'minmax'
+                }, function (err, data) {
+                    deferred.resolve({data: {name: item}});
+                });
+            });
 
             return deferred.promise;
         }
@@ -177,6 +191,7 @@
             timeout = null;
             $rootScope.reconnecting = true;
         }, 2000);
+
         function connect() {
             if (!connecting) {
                 connecting = true;
@@ -206,7 +221,7 @@
                             if (!id  || !state || !$rootScope.items) return;
 
                             var newstate = (state.val !== null && state.val !== undefined) ? state.val.toString() : '';
-                            var item = $filter('filter')($rootScope.items, {name: id}, true)[0];
+                            var item = $rootScope.items[id] = $rootScope.items[id] || {state: ''};
 
                             if (item && item.state !== newstate) {
                                 $rootScope.$apply(function () {
@@ -232,7 +247,7 @@
                         console.error('Cannot execute %s for %s, because of insufficient permissions', err.command, err.arg, 'Insufficient permissions', 'alert', 600);
                         connectPromise.reject();
                     }
-                });
+                }, false, false);
             }
             return connectPromise.promise;
         }

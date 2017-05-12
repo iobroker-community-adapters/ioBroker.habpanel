@@ -74,9 +74,9 @@
                         }
                     })
                 };
-        };
+        }
 
-        if (vm.widget.charttype == 'interactive') {
+        if (vm.widget.charttype === 'interactive') {
             var startTime = function() {
             	var startDate = new Date();
                 switch (vm.widget.period)
@@ -96,7 +96,7 @@
                     default: startDate.setTime(startDate.getTime() - 24*60*60*1000); break;
                 }
                 return startDate;
-            }
+            };
             var startDate = startTime();
 
             if (!vm.widget.series || !vm.widget.series.length)
@@ -104,7 +104,8 @@
 
             vm.rawdata = [];
             for (var i = 0; i < vm.widget.series.length; i++) {
-                vm.rawdata[i] = $http.get('/rest/persistence/items/' + vm.widget.series[i].item + '?serviceId=' + vm.widget.service + "&starttime=" + startDate.toISOString());
+                vm.rawdata[i] = OHService.getTimeSeries(vm.widget.service, vm.widget.series[i].item, startDate.toISOString());
+                    //$http.get('/rest/persistence/items/' + vm.widget.series[i].item + '?serviceId=' + vm.widget.service + "&starttime=" + startDate.toISOString());
             }
 
             $q.all(vm.rawdata).then(function (values) {
@@ -129,8 +130,8 @@
                     series: [],
                     axes: {
                         x: {
-                            key: "time",
-                            type: "date",
+                            key: 'time',
+                            type: 'date',
                             tickFormat: function (value) {
                                 if (value.getHours() === 0) {
                                     if (value.getDate() === 1) {
@@ -178,7 +179,7 @@
                         dataset: vm.widget.series[i].item,
                         key: "state",
                         label: vm.widget.series[i].name || vm.widget.series[i].item,
-                        color: (vm.widget.series[i].color && vm.widget.series[i].color !== "transparent") ?
+                        color: (vm.widget.series[i].color && vm.widget.series[i].color !== 'transparent') ?
                                     vm.widget.series[i].color : '#0db9f0',
                         type: [],
                         id: vm.widget.series[i].item
@@ -224,7 +225,7 @@
                         // add the received update
                         dataset.push(receivedUpdate);
                     }
-                }
+                };
 
                 if(vm.interactiveChartOptions.liveUpdates.enabled) {
                     OHService.onUpdate($scope, vm.widget.item, function (value, item) {
@@ -256,7 +257,7 @@
 
     function WidgetSettingsCtrlChart($scope, $timeout, $rootScope, $modalInstance, widget, OHService) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
         $scope.form = {
             name: widget.name,
@@ -289,7 +290,7 @@
 
         $scope.removeSeries = function (series) {
             $scope.form.series.splice($scope.form.series.indexOf(series), 1);
-        }
+        };
 
         $scope.remove = function() {
             $scope.dashboard.widgets.splice($scope.dashboard.widgets.indexOf(widget), 1);

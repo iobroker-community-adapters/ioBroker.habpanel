@@ -89,7 +89,7 @@
 
     function WidgetSettingsCtrlSwitch($scope, $timeout, $rootScope, $modalInstance, widget, OHService) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
         $scope.form = {
             name            : widget.name,

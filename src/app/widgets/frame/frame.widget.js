@@ -67,7 +67,7 @@
 
     function WidgetSettingsCtrlFrame($scope, $timeout, $rootScope, $modalInstance, widget, OHService, $sce) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
         $scope.form = {
             name      : widget.name,

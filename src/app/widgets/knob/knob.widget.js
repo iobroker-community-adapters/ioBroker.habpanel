@@ -166,7 +166,7 @@
 
     function WidgetSettingsCtrlKnob($scope, $timeout, $rootScope, $modalInstance, widget, OHService) {
         $scope.widget = widget;
-        $scope.items = OHService.getItems();
+        // $scope.items = OHService.getItems();
 
         $scope.colorPopover = {
             barColorTemplateUrl: 'barColorpopoverTemplate.html',
@@ -225,7 +225,7 @@
                         $scope.form.name = obj.common.name;
                     }
                     if (obj.common.write === false || obj.common.write === true) {
-                        $scope.form.readOnly = obj.common.write;
+                        $scope.form.readOnly = !obj.common.write;
                     }
                     if (obj.common.unit) {
                         $scope.form.unit = obj.common.unit;
