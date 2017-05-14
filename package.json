@@ -1,7 +1,7 @@
 {
   "name": "iobroker.habpanel",
   "description": "Dashboard based on HABPanel",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "author": {
     "name": "Yannick Schaus",
     "email": "habpanel@schaus.net"
