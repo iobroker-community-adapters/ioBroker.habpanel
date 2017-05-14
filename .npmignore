@@ -4,6 +4,6 @@ Gruntfile.js
 tasks
 bower.json
 node_modules
-doc
 src
 gulpfile.js
+!www
