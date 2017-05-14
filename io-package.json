@@ -1,9 +1,9 @@
 {
     "common": {
         "name":                     "habpanel",
-        "version": "0.1.3",
+        "version": "0.1.6",
         "news": {
-            "0.1.3": {
+            "0.1.6": {
                 "en": "update version number",
                 "de": "update version number",
                 "ru": "update version number"

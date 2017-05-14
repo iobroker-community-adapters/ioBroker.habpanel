@@ -50,10 +50,10 @@
 
             var parts = item.state.split(',');
             var value;
-            if (parts.length == 3) {
+            if (parts.length === 3) {
                 // slider received HSB value, use the 3rd (brightness)
                 value = parseFloat(parts[2]);
-            } else if (parts.length == 1) {
+            } else if (parts.length === 1) {
                 value = parseFloat(parts[0]);
             } else {
                 return undefined;
@@ -92,7 +92,7 @@
         vm.value = vm.slider.value = angular.isDefined(getValue()) ? getValue() : 0;
         $timeout(function() {
             $scope.$broadcast('rzSliderForceRender');
-        })
+        });
 
         function updateValue() {
             var value = getValue();
@@ -182,6 +182,5 @@
         };
 
     }
-
 
 })();
