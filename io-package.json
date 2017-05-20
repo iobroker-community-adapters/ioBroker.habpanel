@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "habpanel",
-        "version": "0.1.6",
+        "version": "0.1.7",
         "news": {
+			"0.1.7": {
+                "en": "add to welcome screen",
+                "de": "Zum Welcome-Screen hinzufügen",
+                "ru": "Добавлена на экран приветствия"
+            },
             "0.1.6": {
                 "en": "update version number",
                 "de": "update version number",
@@ -24,6 +29,7 @@
         "keywords":                 ["user", "interface", "webapp", "jquerymobile", "ui"],
         "readme":                   "https://github.com/ioBroker/ioBroker.habpanel/blob/master/README.md",
         "singleton":                true,
+		"welcomeScreen": 			{"link": "habpanel/index.html", "name": "HABpanel", "img": "habpanel.admin/habpanel.png", "color": "black", "order": 3},
         "preserveSettings":         "habpanel",
         "authors": [
             "Yannick Schaus <habpanel@schaus.net>",

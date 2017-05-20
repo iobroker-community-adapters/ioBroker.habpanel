@@ -44,5 +44,8 @@ It notably features an embedded dashboard designer allowing to build interfaces 
 
 ## Changelog
 
+### 0.1.7 (2017-05-20)
+* (bluefox) add to welcome screen
+
 ### 0.1.6 (2017-05-15)
 * (bluefox) initial commit

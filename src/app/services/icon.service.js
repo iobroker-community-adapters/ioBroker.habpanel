@@ -18,7 +18,7 @@
             { id: 'freepik-gadgets', name: 'Builtin: Freepik Gadgets', type: 'builtin', colorize: true },
             { id: 'freepik-housethings', name: 'Builtin: Freepik House Things', type: 'builtin', colorize: true },
             { id: 'smarthome-set', name: 'Builtin: Smart Home Set', type: 'builtin', colorize: true },
-            { id: 'eclipse-smarthome-classic', name: 'Eclipse SmartHome Classic', type: 'oh2', oh2iconset: 'classic', colorize: false }
+            { id: 'eclipse-smarthome-classic', name: 'Eclipse SmartHome Classic', type: 'builtin', colorize: false }
         ];
         
         ////////////////
