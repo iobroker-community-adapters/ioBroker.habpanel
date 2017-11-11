@@ -40,7 +40,7 @@
             "bluefox <dogafox@gmail.com>"
         ],
         "localLink":                "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
-        "type":                     "visualisation",
+        "type":                     "visualization",
         "license":                  "EPL-1.0",
         "noConfig":                 true
     },
