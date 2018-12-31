@@ -47,8 +47,8 @@
     "eslint-plugin-react-native": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.4.2",
     "gulp-concat": "^2.6.0",
-    "gulp-cssmin": "^0.1.7",
     "gulp-eslint": "^3.0.1",
     "gulp-filter": "^4.0.0",
     "gulp-main-bower-files": "1.5.3",
@@ -59,6 +59,8 @@
     "gulp-uglify": "^2.0.0",
     "gulp-watch": "^4.3.10",
     "gulp-webserver": "^0.9.1",
+    "pofile": "^1.0.10",
+    "through2": "^2.0.3",
     "n3-charts": "^2.0.28"
   },
   "dependencies": {

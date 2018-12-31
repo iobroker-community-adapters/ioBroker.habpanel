@@ -7,8 +7,8 @@
         .value('OH2ServiceConfiguration', {})
         .service('OH2StorageService', OH2StorageService);
 
-    OHService.$inject = ['$rootScope', '$http', '$q', '$timeout', '$interval', '$filter', '$location', 'SpeechService'];
-    function OHService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService) {
+    OHService.$inject = ['$rootScope', '$http', '$q', '$timeout', '$interval', '$filter', '$location', 'SpeechService', 'tmhDynamicLocale', '$translate'];
+    function OHService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService, tmhDynamicLocale, $translate) {
         this.getItem = getItem;
         this.getItems = getItems;
         this.getLocale = getLocale;
@@ -89,9 +89,42 @@
             if (locale) {
                 deferred.resolve(locale);
             } else {
-                $http.get('/rest/services/org.eclipse.smarthome.core.localeprovider/config')
+                $http.get('/rest/services/org.eclipse.smarthome.core.i18nprovider/config')
                 .then(function (response) {
-                    locale = response.data.language + '-' + response.data.region;
+                    var language;
+                    if (!response.data.language) {
+                        if (navigator && navigator.languages) {
+                            locale = navigator.languages[0];
+                            language = locale.split('-')[0];
+                        } else if (navigator && navigator.language) {
+                            locale = navigator.language;
+                            language = locale.split('-')[0];
+                        } else {
+                            locale = language = 'en';
+                        }
+                    } else {
+                        language = response.data.language;
+                        locale = response.data.language + ((response.data.region) ? '-' + response.data.region : '');
+                    }
+
+                    /* consider the region only for selected common exceptions where the date/number formats
+                        are significantly different than the language's default.
+                        If more are needed change the gulpfile.js too and run the 'vendor-angular-i18n' gulp task */
+                    if (['es-ar', 'de-at', 'en-au', 'fr-be', 'es-bo', 'pt-br', 'en-ca',
+                            'fr-ca', 'fr-ch', 'es-co', 'en-gb', 'en-hk', 'zh-hk', 'en-ie',
+                            'en-in', 'fr-lu', 'es-mx', 'en-nz', 'en-sg', 'zh-sg',
+                            'es-us', 'zh-tw', 'en-za'].indexOf(locale.toLowerCase()) < 0) {
+                        locale = language;
+                    }
+
+                    if (language !== "en") {
+                        console.log('Setting interface language to: ' + language);
+                        $translate.use(language);
+                    }
+
+                    console.log('Setting locale to: ' + locale);
+                    tmhDynamicLocale.set(locale.toLowerCase());
+
                     deferred.resolve(locale);
                 }, function(error) {
                     console.warn('Couldn\'t retrieve locale settings. Setting default to "en-US"');
@@ -143,16 +176,33 @@
                                 $rootScope.$apply(function () {
                                     console.log("Updating " + item.name + " state from " + item.state + " to " + payload.value);
                                     item.state = payload.value;
-                                    $rootScope.$emit('openhab-update', item);
 
-                                    if (item.state && $rootScope.settings.speech_synthesis_item === item.name) {
-                                        console.log('Speech synthesis item state changed! Speaking it now.');
-                                        SpeechService.speak($rootScope.settings.speech_synthesis_voice, item.state);
+                                    if (!item.transformedState) {
+                                        // no transformation on state
+                                        $rootScope.$emit('openhab-update', item);
+
+                                        if (item.state && $rootScope.settings.speech_synthesis_item === item.name) {
+                                            console.log('Speech synthesis item state changed! Speaking it now.');
+                                            SpeechService.speak($rootScope.settings.speech_synthesis_voice, item.state);
+                                        }
+                                        if (item.state && $rootScope.settings.dashboard_control_item === item.name) {
+                                            console.log('Dashboard control item state changed, attempting navigation to: ' + item.state);
+                                            $location.url('/view/' + item.state);
+                                        }
+                                    } else {
+                                        // fetch the new transformed state
+                                        $http.get('/rest/items/' + item.name).then(function (response) {
+                                            if (response.data && response.data.transformedState) {
+                                                item.transformedState = response.data.transformedState;
+                                                $rootScope.$emit('openhab-update', item);
+                                            } else {
+                                                console.error("Failed to retrieve the new transformedState of item: " + item.name);
+                                                item.transformedState = null;
+                                                $rootScope.$emit('openhab-update', item);
+                                            }
+                                        });
                                     }
-                                    if (item.state && $rootScope.settings.dashboard_control_item === item.name) {
-                                        console.log('Dashboard control item state changed, attempting navigation to: ' + item.state);
-                                        $location.url('/view/' + item.state);
-                                    }
+
 
                                 });
                             }
@@ -200,6 +250,13 @@
                                 if (context)
                                   context.close();
                             }
+                        } else if (topicparts[0] !== 'smarthome') {
+                            var payload = JSON.parse(evtdata.payload);
+                            var ohEvent = { topic: evtdata.topic, type: evtdata.type, payload: payload };
+                            $rootScope.$apply(function () {
+                                console.log("Emitting event type=" + ohEvent.type + ", topic=" + ohEvent.topic);
+                                $rootScope.$emit('openhab-event', ohEvent);
+                            });
                         }
                     } catch (e) {
                         console.warn('SSE event issue: ' + e.message);

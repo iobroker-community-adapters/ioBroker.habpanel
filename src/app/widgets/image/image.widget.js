@@ -43,17 +43,18 @@
 
         function updateValue() {
             var item = OHService.getItem(vm.widget.item);
-            if (!item || vm.widget.image_source !== 'item' || item.type !== "String") {
+            if (!item || vm.widget.image_source.indexOf('item') || (item.type !== "String" && item.type !== "Image")) {
                 vm.value = "";
                 return;
             }
             vm.url = $sce.trustAsResourceUrl(item.state);
         }
 
-        OHService.onUpdate($scope, vm.widget.item, function () {
+        OHService.onUpdate($scope, vm.widget.item, function ($event, item) {
+            if (!item || (vm.widget.image_source !== 'static' && vm.widget.item === item.name))
             updateValue();
         });
-        
+
         if (!this.widget.image_source || this.widget.image_source === 'static') {
             vm.original_url = vm.url = this.widget.url;
         }
@@ -63,10 +64,14 @@
         if (vm.widget.refresh) {
             var _interval = intervaltype === 'seconds' ? this.widget.refresh * 1000 : this.widget.refresh;
             var imgRefresh = $interval(function () {
-                var timestamp = (new Date()).toISOString();
+                if (!vm.widget.nosuffix) {
+                    var timestamp = (new Date()).toISOString();
 
-                vm.url = (vm.original_url.indexOf('?') === -1) ?
+                    vm.url = (vm.original_url.indexOf('?') === -1) ?
                         vm.original_url + "?_t=" + timestamp : vm.original_url + "&_t=" + timestamp;
+                } else {
+                    vm.url = vm.original_url;
+                }
             }, _interval, 0, true);
 
             $scope.$on('$destroy', function (event) {
@@ -74,6 +79,7 @@
             });
         }
 
+        vm.background = this.widget.background || 'rgb(0, 0, 0)';
     }
 
 
@@ -92,10 +98,14 @@
             row         : widget.row,
             image_source: widget.image_source || 'static',
             url         : widget.url,
-            item        : widget.item,
             refresh     : widget.refresh,
-            intervaltype: widget.intervaltype || 'seconds'
+            intervaltype: widget.intervaltype || 'seconds',
+            nosuffix    : widget.nosuffix,
+            background  : widget.background || 'rgb(0, 0, 0)'
         };
+        if (widget.image_source === 'item-string') $scope.form.item_string = widget.item;
+        if (widget.image_source === 'item-image') $scope.form.item_image = widget.item;
+
         
         $scope.$watch('form.item', function (item, oldItem) {
             if (item === oldItem) {
@@ -122,13 +132,22 @@
         $scope.submit = function() {
             angular.extend(widget, $scope.form);
             switch (widget.image_source) {
-                case "item":
-                    delete widget.action_type;
+                case "item-string":
+                    widget.item = widget.item_string;
+                    break;
+                case "item-image":
+                    widget.item = widget.item_image;
                     break;
                 default:
                     delete widget.item;
-                    delete widget.action_type;
                     break;
+            }
+
+            delete widget.item_string;
+            delete widget.item_image;
+
+            if (!widget.refresh) {
+                delete widget.nosuffix;
             }
 
             $modalInstance.close(widget);

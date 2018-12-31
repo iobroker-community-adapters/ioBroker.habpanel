@@ -2,29 +2,37 @@
         .module('app')
         .controller('DashboardViewCtrl', DashboardViewController);
 
-  DashboardViewController.$inject = ['$scope', '$location', '$rootScope', '$routeParams', '$timeout', 'dashboard', 'PersistenceService', 'OHService', 'Fullscreen', 'snapRemote', 'SpeechService'];
-  function DashboardViewController($scope, $location, $rootScope, $routeParams, $timeout, dashboard, PersistenceService, OHService, Fullscreen, snapRemote, SpeechService) {
+  DashboardViewController.$inject = ['$scope', '$location', '$rootScope', '$routeParams', '$timeout', 'dashboard', 'PersistenceService', 'OHService', 'Fullscreen', 'snapRemote', 'SpeechService', 'TranslationService'];
+  function DashboardViewController($scope, $location, $rootScope, $routeParams, $timeout, dashboard, PersistenceService, OHService, Fullscreen, snapRemote, SpeechService, TranslationService) {
     var vm = this;
     vm.dashboard = dashboard;
-
+    vm.speakTooltip = TranslationService.translate('dashboard.toolbar.speak', 'Speak');
+    vm.refreshTooltip = TranslationService.translate('dashboard.toolbar.refresh', 'Refresh');
+    vm.fullscreenTooltip = TranslationService.translate('dashboard.toolbar.fullscreen', 'Fullscreen');
+    
     vm.gridsterOptions = {
         margins: (vm.dashboard.widget_margin) ?
                     [vm.dashboard.widget_margin, vm.dashboard.widget_margin] : [5, 5],
         columns: vm.dashboard.columns || 12,
+        rowHeight: vm.dashboard.row_height || 'match',
         pushing: false,
         floating: false,
-        mobileModeEnabled: false,
+        mobileModeEnabled: (vm.dashboard.mobile_mode_enabled || false),
+        mobileBreakpoint: (vm.dashboard.mobile_mode_enabled && vm.dashboard.mobile_breakpoint || undefined),
         draggable: { enabled: false },
         resizable: { enabled: false }
     };
 
-    var fullscreenhandler = Fullscreen.$on('FBFullscreen.change', function(evt, enabled) {
+    var fullscreenhandler = Fullscreen.$on('FBFullscreen.change', function (evt, enabled) {
         vm.fullscreen = enabled;
+    });
+    var resizehandler = $scope.$on('gridster-resized', function () {
+        $scope.$broadcast('rzSliderForceRender');
     });
 
     $scope.$on('$destroy', function() {
         fullscreenhandler();
-        //OHService.clearAllLongPollings();
+        resizehandler();
     });
 
     OHService.onUpdate($scope, '', function () {
@@ -58,6 +66,9 @@
     };
 
     vm.goFullscreen = function() {
+        // fix for Chrome 71+ fullscreen
+        Element.prototype.webkitRequestFullscreen = function () { this.requestFullscreen(); }
+
         Fullscreen.toggleAll();
     };
 
@@ -76,7 +87,7 @@
             return;
         }
 
-        vm.speechOutput = 'Speak now...';
+        vm.speechOutput = TranslationService.translate('dashboard.speaknow', 'Speak now...');
 
         var stopListener = $rootScope.$on('speech-recognition', function (e, args) {
             if (args.interim_transcript) {
@@ -91,7 +102,7 @@
                     vm.isListening = false;
                 }, 2000);
             } else if (args.error) {
-                vm.speechOutput = "Error: " + args.error;
+                vm.speechOutput = TranslationService.translate('dashboard.speakerror', 'Error: ') + args.error;
                 SpeechService.stopSpeechRecognition();
             }
         });

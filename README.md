@@ -27,19 +27,19 @@ It notably features an embedded dashboard designer allowing to build interfaces 
 
 ## Screenshots
 
-![](doc/screenshot0.png)
+![](doc/images/habpanel_screenshot0.png)
 
-![](doc/screenshot1.png)
+![](doc/images/habpanel_screenshot1.png)
 
-![](doc/screenshot2.png)
+![](doc/images/habpanel_screenshot2.png)
 
-![](doc/screenshot3.png)
+![](doc/images/habpanel_screenshot3.png)
 
-![](doc/screenshot4.png)
+![](doc/images/habpanel_screenshot4.png)
 
-![](doc/screenshot5.png)
+![](doc/images/habpanel_screenshot5.png)
 
-![](doc/screenshot6.png)
+![](doc/images/habpanel_screenshot6.png)
 
 
 ## Changelog

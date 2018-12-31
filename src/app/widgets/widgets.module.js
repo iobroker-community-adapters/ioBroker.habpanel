@@ -16,7 +16,9 @@
     .factory('Widgets', WidgetsService)
     .directive('genericWidget', GenericWidgetDirective)
     .directive('widgetIcon', WidgetIcon)
-    .directive('itemPicker', ItemPicker);
+    .directive('itemTypeIcon', ItemTypeIcon)
+    .directive('itemPicker', ItemPicker)
+    .filter('themeValue', ThemeValueFilter)
     
 
     WidgetsService.$inject = ['WidgetTypes'];
@@ -97,7 +99,43 @@
             });
         }
     }
-    
+
+    function ItemTypeIcon() {
+        var directive = {
+            link: link,
+            restrict: 'AE',
+            template:
+                '<strong ng-if="type.indexOf(\'Number\') >= 0" title="Number" style="font-size: 1.2em; line-height: 0.9em; margin: -0.2em 0.1em;">#</strong>' +
+                '<i ng-if="type.indexOf(\'Number\') < 0" title="{{type}}" class="glyphicon glyphicon-{{getGlyph()}}"></i>',
+            scope: {
+                type: '='
+            }
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+            scope.getGlyph = function () {
+                switch (scope.type) {
+                   case 'Group': return 'th-large';
+                    case 'Switch': return 'off';
+                    case 'String': return 'font';
+                    case 'Number': return 'usd';
+                    case 'Color': return 'tint';
+                    case 'DateTime': return 'calendar';
+                    case 'Dimmer': return 'sort-by-attributes';
+                    case 'Rollershutter': return 'oil';
+                    case 'Contact': return 'resize-small';
+                    case 'Player': return 'fast-forward';
+                    case 'Image': return 'picture';
+                    case 'Location': return 'map-marker';
+                    case 'Call': return 'earphone';
+                    default: return 'asterisk';
+                }
+            };
+        }
+    }
+
+
     ItemPicker.$inject = ['$filter', 'OHService'];
 
     function ItemPicker($filter, OHService) {
@@ -122,13 +160,14 @@
         function link(scope, element, attrs) {
         }
     }
-    ItemPickerController.$inject = ['$scope', '$filter', 'OHService'];
-
+    ItemPickerController.$inject = ['$scope', '$filter', 'OHService', 'TranslationService'];
+   
     function _(a) {return a;}
 
-    function ItemPickerController ($scope, $filter, OHService) {
+    function ItemPickerController ($scope, $filter, OHService, TranslationService) {
         var vm = this;
         vm.loading = true;
+                    return !item.type.indexOf(vm.filterType);
 
         OHService.getObject(this.ngModel).then(function (obj) {
             vm.loading = false;
@@ -150,6 +189,8 @@
                 vm.selectedName = '';
             }
         });
+
+       vm.placeholderText = TranslationService.translate('itempicker.placeholder', 'Search or select an item');
 
         $scope.showDialog = function() {
             vm.loading = true;
@@ -200,5 +241,20 @@
                 });
             });
         };
+    }
+
+    ThemeValueFilter.$inject = ['$window'];
+    function ThemeValueFilter($window) {
+        return fallbackToThemeValue;
+
+        ////////////////
+
+        function fallbackToThemeValue(value, themePropertyName) {
+            if (value) return value;
+
+            var themeStyles = window.getComputedStyle(document.body);
+            var themeValue = themeStyles.getPropertyValue('--' + themePropertyName);
+            return (themeValue) ? themeValue.trim() : null;
+        }
     }
 })();

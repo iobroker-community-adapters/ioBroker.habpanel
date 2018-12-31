@@ -8,11 +8,16 @@
     <meta name="description" content="Dashboard user interface" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="HABPanel">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-JOHRfFtpp8mY7MAXRoISwheGsjwulH2pN1lbzouiEZM='">
 
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="vendor/vendor.min.css" />
-    <link rel="stylesheet" ng-href="assets/styles/themes/{{settings.theme || 'default'}}/{{settings.theme || 'default'}}.min.css" />
+    <link rel="icon" type="image/png" href="assets/manifest/logo36.png">
+    <link rel="apple-touch-icon" type="image/png" href="assets/manifest/apple-icon.png">
+    <link rel="apple-touch-startup-image" href="assets/manifest/logo340.png">
+    <link rel="stylesheet" href="vendor/styles.min.css" />
+    <link rel="stylesheet" ng-href="assets/styles/themes/{{settings.theme || 'default'}}.css" />
+    <link rel="stylesheet" ng-if="settings.additional_stylesheet_url" ng-href="{{settings.additional_stylesheet_url}}" />
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" type="text/css" href="../../lib/css/fancytree/ui.fancytree.min.css"/>
     <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/custom-light/jquery-ui.min.css"/>
@@ -80,6 +85,7 @@
     <script src="app/widgets/image/image.widget.js"></script>
     <script src="app/widgets/knob/knob.widget.js"></script>
     <script src="app/widgets/label/label.widget.js"></script>
+    <script src="app/widgets/selection/selection.widget.js"></script>
     <script src="app/widgets/slider/slider.widget.js"></script>
     <script src="app/widgets/switch/switch.widget.js"></script>
     <!--script src="app/widgets/timeline/timeline.widget.js"></script-->
@@ -91,7 +97,8 @@
     <script src="app/services/icon.service.js"></script>
     <script src="app/services/localfile.service.js"></script>
     <script src="app/services/speech.service.js"></script>
-
+    <script src="app/services/translation.service.js"></script>
+    
     <script src="app/app.js"></script>
     <script src="app/dashboard/dashboard.view.controller.js"></script>
     <script src="app/dashboard/dashboard.edit.controller.js"></script>
@@ -104,21 +111,20 @@
 
 </head>
 
-<body>
-<aside class="drawer" snap-drawer style="display: none" ng-controller="DrawerController" ng-include="'app/menu/drawer.tpl.html'">
-</aside>
-<div class="reconnecting" ng-if="reconnecting">
-    &nbsp;<i class="glyphicon glyphicon-ban-circle"></i>&nbsp;Connection lost! Trying to reconnect...&nbsp;
-</div>
-<div class="container"
-     snap-content
-     snap-opt-disable="'right'"
-     snap-opt-hyperextensible="false"
-     ng-view
-     ng-class="{ 'image-bg': settings.background_image }"
-     ng-style="{ 'background-image': (settings.background_image) ? 'url(' + settings.background_image +')' : '',
-                      'padding-top': kioskMode ? 0 : 'auto' }">
-</div>
+<body ng-class="{ 'pinneddrawer': pinnedDrawer }">
+    <aside class="drawer" snap-drawer style="display: none" ng-controller="DrawerController" ng-include="'app/menu/drawer.tpl.html'">
+    </aside>
+    <div class="reconnecting" ng-if="reconnecting">
+        &nbsp;<i class="glyphicon glyphicon-ban-circle"></i>&nbsp;<span translate-keep-content translate="error.connectionlost">Connection lost! Trying to reconnect...</span>&nbsp;
+    </div>
+    <main class="container"
+         snap-content
+         snap-opt-disable="'right'"
+         snap-opt-hyperextensible="false"
+         ng-view
+         ng-class="{ 'image-bg': settings.background_image, kiosk: kioskMode }"
+         ng-style="{ 'background-image': (settings.background_image) ? 'url(' + settings.background_image +')' : '' }">
+    </main>
 </body>
 
 </html>
