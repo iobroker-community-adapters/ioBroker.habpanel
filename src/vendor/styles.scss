@@ -9,6 +9,14 @@
 .iob-list-icon {
 	height: 16px;
 }
+.fancytree-folder  > td:nth-child(2) > span
+{
+    display: flex;
+}
+.fancytree-folder  > td:nth-child(2) > span > span
+{
+    margin-right: 5px;
+}
 
 @import "../../bower_components/angular-gridster/dist/angular-gridster";
 @import "../../bower_components/angularjs-slider/dist/rzslider";
