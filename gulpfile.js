@@ -1,6 +1,6 @@
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
-var cssmin = require('gulp-cssmin');
+var cleanCSS = require('gulp-clean-css');
 var eslint = require('gulp-eslint');
 var gulp = require('gulp');
 // var gulpFilter = require('gulp-filter');
@@ -13,13 +13,23 @@ var sassGlob = require('gulp-sass-glob');
 var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
+var through = require('through2');
+var pofile = require('pofile');
+
+
 var src = './src/';
 var dst = './www/';
+
+// linting (not used)
+
 gulp.task('lint', function () {
     return gulp.src([src + 'app/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format());
 });
+
+
+// live reload for SASS development
 
 gulp.task('web-server', function() {
   gulp.src(src)
@@ -43,12 +53,17 @@ gulp.task('server', [
     'web-server'
 ], function () {});
 
+
+// SASS processing
+
 gulp.task('sass-themes', function () {
     gulp.src(src + 'assets/styles/themes/**/*.scss')
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass())
-        .pipe(cssmin())
+        .pipe(cleanCSS({
+            compatibility: '*,-properties.merging'
+        }))
         .pipe(rename({
             suffix: '.min'
         }))
@@ -58,13 +73,17 @@ gulp.task('sass-themes', function () {
 gulp.task('sass-vendor', function () {
     gulp.src(src + 'vendor/vendor.scss')
         .pipe(plumber())
+		.pipe(sassGlob())
         .pipe(sass())
-        .pipe(cssmin())
+        .pipe(cleanCSS({
+            compatibility: '*,-properties.merging'
+        }))
         .pipe(rename({
             suffix: '.min'
         }))
         .pipe(gulp.dest(dst + 'vendor'));
 });
+
 gulp.task('sass', [
     'sass-themes',
     'sass-vendor'
@@ -222,7 +241,7 @@ gulp.task('src-copy', function () {
         src + '*.*',
         src + '!.csscomb.json',
         src + 'vendor/vendor.js',
-        src + 'vendor/vendor.min.css'
+        src + 'vendor/styles.min.css'
     ], {base: src}).pipe(gulp.dest(dst));
 });
 
