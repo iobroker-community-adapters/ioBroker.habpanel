@@ -71,7 +71,7 @@ gulp.task('sass-themes', function () {
 });
 
 gulp.task('sass-vendor', function () {
-    gulp.src(src + 'vendor/vendor.scss')
+    gulp.src(src + 'vendor/styles.scss')
         .pipe(plumber())
 		.pipe(sassGlob())
         .pipe(sass())
