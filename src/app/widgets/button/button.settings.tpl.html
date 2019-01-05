@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div ng-if="form.action_type !== 'navigate'" class="form-group" ng-class="{error: _form.item.$error && _form.submitted}">
-                                <label class="control-label col-lg-3 col-md-3" translate>openHAB Item</label>
+                                <label class="control-label col-lg-3 col-md-3" translate>Item</label>
                                 <div class="col-lg-9 col-md-9">
                                     <item-picker ng-model="form.item"></item-picker>
                                 </div>
@@ -153,7 +153,7 @@
                             </div>
 
                             <div ng-if="form.action_type === 'navigate' && form.show_item_value" class="form-group" ng-class="{error: _form.item.$error && _form.submitted}">
-                                <label class="control-label col-lg-3 col-md-3" translate>openHAB Item</label>
+                                <label class="control-label col-lg-3 col-md-3" translate>Item</label>
                                 <div class="col-lg-9 col-md-9">
                                     <item-picker ng-model="form.item"></item-picker>
                                 </div>

@@ -161,9 +161,7 @@
         }
     }
     
-    function _(a) {return a;}
-	
-	ItemPickerController.$inject = ['$scope', '$filter', 'OHService', 'TranslationService'];
+    ItemPickerController.$inject = ['$scope', '$filter', 'OHService', 'TranslationService'];
     function ItemPickerController ($scope, $filter, OHService, TranslationService) {
         var vm = this;
         vm.loading = true;

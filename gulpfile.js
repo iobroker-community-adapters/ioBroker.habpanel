@@ -140,7 +140,8 @@ gulp.task('vendor-js', ['uglify-timeline'], function() {
         'bower_components/aCKolor/dist/js/aCKolor.min.js',
         'node_modules/n3-charts/build/LineChart.min.js',
         src + 'vendor/angular-web-colorpicker.js',
-        src + 'vendor/conn.js'
+        src + 'vendor/conn.js',
+		src + 'vendor/global.js'
     ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
 });
 
