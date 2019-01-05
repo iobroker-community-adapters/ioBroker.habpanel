@@ -160,15 +160,14 @@
         function link(scope, element, attrs) {
         }
     }
-    ItemPickerController.$inject = ['$scope', '$filter', 'OHService', 'TranslationService'];
-   
+    
     function _(a) {return a;}
-
+	
+	ItemPickerController.$inject = ['$scope', '$filter', 'OHService', 'TranslationService'];
     function ItemPickerController ($scope, $filter, OHService, TranslationService) {
         var vm = this;
         vm.loading = true;
-                    return !item.type.indexOf(vm.filterType);
-
+        
         OHService.getObject(this.ngModel).then(function (obj) {
             vm.loading = false;
             obj = obj || {common: {}};
