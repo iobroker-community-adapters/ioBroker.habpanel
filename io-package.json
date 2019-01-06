@@ -47,7 +47,8 @@
         "localLink":                "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
         "type":                     "visualization",
         "license":                  "EPL-1.0",
-        "noConfig":                 true
+        "noConfig":                 true,
+		"webExtension":             "lib/habpanelapi.js"
     },
     "native": {
     },
