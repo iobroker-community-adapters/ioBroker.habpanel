@@ -26,7 +26,6 @@
             "ru": "ioBroker визуализация c HABpanel"
         },
         "platform":                 "javascript/Node.js",
-        "onlyWWW":                  "true",
         "loglevel":                 "info",
         "dependencies":             ["web"],
         "icon":                     "habpanel.png",
@@ -48,6 +47,8 @@
         "type":                     "visualization",
         "license":                  "EPL-1.0",
         "noConfig":                 true,
+		"enabled":                  true,
+		"mode":                     "extension",
 		"webExtension":             "lib/habpanelapi.js"
     },
     "native": {
