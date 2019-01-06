@@ -51,6 +51,7 @@
 		"webExtension":             "lib/habpanelapi.js"
     },
     "native": {
+		"webInstance": "*"
     },
     "objects": [
     ]
