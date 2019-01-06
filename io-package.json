@@ -3,12 +3,12 @@
         "name":                     "habpanel",
         "version": "0.1.8",
         "news": {
-		    "0.1.8": {
+            "0.1.8": {
                 "en": "upgrade to current openhab version",
                 "de": "Update auf die aktuellen OpenHab Version",
                 "ru": "upgrade to current openhab version"
             },
-			"0.1.7": {
+            "0.1.7": {
                 "en": "add to welcome screen",
                 "de": "Zum Welcome-Screen hinzufügen",
                 "ru": "Добавлена на экран приветствия"
@@ -33,7 +33,7 @@
         "keywords":                 ["user", "interface", "webapp", "jquerymobile", "ui"],
         "readme":                   "https://github.com/ioBroker/ioBroker.habpanel/blob/master/README.md",
         "singleton":                true,
-		"welcomeScreen": 			{"link": "habpanel/index.html", "name": "HABpanel", "img": "habpanel.admin/habpanel.png", "color": "black", "order": 3},
+        "welcomeScreen":            {"link": "habpanel/index.html", "name": "HABpanel", "img": "habpanel.admin/habpanel.png", "color": "black", "order": 3},
         "preserveSettings":         "habpanel",
         "authors": [
             "Yannick Schaus <habpanel@schaus.net>",
@@ -47,12 +47,12 @@
         "type":                     "visualization",
         "license":                  "EPL-1.0",
         "noConfig":                 true,
-		"enabled":                  true,
-		"mode":                     "extension",
-		"webExtension":             "lib/habpanelapi.js"
+        "enabled":                  true,
+        "mode":                     "extension",
+        "webExtension":             "lib/habpanelapi.js"
     },
     "native": {
-		"webInstance": "*"
+        "webInstance": "*"
     },
     "objects": [
     ]
