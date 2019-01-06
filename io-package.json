@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "habpanel",
-        "version": "0.1.7",
+        "version": "0.1.8",
         "news": {
+		    "0.1.8": {
+                "en": "upgrade to current openhab version",
+                "de": "Update auf die aktuellen OpenHab Version",
+                "ru": "upgrade to current openhab version"
+            },
 			"0.1.7": {
                 "en": "add to welcome screen",
                 "de": "Zum Welcome-Screen hinzufügen",

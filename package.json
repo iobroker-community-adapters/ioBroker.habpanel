@@ -1,7 +1,7 @@
 {
   "name": "iobroker.habpanel",
   "description": "Dashboard based on HABPanel",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": {
     "name": "Yannick Schaus",
     "email": "habpanel@schaus.net"
@@ -18,6 +18,10 @@
     {
       "name": "bluefox",
       "email": "dogafox@gmail.com"
+    },
+    {
+      "name": "jogibear9988",
+      "email": "jochen.kuehner@gmx.de"
     }
   ],
   "homepage": "https://github.com/ioBroker/ioBroker.habpanel",

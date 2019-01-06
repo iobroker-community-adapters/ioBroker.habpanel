@@ -44,6 +44,9 @@ It notably features an embedded dashboard designer allowing to build interfaces 
 
 ## Changelog
 
+### 0.1.8 (2019-01-06)
+* (jogibear9988) upgrade to current openhab version
+
 ### 0.1.7 (2017-05-20)
 * (bluefox) add to welcome screen
 
