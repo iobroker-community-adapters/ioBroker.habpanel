@@ -17,6 +17,10 @@
 {
     margin-right: 5px;
 }
+td.clippy
+{
+    display: flex;
+}
 
 @import "../../bower_components/angular-gridster/dist/angular-gridster";
 @import "../../bower_components/angularjs-slider/dist/rzslider";
