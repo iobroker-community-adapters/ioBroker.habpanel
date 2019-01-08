@@ -6,21 +6,12 @@
     font-style: normal;
 }
 
-.iob-list-icon {
-	height: 16px;
-}
-.ui-widget-conent > tr > td:nth-child(2) > span
-{
-    display: flex;
-}
-.ui-widget-conent > tr > td:nth-child(2) > span > span
-{
-    margin-right: 5px;
-}
-td.clippy
-{
-    display: flex;
-}
+.iob-list-icon { height: 16px; }
+.ui-widget-conent > tr > td:nth-child(2) > span { display: flex; }
+.ui-widget-conent > tr > td:nth-child(2) > span > span { margin-right: 5px; }
+td.clippy { display: flex; }
+.grid-main-wob-div { overflow-y: scroll; height: 100%; }
+.main-toolbar-table { display: flex; }
 
 @import "../../bower_components/angular-gridster/dist/angular-gridster";
 @import "../../bower_components/angularjs-slider/dist/rzslider";
