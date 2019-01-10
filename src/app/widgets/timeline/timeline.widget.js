@@ -14,8 +14,8 @@
             });
         });
 
-    widgetTimeline.$inject = ['$rootScope', '$uibModal', 'OHService'];
-    function widgetTimeline($rootScope, $modal, OHService) {
+    widgetTimeline.$inject = ['$rootScope', '$interval', 'OHService', 'tmhDynamicLocaleCache'];
+    function widgetTimeline($rootScope, $interval, OHService, tmhDynamicLocaleCache) {
         // Usage: <widget-timeline ng-model="widget" />
         //
         // Creates: A timeline widget
@@ -35,25 +35,54 @@
 
         function link(scope, element, attrs) {
 
-            scope.$watch('data', function (data) {
-                if (!data) return;
+            function redraw() {
+                if (!scope.data) return;
 
                 var el = element[0].firstElementChild.firstElementChild;
+
+                if (el.getElementsByTagName('svg').length) {
+                    el.removeChild(el.getElementsByTagName('svg')[0]);
+                }
 
                 var parentElement = element[0].parentNode.parentNode.parentNode;
 
                 var width = parentElement.style.width.replace('px', '') - 20;
                 var height = parentElement.style.height.replace('px', '') - 20;
 
-                var colorScale = d3.scale.ordinal().range(scope.colorScale.colors)
-                .domain(scope.colorScale.states);
+                var colorScale = d3.scale.ordinal().range(scope.colorScale.colors).domain(scope.colorScale.states);
+
+                var nglocale = tmhDynamicLocaleCache.get(scope.locale.toLowerCase());
+                var d3timeformat = (!nglocale) ? d3.time.format :
+                    d3.locale({
+                        "decimal": nglocale.NUMBER_FORMATS.DECIMAL_SEP,
+                        "thousands": nglocale.NUMBER_FORMATS.GROUP_SEP,
+                        "grouping": [3],
+                        "currency": [nglocale.NUMBER_FORMATS.CURRENCY_SYM, ""],
+                        "dateTime": "%a %b %e %X %Y",
+                        "date": "%d/%M/%Y",
+                        "time": "%H:%M:%S",
+                        "periods": nglocale.DATETIME_FORMATS.AMPMS,
+                        "days": nglocale.DATETIME_FORMATS.DAY,
+                        "shortDays": nglocale.DATETIME_FORMATS.SHORTDAY,
+                        "months": nglocale.DATETIME_FORMATS.MONTH,
+                        "shortMonths": nglocale.DATETIME_FORMATS.SHORTMONTH
+                    }).timeFormat;
+
+
+                var customTimeFormat = d3timeformat.multi([
+                    ["%H:%M", function(d) { return d.getMinutes(); }],
+                    ["%H:00", function(d) { return d.getHours(); }],
+                    ["%d %b", function (d) { return scope.vm.widget.period === '2M' || scope.vm.widget.period === '4M'; }],
+                    ["%a %d", function(d) { return d.getDate() != 1 }],
+                    ["1 %b", function(d) { return d.getDate() == 1 }]
+                ]);
 
                 var chart = d3.timeline()
                 .colors(colorScale)
                 .colorProperty('state')
                 .width(0)
                 .tickFormat({
-                    format: d3.time.format("%H:%M"),
+                    format: customTimeFormat,
                     tickSize: 6
                 })
                 .showTimeAxisTick()
@@ -83,14 +112,25 @@
                 });
 
                 var svg = d3.select(el).append("svg").attr("width", width).attr("height", height)
-                .datum(data).call(chart);
+                .datum(scope.data).call(chart);
 
-            });
+            }
+
+            var dataWatcher = scope.$watch("data", redraw);
+            var resizeHandler = scope.$on('gridster-resized', redraw);
+
+            scope.$on('$destroy', dataWatcher);
+            scope.$on('$destroy', resizeHandler);
+            if (scope.vm.refreshInterval) {
+                element.on('$destroy', function () {
+                    $interval.cancel(scope.vm.refreshInterval);
+                });
+            }
 
         }
     }
-    TimelineController.$inject = ['$rootScope', '$scope', '$timeout', '$http', '$q', 'OHService'];
-    function TimelineController ($rootScope, $scope, $timeout, $http, $q, OHService) {
+    TimelineController.$inject = ['$rootScope', '$scope', '$timeout', '$interval', '$http', '$q', 'OHService'];
+    function TimelineController ($rootScope, $scope, $timeout, $interval, $http, $q, OHService) {
         var vm = this;
         this.widget = this.ngModel;
 
@@ -135,7 +175,7 @@
             partitions.push({
                 state: currentState,
                 starting_time: currentStartTime,
-                ending_time: raw.data[raw.data.length-1].time
+                ending_time: Date.now()
             });
 
             return partitions;
@@ -150,27 +190,21 @@
                 case '8h': startDate.setTime(startDate.getTime() - 8*60*60*1000); break;
                 case '12h': startDate.setTime(startDate.getTime() - 12*60*60*1000); break;
                 case 'D': startDate.setTime(startDate.getTime() - 24*60*60*1000); break;
+                case '2D': startDate.setTime(startDate.getTime() - 2*24*60*60*1000); break;
                 case '3D': startDate.setTime(startDate.getTime() - 3*24*60*60*1000); break;
                 case 'W': startDate.setTime(startDate.getTime() - 7*24*60*60*1000); break;
                 case '2W': startDate.setTime(startDate.getTime() - 2*7*24*60*60*1000); break;
-                case 'M': startDate.setTime(startDate.getTime() - 31*24*60*60*1000); break; //Well...
-                case '2M': startDate.setTime(startDate.getTime() - 2*31*24*60*60*1000); break;
-                case '4M': startDate.setTime(startDate.getTime() - 4*31*24*60*60*1000); break;
-                case 'Y': startDate.setTime(startDate.getTime() - 12*31*24*60*60*1000); break;
+                case 'M': startDate.setMonth(startDate.getMonth() - 1); break;
+                case '2M': startDate.setMonth(startDate.getMonth() - 2); break;
+                case '4M': startDate.setMonth(startDate.getMonth() - 4); break;
+                case 'Y': startDate.setFullYear(startDate.getFullYear() - 1); break;
                 default: startDate.setTime(startDate.getTime() - 24*60*60*1000); break;
             }
             return startDate;
-        };
-        var startDate = startTime();
+        }
 
         if (!vm.widget.series || !vm.widget.series.length)
             return;
-        
-        vm.rawdata = [];
-        for (var i = 0; i < vm.widget.series.length; i++) {
-            vm.rawdata[i] = OHService.getTimeSeries(vm.widget.service, vm.widget.series[i].item, startDate.toISOString());
-                //$http.get('/rest/persistence/items/' + vm.widget.series[i].item + '?serviceId=' + vm.widget.service + "&boundary=true&starttime=" + startDate.toISOString());
-        }
 
         $scope.colorScale = { states: [], colors: [] };
         for (var i = 0; i < vm.widget.colorMaps.length; i++) {
@@ -178,44 +212,62 @@
             $scope.colorScale.colors.push(vm.widget.colorMaps[i].color);
         }
 
-        $q.all(vm.rawdata).then(function (values) {
-            var partitioned = {};
-            var data = [];
+        function getData() {
+            var startDate = startTime();
 
-            for (var i = 0; i < values.length; i++) {
-                partitioned[values[i].data.name] = partitionData(values[i].data);
-            }
-
-            $scope.margin_left = 20;
-
+            vm.rawdata = [];
             for (var i = 0; i < vm.widget.series.length; i++) {
-                if (!partitioned[vm.widget.series[i].item]) {
-                    continue;
-                }
-
-                var label = vm.widget.series[i].name || vm.widget.series[i].item;
-                var textWidth = getTextWidth(label, 'normal 1.5em Roboto');
-                if ($scope.margin_left < textWidth) {
-                    $scope.margin_left = textWidth;
-                }
-
-                data.push({
-                    label: label,
-                    times: partitioned[vm.widget.series[i].item]
-                });
+                vm.rawdata[i] = OHService.getTimeSeries(vm.widget.service, vm.widget.series[i].item, startDate.toISOString());
+                //vm.rawdata[i] = $http.get('/rest/persistence/items/' + vm.widget.series[i].item + "?boundary=true&starttime=" + startDate.toISOString() + (vm.widget.service ? '&serviceId=' + vm.widget.service : ''));
             }
 
-            $timeout(function () {
-                $scope.data = data;
+
+            $q.all(vm.rawdata).then(function (values) {
+                var partitioned = {};
+                var data = [];
+
+                for (var i = 0; i < values.length; i++) {
+                    partitioned[values[i].data.name] = partitionData(values[i].data);
+                }
+
+                $scope.margin_left = 20;
+
+                for (var i = 0; i < vm.widget.series.length; i++) {
+                    if (!partitioned[vm.widget.series[i].item]) {
+                        continue;
+                    }
+
+                    var label = vm.widget.series[i].name || vm.widget.series[i].item;
+                    var textWidth = getTextWidth(label, "normal 1.5em Roboto");
+                    if ($scope.margin_left < textWidth) {
+                        $scope.margin_left = textWidth;
+                    }
+
+                    data.push({
+                        label: label,
+                        times: partitioned[vm.widget.series[i].item]
+                    });
+                }
+
+                $timeout(function () {
+                    $scope.data = data;
+                });
             });
+
+        }
+
+        OHService.getLocale().then(function (locale) {
+            $scope.locale = locale;
+            vm.refreshInterval = $interval(getData, ((new Date).getTime() - startTime()) / 60 / 2);
+            getData();
         });
     }
 
 
     // settings dialog
-    WidgetSettingsCtrlTimeline.$inject = ['$scope', '$timeout', '$rootScope', '$uibModalInstance', 'widget', 'OHService'];
+    WidgetSettingsCtrlTimeline.$inject = ['$scope', '$timeout', '$rootScope', '$uibModalInstance', 'widget', 'OHService', 'themeValueFilter'];
 
-    function WidgetSettingsCtrlTimeline($scope, $timeout, $rootScope, $modalInstance, widget, OHService) {
+    function WidgetSettingsCtrlTimeline($scope, $timeout, $rootScope, $modalInstance, widget, OHService, themeValueFilter) {
         $scope.widget = widget;
         // $scope.items = OHService.getItems();
 
@@ -228,8 +280,8 @@
             service: widget.service,
             period: widget.period || 'D',
             colorMaps: widget.colorMaps || [
-                { state: 'ON', color: '#0DB9F0' },
-                { state: 'OFF', color: '#89A' },
+                { state: 'ON', color: themeValueFilter(null, 'primary-color') },
+                { state: 'OFF', color: themeValueFilter(null, 'switch-off-color') },
                 { state: 'OPEN', color: '#CCCC00' },
                 { state: 'CLOSED', color: '#CC99FF' },
                 { state: 'UP', color: '#FFCC66' },

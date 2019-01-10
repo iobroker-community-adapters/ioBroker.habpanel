@@ -14,8 +14,8 @@
             });
         });
 
-    widgetTemplate.$inject = ['$rootScope', '$compile', '$filter', 'OHService'];
-    function widgetTemplate($rootScope, $compile, $filter, OHService) {
+    widgetTemplate.$inject = ['$rootScope', '$compile', '$timeout', '$filter', 'OHService', '$uibModal'];
+    function widgetTemplate($rootScope, $compile, $timeout, $filter, OHService, $uibModal) {
         // Usage: <widget-template ng-model="widget" />
         //
         // Creates: A template widget
@@ -68,12 +68,12 @@
                 return item;
             };
 
-            scope.itemState = function(itemname) {
+            scope.itemState = function(itemname, ignoreTransform) {
                 if (!itemname) return "N/A";
                 var item = OHService.getItem(itemname);
                 if (!item) return "N/A";
 
-                var value = item.state;
+                var value = (item.transformedState && !ignoreTransform) ? item.transformedState : item.state;
                 return value;
             };
  
@@ -106,7 +106,21 @@
                 OHService.sendCmd(_item.name, cmd);
             };
 
-            scope.$on('refreshTemplate', function () {
+            scope.openModal = function(templateUrl, noAnimation, size) {
+                scope.currentModalInstance = $uibModal.open({
+                    templateUrl: templateUrl,
+                    size: size,
+                    animation: !noAnimation,
+                    scope: scope
+                }).rendered.then(function () {
+                    $timeout(function () {
+                        $rootScope.$broadcast('openhab-update');
+                        OHService.reloadItems();
+                    });
+                });
+            }
+
+            scope.$on("refreshTemplate", function () {
                 render();
             });
 
@@ -140,9 +154,11 @@
                 if ($rootScope.configWidgets[$scope.widget.customwidget]) {
                     $scope.widgetsettings = angular.copy($rootScope.configWidgets[$scope.widget.customwidget].settings);
                     $scope.customwidget_name = $rootScope.configWidgets[$scope.widget.customwidget].name;
+                    $scope.customwidget_helpUrl = $rootScope.configWidgets[$scope.widget.customwidget].readme_url;
                 } else {
                     $scope.widgetsettings = angular.copy($rootScope.customwidgets[$scope.widget.customwidget].settings);
                     $scope.customwidget_name = $rootScope.customwidgets[$scope.widget.customwidget].name;
+                    $scope.customwidget_helpUrl = $rootScope.customwidgets[$scope.widget.customwidget].readme_url;
                 }
             }
         }

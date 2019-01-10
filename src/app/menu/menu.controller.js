@@ -6,22 +6,19 @@
         .controller('MenuCtrl', MenuController)
         .controller('DashboardSettingsCtrl', DashboardSettingsCtrl);
 
-    MenuController.$inject = ['$rootScope', '$scope', 'dashboards', '$routeParams', '$interval', '$location', 'PersistenceService', 'OHService', 'prompt', '$filter', '$uibModal', 'Fullscreen'];
-    function MenuController($rootScope, $scope, dashboards, $routeParams, $interval, $location, PersistenceService, OHService, prompt, $filter, $modal, Fullscreen) {
+    MenuController.$inject = ['$rootScope', '$scope', 'dashboards', '$routeParams', '$interval', '$location', 'PersistenceService', 'OHService', 'prompt', '$filter', '$uibModal', 'Fullscreen', 'TranslationService'];
+    function MenuController($rootScope, $scope, dashboards, $routeParams, $interval, $location, PersistenceService, OHService, prompt, $filter, $modal, Fullscreen, TranslationService) {
         var vm = this;
         vm.dashboards = dashboards;
         vm.editMode = false;
-        vm.clock = new Date();
+        vm.customWidgetsModels = {};
+        vm.customDrawerWidgetsModels = {};
 
         activate();
 
         ////////////////
 
         function activate() {
-            var tick = function () {
-                vm.clock = Date.now();
-            };
-            $interval(tick, 1000);
             if ($rootScope.settings.no_scrolling) iNoBounce.enable(); else iNoBounce.disable();
             if ($routeParams.kiosk) $rootScope.kioskMode = ($routeParams.kiosk == 'on');
 
@@ -46,8 +43,8 @@
 
         vm.addNewDashboard = function() {
             prompt({
-                title: "New dashboard",
-                message: "Name of your new dashboard:",
+                title: TranslationService.translate("menu.dialog.newdashboard.title", "New dashboard"),
+                message: TranslationService.translate("menu.dialog.newdashboard.message", "Name of your new dashboard:"),
                 input: true
             }).then(function (name) {
                 dashboards.push({ id: name, name: name, widgets: [] });
@@ -63,29 +60,6 @@
                 iNoBounce.disable();
             else
                 if ($rootScope.settings.no_scrolling) iNoBounce.enable();
-        };
-
-        vm.removeDashboard = function (dash) {
-            prompt({
-                title: "Remove dashboard",
-                message: "Please confirm you want to delete this dashboard: " + dash.name,
-            }).then(function () {
-                dashboards.splice(dashboards.indexOf(dash), 1);
-                PersistenceService.saveDashboards();
-            });
-        };
-
-        vm.renameDashboard = function (dash) {
-            prompt({
-                title: "Rename dashboard",
-                message: "New name:",
-                value: dash.name,
-                input: true
-            }).then(function (name) {
-                dash.id = dash.name = name;
-                PersistenceService.saveDashboards();
-            })
-
         };
 
         vm.onChangedColumns = function () {
@@ -126,23 +100,27 @@
                 resolve: {
                     dashboard: function() {
                         return dashboard;
-                    }
+                    },
+                    translations: ['TranslationService', function (TranslationService) {
+                        return TranslationService.enterPart('admin');
+                    }],
+                    translations_widgets: ['TranslationService', function (TranslationService) {
+                        return TranslationService.enterPart('widgets');
+                    }]
                 }
-            }).result.then(function (dashboards) {
-                var newdashboard = PersistenceService.getDashboard(dashboard.id);
-                var idx = vm.dashboards.indexOf(dashboard);
-                vm.dashboards[idx] = newdashboard; 
             });
         };
 
     }
 
     // settings dialog
-    DashboardSettingsCtrl.$inject = ['$scope', '$timeout', '$rootScope', '$uibModalInstance', 'dashboard', 'OHService', 'PersistenceService'];
+    DashboardSettingsCtrl.$inject = ['$scope', '$timeout', '$rootScope', '$uibModalInstance', 'dashboard', 'OHService', 'PersistenceService', 'prompt', 'TranslationService'];
 
-    function DashboardSettingsCtrl($scope, $timeout, $rootScope, $modalInstance, dashboard, OHService, PersistenceService) {
+    function DashboardSettingsCtrl($scope, $timeout, $rootScope, $modalInstance, dashboard, OHService, PersistenceService, prompt, TranslationService) {
         $scope.dashboard = dashboard;
         if (!$scope.dashboard.tile) $scope.dashboard.tile = {};
+        if (!$scope.dashboard.drawer) $scope.dashboard.drawer = {};
+        if (!$scope.dashboard.header) $scope.dashboard.header = {};
         //$scope.items = OHService.getItems();
 
         $scope.form = {
@@ -152,8 +130,11 @@
             col: dashboard.col,
             row: dashboard.row,
             columns: dashboard.columns,
+            row_height: dashboard.row_height,
             widget_margin: dashboard.widget_margin,
             font_scale: dashboard.font_scale,
+            mobile_breakpoint: dashboard.mobile_breakpoint,
+            mobile_mode_enabled: dashboard.mobile_mode_enabled,
             tile: {
                 background_image: dashboard.tile.background_image,
                 backdrop_iconset: dashboard.tile.backdrop_iconset,
@@ -163,7 +144,25 @@
                 icon: dashboard.tile.icon,
                 icon_size: dashboard.tile.icon_size,
                 icon_nolinebreak: dashboard.tile.icon_nolinebreak,
-                icon_replacestext: dashboard.tile.icon_replacestext
+                icon_replacestext: dashboard.tile.icon_replacestext,
+                title_color: dashboard.tile.title_color,
+                no_click_feedback: dashboard.tile.no_click_feedback,
+                use_custom_widget: dashboard.tile.use_custom_widget,
+                custom_widget: dashboard.tile.custom_widget,
+                custom_widget_dontwrap: dashboard.tile.custom_widget_dontwrap,
+                custom_widget_nobackground: dashboard.tile.custom_widget_nobackground,
+                custom_widget_config: dashboard.tile.custom_widget_config || {}
+            },
+            drawer: {
+                hide: dashboard.drawer.hide,
+                use_custom_widget: dashboard.drawer.use_custom_widget,
+                custom_widget: dashboard.drawer.custom_widget,
+                custom_widget_config: dashboard.drawer.custom_widget_config || {}
+            },
+            header: {
+                use_custom_widget: dashboard.header.use_custom_widget,
+                custom_widget: dashboard.header.custom_widget,
+                custom_widget_config: dashboard.header.custom_widget_config || {}
             }
         };
 
@@ -172,23 +171,63 @@
         };
 
         $scope.remove = function() {
-            $rootScope.dashboards.splice($rootScope.dashboards.indexOf(dashboard), 1);
-            PersistenceService.saveDashboards().then(function () {
-                $modalInstance.dismiss();
+            prompt({
+                title: TranslationService.translate("menu.dialog.removedashboard.title", "Remove dashboard"),
+                message: TranslationService.translate("menu.dialog.removedashboard.message", "Please confirm you want to delete this dashboard: ") + dashboard.name
+            }).then(function () {
+                $rootScope.dashboards.splice($rootScope.dashboards.indexOf(dashboard), 1);
+                PersistenceService.saveDashboards().then(function () {
+                    $modalInstance.dismiss();
+                });
             });
+        };
+
+        $scope.updateCustomWidgetSettings = function(erase_config, type) {
+            if (!$scope.widgetsettings)
+                $scope.widgetsettings = {};
+            delete $scope.widgetsettings[type];
+            if ($scope.form[type] && $scope.form[type].use_custom_widget && $scope.form[type].custom_widget) {
+                if ($rootScope.configWidgets[$scope.form[type].custom_widget]) {
+                    $scope.widgetsettings[type] = $rootScope.configWidgets[$scope.form[type].custom_widget].settings;
+                } else if ($rootScope.customwidgets[$scope.form[type].custom_widget]) {
+                    $scope.widgetsettings[type] = $rootScope.customwidgets[$scope.form[type].custom_widget].settings;
+                }
+            }
+            if (erase_config && $scope.form[type].custom_widget_config) {
+                $scope.form[type].custom_widget_config = {};
+            }
         };
 
         $scope.submit = function() {
             angular.extend(dashboard, $scope.form);
             PersistenceService.getDashboard(dashboard.id).tile = angular.copy(dashboard.tile);
+            if (!dashboard.tile.use_custom_widget) {
+                delete dashboard.tile.custom_widget;
+            }
+            if (!dashboard.tile.custom_widget) {
+                delete dashboard.tile.use_custom_widget;
+                delete dashboard.tile.custom_widget;
+                delete dashboard.tile.custom_widget_config;
+                delete dashboard.tile.custom_widget_dontwrap;
+                delete dashboard.tile.custom_widget_nobackground;
+            }
+            if (!dashboard.drawer.use_custom_widget && !dashboard.drawer.hide) {
+                delete dashboard.drawer;
+            }
+            if (!dashboard.header.use_custom_widget) {
+                delete dashboard.header;
+            }
+
             PersistenceService.saveDashboards().then(function () {
-                $rootScope.dashboards = null;
-                PersistenceService.getDashboards().then (function (dashboards) {
-                    $modalInstance.close(dashboards);
-                });
+                $modalInstance.close();
+            }, function (err) {
+                alert('Error while saving dashboards:' + err);
             });
         };
 
+        $scope.updateCustomWidgetSettings(false, 'tile');
+        $scope.updateCustomWidgetSettings(false, 'drawer');
+        $scope.updateCustomWidgetSettings(false, 'header');
     }
     
 })();

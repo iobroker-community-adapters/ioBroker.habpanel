@@ -11,6 +11,10 @@ HABPanel is a lightweight dashboard interface for ioBroker based on OpenHAB HABp
 
 It notably features an embedded dashboard designer allowing to build interfaces easily right on the target device.
 
+## Installation
+**Important!**
+This adapter cannot be installed directly from github. Only from npm.
+
 ## Getting started
 
 - When accessing HABPanel for the first time on a new browser or device, you should be presented with a rather empty screen - follow the tutorial and begin by clicking (or tapping) on the top-right corner icon.
@@ -27,22 +31,25 @@ It notably features an embedded dashboard designer allowing to build interfaces 
 
 ## Screenshots
 
-![](doc/screenshot0.png)
+![](doc/images/habpanel_screenshot0.png)
 
-![](doc/screenshot1.png)
+![](doc/images/habpanel_screenshot1.png)
 
-![](doc/screenshot2.png)
+![](doc/images/habpanel_screenshot2.png)
 
-![](doc/screenshot3.png)
+![](doc/images/habpanel_screenshot3.png)
 
-![](doc/screenshot4.png)
+![](doc/images/habpanel_screenshot4.png)
 
-![](doc/screenshot5.png)
+![](doc/images/habpanel_screenshot5.png)
 
-![](doc/screenshot6.png)
+![](doc/images/habpanel_screenshot6.png)
 
 
 ## Changelog
+
+### 0.1.8 (2019-01-06)
+* (jogibear9988) upgrade to current openhab version
 
 ### 0.1.7 (2017-05-20)
 * (bluefox) add to welcome screen

@@ -32,20 +32,27 @@
             }
         };
         return directive;
-        
+
         function link(scope, element, attrs) {
-            $timeout(function () {
-                var width = element[0].parentNode.parentNode.parentNode.style.width.replace('px', '');
-                scope.vm.knob.options.size = width - 20;
-                if (!scope.vm.widget.trackWidth)
-                    scope.vm.knob.options.trackWidth = width / 5;
-                if (!scope.vm.widget.barWidth)
-                    scope.vm.knob.options.barWidth = width / 5;
-            });
+
+            function computeSize() {
+                $timeout(function () {
+                    var width = element[0].parentNode.parentNode.parentNode.style.width.replace('px', '');
+                    scope.vm.knob.options.size = width - 20;
+                    if (!scope.vm.widget.trackWidth)
+                        scope.vm.knob.options.trackWidth = width / 5;
+                    if (!scope.vm.widget.barWidth)
+                        scope.vm.knob.options.barWidth = width / 5;
+                });
+            }
+
+            computeSize();
+            var resizeHandler = scope.$on('gridster-resized', computeSize);
+            scope.$on('$destroy', resizeHandler);
         }
     }
-    KnobController.$inject = ['$rootScope', '$scope', 'OHService', '$timeout'];
-    function KnobController ($rootScope, $scope, OHService, $timeout) {
+    KnobController.$inject = ['$rootScope', '$scope', 'OHService', '$timeout', 'themeValueFilter'];
+    function KnobController ($rootScope, $scope, OHService, $timeout, themeValueFilter) {
         var vm = this;
         this.widget = this.ngModel;
 
@@ -67,6 +74,12 @@
                 return undefined;
             }
 
+            if (vm.widget.useserverformat && item.stateDescription && item.stateDescription.pattern) {
+                vm.knob.options.inputFormatter = function (input) {
+                    return sprintf(item.stateDescription.pattern.replace('%unit%', ''), input);
+                }
+            }
+
             return value;
         }
 
@@ -81,18 +94,18 @@
                 size: (vm.widget.size) ? vm.widget.size : 300,
                 startAngle: (vm.widget.startAngle) ? vm.widget.startAngle : 0,
                 endAngle: (vm.widget.endAngle) ? vm.widget.endAngle : 360,
-                displayInput: (vm.widget.displayInput) ? vm.widget.displayInput : true,
-                readOnly: (vm.widget.readOnly) ? vm.widget.readOnly : false,
-                barWidth: (vm.widget.barWidth) ? vm.widget.barWidth : 50,
-                trackWidth: (vm.widget.trackWidth) ? vm.widget.trackWidth : undefined,
-                barColor: (vm.widget.barColor) ? vm.widget.barColor : '#0db9f0',
+                displayInput: (angular.isDefined(vm.widget.displayInput)) ? vm.widget.displayInput : true,
+                readOnly: (angular.isDefined(vm.widget.readOnly)) ? vm.widget.readOnly : false,
+                barWidth: (angular.isDefined(vm.widget.barWidth)) ? vm.widget.barWidth : 50,
+                trackWidth: (angular.isDefined(vm.widget.trackWidth)) ? vm.widget.trackWidth : undefined,
+                barColor: themeValueFilter(vm.widget.barColor, 'primary-color'),
                 prevBarColor: (vm.widget.prevBarColor) ? vm.widget.prevBarColor: '#789',
                 trackColor: (vm.widget.trackColor) ? vm.widget.trackColor : '#567',
-                textColor: (vm.widget.textColor) ? vm.widget.textColor : '#0db9f0',
-                barCap: (vm.widget.barCap) ? vm.widget.barCap : 0,
-                trackCap: (vm.widget.trackCap) ? vm.widget.trackCap : 0,
+                textColor: themeValueFilter(vm.widget.textColor, 'primary-color'),
+                barCap: (angular.isDefined(vm.widget.barCap)) ? vm.widget.barCap : 0,
+                trackCap: (angular.isDefined(vm.widget.trackCap)) ? vm.widget.trackCap : 0,
                 fontSize: (vm.widget.fontSize) ? vm.widget.fontSize : 'auto',
-                subText: { enabled: vm.widget.subTextEnabled, text: vm.widget.name, color: '#def', font:'auto' },
+                subText: { enabled: vm.widget.subTextEnabled, text: vm.widget.name, color: themeValueFilter(null, 'widget-text-color'), font:'auto' },
                 bgColor: (vm.widget.bgColor) ? vm.widget.bgColor : '',
                 scale: {
                     enabled: vm.widget.scaleEnabled,
@@ -100,10 +113,10 @@
                     color: (vm.widget.scaleColor) ? vm.widget.scaleColor : '#567',
                     width: (vm.widget.scaleWidth) ? vm.widget.scaleWidth : 2
                 },
-                displayPrevious: (vm.widget.displayPrevious) ? vm.widget.displayPrevious : true,
+                displayPrevious: (angular.isDefined(vm.widget.displayPrevious)) ? vm.widget.displayPrevious : true,
                 skin: {
                     type: (vm.widget.skinType) ? vm.widget.skinType : 'simple',
-                    width: (vm.widget.skinWidth) ? vm.widget.skinWidth : 10,
+                    width: (angular.isDefined(vm.widget.skinWidth)) ? vm.widget.skinWidth : 10,
                     color: (vm.widget.skinColor) ? vm.widget.skinColor : '#abc',
                     spaceWidth: (vm.widget.skinSpaceWidth) ? vm.widget.skinSpaceWidth : 5
                 },
@@ -114,19 +127,23 @@
                         OHService.sendCmd(vm.widget.item, vm.value.toString());
                     }
                 },
-                rangesEnabled: (vm.widget.rangesEnabled) ? vm.widget.rangesEnabled : false,
+                rangesEnabled: (angular.isDefined(vm.widget.rangesEnabled)) ? vm.widget.rangesEnabled : false,
                 ranges: []
             }
         };
         if (vm.widget.scaleQuantity) vm.knob.options.scale.quantity = vm.widget.scaleQuantity;
         if (vm.widget.scaleSpaceWidth) vm.knob.options.scale.spaceWidth = vm.widget.scaleSpaceWidth;
-
+        if (vm.widget.format && !vm.widget.useserverformat) {
+            vm.knob.options.inputFormatter = function (input) {
+                return sprintf(vm.widget.format, input);
+            }
+        }
 
         // if ranges are enabled update knob setings
         if ( vm.widget.rangesEnabled) {
           vm.widget.ranges.forEach(function(rangeItem) {
               if (rangeItem.min != 0 || rangeItem.max != 0) {
-                  var textColor = vm.widget.textColor;
+                  var textColor = themeValueFilter(vm.widget.textColor, 'primary-color');
                   if (vm.widget.rangesTextColorMatching == true) {
                     textColor = rangeItem.barColor;
                   }
@@ -187,7 +204,9 @@
             size: widget.size,
             startAngle: widget.startAngle,
             endAngle: widget.endAngle,
-            displayInput: widget.displayInput,
+            displayInput: angular.isDefined(widget.displayInput) ? widget.displayInput : true,
+            format: widget.format,
+            useserverformat: widget.useserverformat,
             readOnly: widget.readOnly,
             barWidth: widget.barWidth,
             trackWidth: widget.trackWidth,
@@ -205,7 +224,7 @@
             scaleWidth: widget.scaleWidth,
             scaleQuantity: widget.scaleQuantity,
             scaleSpaceWidth: widget.scaleSpaceWidth,
-            displayPrevious: widget.displayPrevious,
+            displayPrevious: angular.isDefined(widget.displayPrevious) ? widget.displayPrevious : true,
             skinType: widget.skinType,
             skinWidth: widget.skinWidth,
             skinColor: widget.skinColor,
@@ -270,6 +289,8 @@
 
         $scope.submit = function() {
             angular.extend(widget, $scope.form);
+            if (!!widget.displayInput) delete widget.displayInput;
+            if (!!widget.displayPrevious) delete widget.displayPrevious;
 
             $modalInstance.close(widget);
         };
