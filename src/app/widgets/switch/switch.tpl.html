@@ -3,7 +3,7 @@
     <div class="switch-content">
         <div ng-hide="vm.widget.hidelabel">{{vm.widget.name}}</div>
         <div class="value" ng-class="{ 'switch-off': !vm.valueAsBool() }">
-            <widget-icon ng-if="vm.widget.icon && !vm.widget.hideicon" iconset="vm.widget.iconset" icon="vm.widget.icon" size="vm.widget.icon_size" state="vm.value"></widget-icon>
+            <widget-icon ng-if="vm.widget.icon && !vm.widget.hideicon" iconset="vm.widget.iconset" icon="vm.widget.icon" size="vm.widget.icon_size" state="vm.value?'ON':'OFF'"></widget-icon>
             <div ng-if="!vm.widget.icon" class="switch-icon" ng-hide="vm.widget.hideicon">
                 <i class="glyphicon glyphicon-off" ng-show="vm.value===false"></i>
                 <i class="glyphicon glyphicon-record" ng-show="vm.value===true"></i>

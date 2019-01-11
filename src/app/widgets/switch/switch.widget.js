@@ -61,9 +61,9 @@
                 }
             } else {
                 item.state = (item.state === true || item.state === 'true' || item.state === 1 || item.state === '1');
-                vm.label = OHService.getItem(vm.widget.item).state;
+                vm.value = OHService.getItem(vm.widget.item).state;
             }
-            vm.text = vm.value ? 'ON' : 'OFF';
+            vm.label = vm.value ? 'ON' : 'OFF';
 
         }
 
