@@ -1,7 +1,7 @@
 {
   "name": "iobroker.habpanel",
   "description": "Dashboard based on HABPanel",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "author": {
     "name": "Yannick Schaus",
     "email": "habpanel@schaus.net"
@@ -68,11 +68,13 @@
     "pofile": "^1.0.10",
     "through2": "^2.0.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bower": "^1.8.4"
+  },
   "bugs": {
     "url": "https://github.com/ioBroker/ioBroker.habpanel/issues"
   },
-  "main": "widgets/hqwidgets.html",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
