@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.2.1",
+        "version": "0.2.2",
         "news": {
-            "0.2.1": {
+            "0.2.2": {
                 "en": "upgrade to current openhab version",
                 "de": "Update auf die aktuellen OpenHab Version",
                 "ru": "upgrade to current openhab version"
@@ -63,6 +63,7 @@
         "noConfig": true,
         "enabled": true,
         "onlyWWW": true,
+        "nogit": true,
         "mode": "extension",
         "webExtension": "lib/habpanelapi.js"
     },
