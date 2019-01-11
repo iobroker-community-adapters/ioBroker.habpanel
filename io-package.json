@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.2.2",
+        "version": "0.2.3",
         "news": {
-            "0.2.2": {
+            "0.2.3": {
                 "en": "upgrade to current openhab version",
                 "de": "Update auf die aktuellen OpenHab Version",
                 "ru": "upgrade to current openhab version"

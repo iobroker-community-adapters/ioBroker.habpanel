@@ -48,7 +48,7 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
-### 0.1.8 (2019-01-06)
+### 0.2.3 (2019-01-11)
 * (jogibear9988) upgrade to current openhab version
 
 ### 0.1.7 (2017-05-20)
