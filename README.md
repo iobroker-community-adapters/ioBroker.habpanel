@@ -48,6 +48,9 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
+### 0.2.4 (2019-01-13)
+* (jogibear9988) bugfix template widget
+
 ### 0.2.3 (2019-01-11)
 * (jogibear9988) upgrade to current openhab version
 

@@ -253,7 +253,7 @@
                             return "template-expression";
                         }
                     }
-                    while (stream.next() !== null
+                    while (stream.next() != null
                         && (!stream.match("{{", false)) && !stream.match("itemState", false) && !stream.match("itemValue", false)
                             && !stream.match("sendCmd", false) && !stream.match("itemsInGroup", false)
                             && !stream.match("itemsWithTag", false) && !stream.match("getItem", false)) {}

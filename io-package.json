@@ -1,29 +1,69 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.2.3",
+        "version": "0.2.4",
         "news": {
+            "0.2.4": {
+                "en": "bugfix template widget",
+                "de": "Bugfix-Vorlagen-Widget",
+                "ru": "Исправление виджета шаблона",
+                "pt": "Widget de template bugfix",
+                "nl": "bugfix-sjabloon widget",
+                "fr": "widget de modèle de correction de bug",
+                "it": "widget modello di bugfix",
+                "es": "widget de plantilla de corrección de errores",
+                "pl": "Widżet szablonu błędu",
+                "zh-cn": "错误修正模板小部件"
+            },
             "0.2.3": {
                 "en": "upgrade to current openhab version",
                 "de": "Update auf die aktuellen OpenHab Version",
-                "ru": "upgrade to current openhab version"
+                "ru": "upgrade to current openhab version",
+                "pt": "atualizar para a versão atual do openhab",
+                "nl": "upgrade naar de huidige openhab-versie",
+                "fr": "passer à la version actuelle d'Openhab",
+                "it": "aggiornamento alla versione attuale di OpenHab",
+                "es": "actualizar a la versión actual de openhab",
+                "pl": "uaktualnij do obecnej wersji openhab",
+                "zh-cn": "升级到当前的openhab版本"
             },
             "0.1.7": {
                 "en": "add to welcome screen",
                 "de": "Zum Welcome-Screen hinzufügen",
-                "ru": "Добавлена на экран приветствия"
+                "ru": "Добавлена на экран приветствия",
+                "pt": "adicionar à tela de boas vindas",
+                "nl": "toevoegen aan welkomstscherm",
+                "fr": "ajouter à l'écran d'accueil",
+                "it": "aggiungi alla schermata di benvenuto",
+                "es": "añadir a la pantalla de bienvenida",
+                "pl": "dodaj do ekranu powitalnego",
+                "zh-cn": "添加到欢迎屏幕"
             },
             "0.1.6": {
                 "en": "update version number",
                 "de": "update version number",
-                "ru": "update version number"
+                "ru": "update version number",
+                "pt": "atualizar número da versão",
+                "nl": "update versienummer",
+                "fr": "mettre à jour le numéro de version",
+                "it": "aggiorna il numero di versione",
+                "es": "actualizar el número de versión",
+                "pl": "zaktualizuj numer wersji",
+                "zh-cn": "更新版本号"
             }
         },
         "title": "HABpanel",
         "desc": {
             "en": "HABpanel based ioBroker user interface",
             "de": "ioBroker GUI mit HABpanel",
-            "ru": "ioBroker визуализация c HABpanel"
+            "ru": "ioBroker визуализация c HABpanel",
+            "pt": "Interface de usuário do ioBroker baseada em HABpanel",
+            "nl": "Op HABpanel gebaseerde gebruikersinterface van ioBroker",
+            "fr": "Interface utilisateur ioBroker basée sur HABpanel",
+            "it": "Interfaccia utente ioBroker basata su HABpanel",
+            "es": "Interfaz de usuario ioBroker basada en HABpanel",
+            "pl": "Interfejs użytkownika ioBroker oparty na HABpanel",
+            "zh-cn": "基于HABpanel的ioBroker用户界面"
         },
         "platform": "javascript/Node.js",
         "loglevel": "info",
@@ -70,6 +110,5 @@
     "native": {
         "webInstance": "*"
     },
-    "objects": [
-    ]
+    "objects": []
 }

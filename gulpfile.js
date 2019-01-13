@@ -16,6 +16,21 @@ var webserver = require('gulp-webserver');
 var through = require('through2');
 var pofile = require('pofile');
 
+const fs        = require('fs');
+const iopackage = require('./io-package.json');
+
+const languages =  {
+    en: {},
+    de: {},
+    ru: {},
+    pt: {},
+    nl: {},
+    fr: {},
+    it: {},
+    es: {},
+    pl: {},
+	"zh-cn": {}
+};
 
 var src = './src/';
 var dst = './www/';
@@ -265,5 +280,64 @@ gulp.task('vendor', [
     'vendor-fonts',
     'src-copy'
 ], function () {});
+
+const translate   = require('@vitalets/google-translate-api');
+
+async function translateText(text, lang) {
+	let res = await translate(text, {to: lang, from: 'en'});
+	return res.text;
+}
+
+async function translateNotExisting(obj, baseText) {
+	let t = obj['en'];
+	if (!t)
+		t = baseText;
+
+	if (t) {
+		for (let l in languages) {
+			if (!obj[l]) {
+				obj[l] = await translateText(t, l);
+			}
+		}
+	}
+}
+
+gulp.task('translate', async function (done) {
+	if (iopackage && iopackage.common) {
+		if (iopackage.common.news) {
+			for (let k in iopackage.common.news) {
+				let nw = iopackage.common.news[k];
+				await translateNotExisting(nw)
+			}
+		}
+		if (iopackage.common.titleLang) {
+			await translateNotExisting(iopackage.common.titleLang, iopackage.common.title)
+		}
+		if (iopackage.common.desc) {
+			await translateNotExisting(iopackage.common.desc)
+		}
+		
+		if (fs.existsSync('./admin/i18n/en/translations.json')) {
+			let enTranslations = require('./admin/i18n/en/translations.json');
+			for (let l in languages) {
+				let existing = {};
+				if (fs.existsSync('./admin/i18n/' + l +'/translations.json')) {
+					existing = require('./admin/i18n/' + l + '/translations.json');
+				}
+				for (let t in enTranslations) {
+					if (!existing[t]) {
+						existing[t] = await translateText(enTranslations[t], l);
+					}					
+				}
+				if (!fs.existsSync('./admin/i18n/' + l +'/')) {
+					fs.mkdirSync('./admin/i18n/' + l +'/');
+				}
+				fs.writeFileSync('./admin/i18n/' + l + '/translations.json', JSON.stringify(existing, null, 4));
+			}
+		}
+		
+	}
+    fs.writeFileSync('io-package.json', JSON.stringify(iopackage, null, 4));
+});
 
 gulp.task('default', ['vendor', 'codemirror'], function () {});
