@@ -39,24 +39,44 @@
 
         function loadItems() {
             connect().then(function () {
-                servConn.getStates(null, function (err, items) {
-                    var count = 0;
-                    for (var id in items) {
-                        if (items.hasOwnProperty(id)) {
-                            count++;
-                            items[id] = items[id] || {};
+                if (!$rootScope.items) {
+                    servConn.getObjects(false, function (err, items) {
+                        servConn.getStates(null, function (err, valueItems) {
+                            var count = 0;
+                            for (var id in items) {
+                                Object.assign(items[id], valueItems[id]);
+                                valueItems[id] = valueItems[id] || {};
+                                items[id].label = id;
+                                items[id].name = id;
+                                items[id].state = (valueItems[id].val !== null && valueItems[id].val !== undefined) ? valueItems[id].val.toString() : '';
+                                count++;
+                            }
+                            console.log('Received ' + count + ' states.');
+                            $rootScope.items = items;
+                            $rootScope.$emit('iobroker-update');
+                        });
+                    });
+                } else {
+                    $rootScope.$emit('iobroker-update');
+                    let items = $rootScope.items;
+                    servConn.getStates(null, function (err, valueItems) {
+                        var count = 0;
+                        for (var id in items) {
+                            Object.assign(items[id], valueItems[id]);
+                            valueItems[id] = valueItems[id] || {};
                             items[id].label = id;
                             items[id].name = id;
-                            items[id].state = (items[id].val !== null && items[id].val !== undefined) ? items[id].val.toString() : '';
+                            items[id].state = (valueItems[id].val !== null && valueItems[id].val !== undefined) ? valueItems[id].val.toString() : '';
+                            count++;
                         }
-                    }
-                    console.log('Received ' + count + ' states.');
-                    $rootScope.items = items;
-                    $rootScope.$emit('iobroker-update');
-                });
+                        console.log('Received ' + count + ' states.');
+                        $rootScope.items = items;
+                        $rootScope.$emit('iobroker-update');
+                    });
+                }
             });
         }
-        
+
         function getItem(name) {
             if (name && subscribes.indexOf(name) === -1) {
                 subscribes.push(name);
