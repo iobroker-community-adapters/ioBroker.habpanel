@@ -48,6 +48,9 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
+### 0.2.6 (2019-01-14)
+* (jogibear9988) bugfix selection element
+
 ### 0.2.5 (2019-01-14)
 * (jogibear9988) bugfix format strings
 

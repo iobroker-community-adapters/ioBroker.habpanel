@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.2.5",
+        "version": "0.2.6",
         "news": {
+            "0.2.6": {
+                "en": "bugfix selection element",
+                "de": "Bugfix-Auswahlelement",
+                "ru": "элемент выбора исправления",
+                "pt": "elemento de seleção bugfix",
+                "nl": "bugfix selectie-element",
+                "fr": "élément de sélection de correction de bug",
+                "it": "elemento di selezione bugfix",
+                "es": "elemento de selección de corrección de errores",
+                "pl": "element wyboru błędu",
+                "zh-cn": "错误修复选择元素"
+            },
             "0.2.5": {
                 "en": "bugfix format strings",
                 "de": "Bugfix-Formatstrings",
