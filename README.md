@@ -48,6 +48,9 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
+### 0.2.5 (2019-01-14)
+* (jogibear9988) bugfix format strings
+
 ### 0.2.4 (2019-01-13)
 * (jogibear9988) bugfix template widget
 
