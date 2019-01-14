@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.2.4",
+        "version": "0.2.5",
         "news": {
+            "0.2.5": {
+                "en": "bugfix format strings",
+                "de": "Bugfix-Formatstrings",
+                "ru": "строки формата исправления ошибок",
+                "pt": "strings de formato bugfix",
+                "nl": "formules voor bugfix-indeling",
+                "fr": "chaînes de format de correction",
+                "it": "stringhe di formato bugfix",
+                "es": "cadenas de formato de corrección de errores",
+                "pl": "ciągi zawierające poprawki błędów",
+                "zh-cn": "bugfix格式字符串"
+            },
             "0.2.4": {
                 "en": "bugfix template widget",
                 "de": "Bugfix-Vorlagen-Widget",
