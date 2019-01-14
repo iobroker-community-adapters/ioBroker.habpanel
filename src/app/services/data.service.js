@@ -17,6 +17,7 @@
 
     function IOBService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService) {
         this.getItem = getItem;
+        this.getItems = getItems;
         this.getObjects = getObjects;
         this.getObject = getObject;
         this.getLocale = getLocale;
@@ -84,6 +85,10 @@
             }
 
             return $rootScope.items ? $rootScope.items[name] || {state: ''} : {state: ''};
+        }
+
+        function getItems() {
+            return $rootScope.items;
         }
 
         function getObject(id) {
