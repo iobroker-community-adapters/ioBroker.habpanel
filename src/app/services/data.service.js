@@ -140,8 +140,8 @@
                     start:    start,
                     end:      end,
                     aggregate: 'onchange' //minmax
-                }, function (err, data) {
-                    deferred.resolve({data: {name: item}});
+                }, function (err, datastruct) {
+                    deferred.resolve({data: {name: item, data: [datastruct] }});
                 });
             });
 
