@@ -1287,6 +1287,14 @@ var servConn = {
             callback(err, result);
         });
     },
+    sendTo:         function (instance, command, payload, callback) {
+        //socket.io
+        if (this._socket === null) {
+            //console.log('socket.io not initialized');
+            return;
+        }
+        this._socket.emit('sendTo', instance, command, payload, callback);
+    },
     getLiveHost:        function (cb) {
         var that = this;
         this._socket.emit('getObjectView', 'system', 'host', {startkey: 'system.host.', endkey: 'system.host.\u9999'}, function (err, res) {
