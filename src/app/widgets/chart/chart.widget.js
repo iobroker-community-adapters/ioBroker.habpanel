@@ -128,10 +128,10 @@
                         var finaldata = values[i].data.data;
 
                         angular.forEach(finaldata, function (datapoint) {
-                            datapoint.state = datapoint.state.toString().replace("ON",1);
-                            datapoint.state = datapoint.state.toString().replace("OFF",0);
-                            datapoint.time = new Date(datapoint.time);
-                            datapoint.state = parseFloat(datapoint.state);
+                            datapoint.state = datapoint.val.toString().replace("ON",1);
+                            datapoint.state = datapoint.val.toString().replace("OFF",0);
+                            datapoint.time = new Date(datapoint.ts);
+                            datapoint.state = parseFloat(datapoint.val);
                         });
 
                         vm.datasets[seriesname] = finaldata;
