@@ -135,10 +135,11 @@
             var deferred = $q.defer();
 
             connect().then(function () {
-                servConn.getHistory(item, {
-                    instance: service,
+                servConn.getHistory(service, {
+                    id:       item,
                     start:    start,
-                    aggregate: 'minmax'
+                    end:      end,
+                    aggregate: 'onchange' //minmax
                 }, function (err, data) {
                     deferred.resolve({data: {name: item}});
                 });
