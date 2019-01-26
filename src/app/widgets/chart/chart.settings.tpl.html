@@ -19,8 +19,10 @@
                         <label class="control-label col-lg-3 col-md-3" translate-keep-content translate="widget.chart.general.type">Type</label>
                         <div class="col-lg-9 col-md-9">
                             <select ng-model="form.charttype" class="form-control">
+                                <!--
                                 <option value="default" translate-keep-content translate="widget.chart.general.type.default">Default</option>
                                 <option value="rrd4j" translate-keep-content translate="widget.chart.general.type.rrd4j">RRD4j (rrd4j persistence service only)</option>
+                                -->
                                 <option value="interactive" translate-keep-content translate="widget.chart.general.type.interactive">n3-line-chart (interactive)</option>
                             </select>
                         </div>
@@ -33,8 +35,13 @@
                     </div>
                     <div class="form-group" ng-class="{error: _form.name.$error && _form.submitted}" ng-if="form.charttype=='interactive'">
                         <label class="control-label col-lg-3 col-md-3" translate-keep-content translate="widget.chart.general.service">Persistence service</label>
-                        <div class="col-lg-9 col-md-9">
-                            <input name="name" type="text" ng-model="form.service" class="form-control" placeholder="{{'rrd4j, mysql, influxdb... Leave blank for default' | translation:'widget.chart.general.service.hint'}}" />
+                        <div class="col-lg-9 col-md-9">                            
+                            <!--input name="name" type="text" ng-model="form.service" class="form-control" placeholder="{{'rrd4j, mysql, influxdb... Leave blank for default' | translation:'widget.chart.general.service.hint'}}" /-->
+                            <select ng-model="form.service" class="form-control">
+                                <option value="history.0">history.0</option>
+                                <option value="sql.0">sql-0</option>
+                                <option value="influxdb.0">influxdb.0</option>
+                            </select>                        
                         </div>
                     </div>
                     <div class="form-group" ng-class="{error: _form.period.$error && _form.submitted}">
