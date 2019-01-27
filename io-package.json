@@ -3,6 +3,18 @@
         "name": "habpanel",
         "version": "0.2.6",
         "news": {
+            "0.3.0": {
+                "en": "chart and timeline functionality added",
+                "de": "Diagramm- und Zeitleistenfunktion hinzugefügt",
+                "ru": "добавлена ​​функциональность графика и графика",
+                "pt": "Funcionalidade de gráfico e cronograma adicionada",
+                "nl": "grafiek en tijdlijn functionaliteit toegevoegd",
+                "fr": "fonctionnalité de graphique et de chronologie ajoutée",
+                "it": "funzionalità di grafico e timeline aggiunta",
+                "es": "Gráfica y funcionalidad de línea de tiempo añadida",
+                "pl": "Dodano funkcję wykresu i osi czasu",
+                "zh-cn": "添加了图表和时间线功能"
+            },
             "0.2.6": {
                 "en": "bugfix selection element",
                 "de": "Bugfix-Auswahlelement",
