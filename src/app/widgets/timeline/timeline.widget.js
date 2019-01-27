@@ -154,7 +154,7 @@
 
         var partitionData = function (raw) {
             var partitions = [];
-            if (!raw.datapoints) return;
+            if (!raw.data) return; //was raw.datapoints, bt this seems a bug datapoints is used in charts
 
             var currentState = raw.data[0].state;
             var currentStartTime = raw.data[0].time;
