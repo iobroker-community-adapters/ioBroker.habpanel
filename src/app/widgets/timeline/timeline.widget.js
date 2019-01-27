@@ -154,7 +154,7 @@
 
         var partitionData = function (raw) {
             var partitions = [];
-            if (!raw.datapoints) return;
+            if (!raw.data) return; //was raw.datapoints, bt this seems a bug datapoints is used in charts
 
             var currentState = raw.data[0].state;
             var currentStartTime = raw.data[0].time;
@@ -282,6 +282,11 @@
             colorMaps: widget.colorMaps || [
                 { state: 'ON', color: themeValueFilter(null, 'primary-color') },
                 { state: 'OFF', color: themeValueFilter(null, 'switch-off-color') },
+                { state: 'true', color: themeValueFilter(null, 'primary-color') },
+                { state: 'false', color: themeValueFilter(null, 'switch-off-color') },
+                { state: true, color: themeValueFilter(null, 'primary-color') },
+                { state: false, color: themeValueFilter(null, 'switch-off-color') },
+                { state: 'standby', color: themeValueFilter(null, 'switch-off-color') },
                 { state: 'OPEN', color: '#CCCC00' },
                 { state: 'CLOSED', color: '#CC99FF' },
                 { state: 'UP', color: '#FFCC66' },
