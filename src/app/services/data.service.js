@@ -135,14 +135,14 @@
             var deferred = $q.defer();
 
             connect().then(function () {
-                servConn.getHistory(service, {
+                servConn.getHistory(item, { //it seems that this function always goes to history.0 so service is not aproriate yet
                     id:       item,
                     start:    start,
                     end:      end,
                     ignoreNull: true,
                     aggregate: 'onchange' //minmax
                 }, function (err, datastruct) {
-                    deferred.resolve({data: {name: item, data: [datastruct] }});
+                    deferred.resolve({data: {name: item, data: datastruct}});
                 });
             });
 
