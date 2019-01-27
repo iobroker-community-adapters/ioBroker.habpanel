@@ -139,6 +139,7 @@
                     id:       item,
                     start:    start,
                     end:      end,
+                    ignoreNull: true,
                     aggregate: 'onchange' //minmax
                 }, function (err, datastruct) {
                     deferred.resolve({data: {name: item, data: [datastruct] }});
