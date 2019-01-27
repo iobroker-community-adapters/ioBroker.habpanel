@@ -282,6 +282,11 @@
             colorMaps: widget.colorMaps || [
                 { state: 'ON', color: themeValueFilter(null, 'primary-color') },
                 { state: 'OFF', color: themeValueFilter(null, 'switch-off-color') },
+                { state: 'true', color: themeValueFilter(null, 'primary-color') },
+                { state: 'false', color: themeValueFilter(null, 'switch-off-color') },
+                { state: true, color: themeValueFilter(null, 'primary-color') },
+                { state: false, color: themeValueFilter(null, 'switch-off-color') },
+                { state: 'standby', color: themeValueFilter(null, 'switch-off-color') },
                 { state: 'OPEN', color: '#CCCC00' },
                 { state: 'CLOSED', color: '#CC99FF' },
                 { state: 'UP', color: '#FFCC66' },
