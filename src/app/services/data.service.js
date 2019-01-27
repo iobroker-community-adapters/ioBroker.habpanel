@@ -135,14 +135,15 @@
             var deferred = $q.defer();
 
             connect().then(function () {
-                servConn.getHistory(item, { //it seems that this function always goes to history.0 so service is not aproriate yet
-                    id:       item,
+                servConn.getHistory(item, { //it seems that this function always goes to history.0 or to default history instance defined in system
+                    id:       item, // probably not necessary to put it here again
                     start:    start,
                     end:      end,
                     ignoreNull: true,
                     aggregate: 'onchange' //minmax
-                }, function (err, datastruct) {
-                    deferred.resolve({data: {name: item, data: datastruct}});
+                }, function (err, dataIOB) { // values from IOB have val and ts instead of state and time
+                    var  dataOHAB= dataIOB.map(obj =>{ var newArr = {}; newArr['state'] = obj.val; newArr['time'] = obj.ts; return newArr; });
+                    deferred.resolve({data: {name: item, data: dataOHAB}});
                 });
             });
 
