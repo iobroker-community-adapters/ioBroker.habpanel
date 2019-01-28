@@ -70,7 +70,9 @@
     "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
     "configstore": "^4.0.0",
     "request": "^2.88.0",
-    "safe-eval": "^0.4.1"
+    "safe-eval": "^0.4.1",
+    "mocha": "^5.2.0",
+    "chai": "^4.1.2"
   },
   "dependencies": {
     "bower": "^1.8.4"
@@ -80,7 +82,7 @@
   },
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node node_modules/mocha/bin/mocha --exit",
     "prepublish": "node node_modules/gulp/bin/gulp default"
   },
   "license": "EPL-1.0"
