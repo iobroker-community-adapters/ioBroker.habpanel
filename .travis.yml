@@ -1,9 +1,10 @@
 os:
   - linux
 language: node_js
-before_install:
+install:
   - npm install bower@1.8.4
   - bower i
+  - npm install
 node_js:
   - '4'
   - '8'
