@@ -48,7 +48,7 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
-### 0.3.0 (2019-01-27)
+### 0.3.1 (2019-01-27)
 * (foxthefox) chart and timeline functionality added
 
 ### 0.2.6 (2019-01-14)

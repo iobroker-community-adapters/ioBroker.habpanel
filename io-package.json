@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.2.6",
+        "version": "0.3.1",
         "news": {
-            "0.3.0": {
+            "0.3.1": {
                 "en": "chart and timeline functionality added",
                 "de": "Diagramm- und Zeitleistenfunktion hinzugefügt",
                 "ru": "добавлена ​​функциональность графика и графика",
