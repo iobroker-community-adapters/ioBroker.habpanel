@@ -6,6 +6,5 @@ install:
   - bower i
   - npm install
 node_js:
-  - '4'
   - '8'
   - '10'
