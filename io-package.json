@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.3.1",
+        "version": "0.3.2",
         "news": {
+            "0.3.2": {
+                "en": "chart and timeline functionality fixed",
+                "de": "Diagramm- und Timeline-Funktionalität behoben",
+                "ru": "исправлена ​​функциональность графика и графика",
+                "pt": "Funcionalidade de gráfico e cronograma fixada",
+                "nl": "kaart- en tijdlijnfunctionaliteit opgelost",
+                "fr": "fonctionnalité de graphique et de chronologie corrigée",
+                "it": "funzionalità di grafico e cronologia fissi",
+                "es": "Funcionalidad de gráfico y línea de tiempo fija",
+                "pl": "Poprawiono funkcjonalność wykresów i osi czasu",
+                "zh-cn": "图表和时间线功能已修复"
+
+            },
             "0.3.1": {
                 "en": "chart and timeline functionality added",
                 "de": "Diagramm- und Zeitleistenfunktion hinzugefügt",
