@@ -1,8 +1,32 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.3.1",
+        "version": "0.3.3",
         "news": {
+            "0.3.3": {
+                "en": "button toggle functionality for true/false fixed",
+                "de": "Schaltflächenumschaltfunktion für wahr / falsch behoben",
+                "ru": "исправлена ​​функция переключения кнопок на true / false",
+                "pt": "botão alterna funcionalidade para true / false fixo",
+                "nl": "knopschakelfunctionaliteit voor waar / vals vast",
+                "fr": "bouton bascule la fonctionnalité pour vrai / faux fixe",
+                "it": "pulsante attiva la funzionalità per vero / falso fisso",
+                "es": "Botón para cambiar la funcionalidad de verdadero / falso fijo",
+                "pl": "przycisk przełącza funkcjonalność dla poprawionej wartości true / false",
+                "zh-cn": "用于真/假修复的按钮切换功能"
+            },
+            "0.3.2": {
+                "en": "chart and timeline functionality fixed",
+                "de": "Diagramm- und Timeline-Funktionalität behoben",
+                "ru": "исправлена ​​функциональность графика и графика",
+                "pt": "Funcionalidade de gráfico e cronograma fixada",
+                "nl": "kaart- en tijdlijnfunctionaliteit opgelost",
+                "fr": "fonctionnalité de graphique et de chronologie corrigée",
+                "it": "funzionalità di grafico e cronologia fissi",
+                "es": "Funcionalidad de gráfico y línea de tiempo fija",
+                "pl": "Poprawiono funkcjonalność wykresów i osi czasu",
+                "zh-cn": "图表和时间线功能已修复"
+            },
             "0.3.1": {
                 "en": "chart and timeline functionality added",
                 "de": "Diagramm- und Zeitleistenfunktion hinzugefügt",

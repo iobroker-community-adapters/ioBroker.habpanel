@@ -125,7 +125,7 @@
                     break;
 
                 case "toggle":
-                    if (vm.widget.command && vm.widget.command_alt) {
+                    if (vm.widget.command != null && vm.widget.command_alt != null) {
                         if (vm.state === vm.widget.command) {
                             OHService.sendCmd(this.widget.item, this.widget.command_alt);
                         } else {
