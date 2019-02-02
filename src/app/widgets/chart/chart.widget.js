@@ -116,7 +116,7 @@
             var getData = function () {
                 vm.rawdata = [];
                 for (var i = 0; i < vm.widget.series.length; i++) {
-                    vm.rawdata[i] = OHService.getTimeSeries(vm.widget.service, vm.widget.series[i].item, startDate.getTime, new Date().getTime();
+                    vm.rawdata[i] = OHService.getTimeSeries(vm.widget.service, vm.widget.series[i].item, startDate.getTime, new Date().getTime());
                     //vm.rawdata[i] = $http.get('/rest/persistence/items/' + vm.widget.series[i].item + "?starttime=" + startDate.toISOString() + (vm.widget.service ? '&serviceId=' + vm.widget.service : ''));
                 }
 
