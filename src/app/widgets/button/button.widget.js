@@ -116,28 +116,48 @@
         });
 
         vm.sendCommand = function () {
-            if (this.widget.command === '') this.widget.command = true;
-            if (this.widget.command_alt === '') this.widget.command_alt = false;
-            
+            // Convert boolean-like commands to the data type of item state, to avoid comparison trouble.
+            if (typeof vm.state === "boolean") {
+                if (this.widget.command == null || this.widget.command === '' || this.widget.command === "true") {
+                    this.widget.command = true;
+                } else if (this.widget.command === "false") {
+                    this.widget.command = false;
+                }
+                if (this.widget.command_alt == null || this.widget.command_alt === '' || this.widget.command_alt === "false") {
+                    this.widget.command_alt = false;
+                } else if (this.widget.command_alt === "true") {
+                    this.widget.command_alt = true;
+                }
+            } else {
+                if (this.widget.command == null || this.widget.command === '' || this.widget.command === true) {
+                    this.widget.command = "true";
+                } else if (this.widget.command === false) {
+                    this.widget.command = "false";
+                }
+                if (this.widget.command_alt == null || this.widget.command_alt === '' || this.widget.command_alt === false) {
+                    this.widget.command_alt = "false";
+                } else if (this.widget.command_alt === true) {
+                    this.widget.command_alt = "true";
+                }
+            }
+
             switch (vm.widget.action_type) {
                 case "navigate":
                     onNavigate();
                     break;
 
                 case "toggle":
-                    if (vm.widget.command != null && vm.widget.command_alt != null) {
-                        if (vm.state === vm.widget.command) {
-                            OHService.sendCmd(this.widget.item, this.widget.command_alt);
-                        } else {
-                            OHService.sendCmd(this.widget.item, this.widget.command);
-                        }
+                    if (vm.state === vm.widget.command) {
+                        OHService.sendCmd(this.widget.item, this.widget.command_alt);
+                    } else {
+                        OHService.sendCmd(this.widget.item, this.widget.command);
                     }
                     break;
                 default:
                     OHService.sendCmd(this.widget.item, this.widget.command);
                     break;
             }
-        }
+        };
 
     }
 
