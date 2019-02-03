@@ -48,6 +48,9 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
+### 0.3.3 (2019-02-02)
+* (janfromberlin) fix button toggle functionality for true/false
+
 ### 0.3.2 (2019-01-30)
 * (foxthefox) chart and timeline functionality fixed
 
