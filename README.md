@@ -48,6 +48,10 @@ This adapter cannot be installed directly from github. Only from npm.
 
 ## Changelog
 
+### 0.3.4 (2019-02-04)
+* (janfromberlin) button widget did not handle primitive boolean commands
+* (matthiasgasser) fix time series query start date, adapted end date
+
 ### 0.3.3 (2019-02-02)
 * (janfromberlin) fix button toggle functionality for true/false
 

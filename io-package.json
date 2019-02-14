@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.3.3",
+        "version": "0.3.4",
         "news": {
+            "0.3.4": {
+                "en": "button widget accepts boolean; correcting charts",
+                "de": "Button Widget akzeptiert Boolean; Diagramme korrigieren",
+                "ru": "виджет кнопки принимает логическое значение; корректирующие диаграммы",
+                "pt": "botão widget aceita booleano; corrigindo gráficos",
+                "nl": "knop widget accepteert boolean; grafieken corrigeren",
+                "fr": "bouton widget accepte booléen; corriger les graphiques",
+                "it": "il widget pulsante accetta booleano; correggere i grafici",
+                "es": "botón widget acepta booleano; corrigiendo cuadros",
+                "pl": "przycisk widget akceptuje wartość logiczną; korygowanie wykresów",
+                "zh-cn": "按钮小部件接受布尔值;纠正图表"
+            },
             "0.3.3": {
                 "en": "button toggle functionality for true/false fixed",
                 "de": "Schaltflächenumschaltfunktion für wahr / falsch behoben",
