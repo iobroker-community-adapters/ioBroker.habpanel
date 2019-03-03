@@ -71,8 +71,9 @@
     "configstore": "^4.0.0",
     "request": "^2.88.0",
     "safe-eval": "^0.4.1",
-    "mocha": "^5.2.0",
-    "chai": "^4.1.2"
+    "mocha": "^6.0.2",
+    "chai": "^4.1.2",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "dependencies": {
     "bower": "^1.8.4"
