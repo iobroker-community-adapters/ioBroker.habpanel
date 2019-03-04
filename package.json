@@ -24,15 +24,15 @@
       "email": "jochen.kuehner@gmx.de"
     }
   ],
-  "homepage": "https://github.com/ioBroker/ioBroker.habpanel",
+  "homepage": "https://github.com/iobroker-community-adapters/ioBroker.habpanel",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ioBroker/ioBroker.habpanel"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel"
   },
   "licenses": [
     {
       "type": "EPL-1.0",
-      "url": "https://github.com/ioBroker/ioBroker.habpanel/blob/master/LICENSE"
+      "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/blob/master/LICENSE"
     }
   ],
   "keywords": [
@@ -71,14 +71,15 @@
     "configstore": "^4.0.0",
     "request": "^2.88.0",
     "safe-eval": "^0.4.1",
-    "mocha": "^5.2.0",
-    "chai": "^4.1.2"
+    "mocha": "^6.0.2",
+    "chai": "^4.1.2",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "dependencies": {
     "bower": "^1.8.4"
   },
   "bugs": {
-    "url": "https://github.com/ioBroker/ioBroker.habpanel/issues"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/issues"
   },
   "main": "",
   "scripts": {

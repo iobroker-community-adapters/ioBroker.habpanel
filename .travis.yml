@@ -1,5 +1,6 @@
 os:
   - linux
+  - windows
 language: node_js
 install:
   - npm install bower@1.8.4

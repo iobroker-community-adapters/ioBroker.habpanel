@@ -143,7 +143,7 @@
             "web"
         ],
         "icon": "habpanel.png",
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.habpanel/master/admin/habpanel.png",
+        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.png",
         "keywords": [
             "user",
             "interface",
@@ -151,7 +151,7 @@
             "jquerymobile",
             "ui"
         ],
-        "readme": "https://github.com/ioBroker/ioBroker.habpanel/blob/master/README.md",
+        "readme": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/blob/master/README.md",
         "singleton": true,
         "welcomeScreen": {
             "link": "habpanel/index.html",
