@@ -1,5 +1,3 @@
-# moved to https://github.com/iobroker-community-adapters/ioBroker.habpanel
-
 ![Logo](admin/habpanel.png)
 # ioBroker.habpanel
 =================
