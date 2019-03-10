@@ -2,7 +2,7 @@
 # ioBroker.habpanel
 =================
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.habpanel.svg)](https://www.npmjs.com/package/iobroker.habpanel)
+![Number of Installations](http://iobroker.live/badges/habpanel-installed.svg) ![Number of Installations](http://iobroker.live/badges/habpanel-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.habpanel.svg)](https://www.npmjs.com/package/iobroker.habpanel)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.habpanel.svg)](https://www.npmjs.com/package/iobroker.habpanel)
 
 [![NPM](https://nodei.co/npm/iobroker.habpanel.png?downloads=true)](https://nodei.co/npm/iobroker.habpanel/)
