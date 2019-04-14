@@ -155,29 +155,29 @@
         var partitionData = function (raw) {
             var partitions = [];
             if (!raw.data) return; //was raw.datapoints, bt this seems a bug datapoints is used in charts
+            if (raw.data.length > 0) {
+                var currentState = raw.data[0].state;
+                var currentStartTime = raw.data[0].time;
 
-            var currentState = raw.data[0].state;
-            var currentStartTime = raw.data[0].time;
-
-            for (var i = 1; i < raw.data.length; i++) {
-                if (raw.data[i].state !== currentState) {
-                    partitions.push({
-                        state: currentState,
-                        starting_time: currentStartTime,
-                        ending_time: raw.data[i].time
-                    });
-                    currentState = raw.data[i].state;
-                    currentStartTime = raw.data[i].time;
+                for (var i = 1; i < raw.data.length; i++) {
+                    if (raw.data[i].state !== currentState) {
+                        partitions.push({
+                            state: currentState,
+                            starting_time: currentStartTime,
+                            ending_time: raw.data[i].time
+                        });
+                        currentState = raw.data[i].state;
+                        currentStartTime = raw.data[i].time;
+                    }
                 }
+
+                // push the last partition
+                partitions.push({
+                    state: currentState,
+                    starting_time: currentStartTime,
+                    ending_time: Date.now()
+                });
             }
-
-            // push the last partition
-            partitions.push({
-                state: currentState,
-                starting_time: currentStartTime,
-                ending_time: Date.now()
-            });
-
             return partitions;
         };
 
