@@ -26,7 +26,7 @@ msgstr "最大值"
 #. Common term in widget settings dialogs
 msgctxt "widget.common.step"
 msgid "Step"
-msgstr "步"
+msgstr "步进值"
 
 #. Common term in widget settings dialogs
 msgctxt "widget.common.unit"
@@ -61,7 +61,7 @@ msgstr "标签左边的图标而不是下面"
 #. Common option label in widget settings dialogs
 msgctxt "widget.common.icon_replacestext"
 msgid "Icon replaces textual value display"
-msgstr "图标替换文本值显示"
+msgstr "文本值显示使用图标来替换"
 
 #. Common tab header label
 msgctxt "widget.common.general"
@@ -191,7 +191,7 @@ msgstr "布局"
 #. Tab header
 msgctxt "widget.button.inactive"
 msgid "Inactive"
-msgstr "交互"
+msgstr "非活动"
 
 #. Tab header
 msgctxt "widget.button.active"
@@ -220,7 +220,7 @@ msgstr "颜色值"
 
 msgctxt "widget.button.preview.state"
 msgid "State"
-msgstr "州/省"
+msgstr "状态"
 
 #. Display name of the widget (appears in the Add Widget dropdown menu in the designer)
 msgctxt "widget.chart"
@@ -295,7 +295,7 @@ msgstr "主轴 (y)"
 #. Section header
 msgctxt "widget.chart.axis.secondary"
 msgid "Secondary axis (y2)"
-msgstr "二次轴 (y2)"
+msgstr "次轴 (y2)"
 
 #. Checkbox label
 msgctxt "widget.chart.axis.enabled"
@@ -325,7 +325,7 @@ msgstr "主要"
 #. Radio button label
 msgctxt "widget.chart.series.axis.secondary"
 msgid "Secondary"
-msgstr "中学"
+msgstr "次要"
 
 #. Radio buttons header
 msgctxt "widget.chart.series.display"
@@ -340,7 +340,7 @@ msgstr "线"
 #. Radio button label
 msgctxt "widget.chart.series.display.area"
 msgid "Area"
-msgstr "地区"
+msgstr "范围"
 
 #. Radio button label
 msgctxt "widget.chart.series.display.dots"
@@ -395,7 +395,7 @@ msgstr "模拟主题"
 #. Dropdown option
 msgctxt "widget.clock.theme.light"
 msgid "light"
-msgstr "光"
+msgstr "浅色调"
 
 #. Dropdown option
 msgctxt "widget.clock.theme.dark"
@@ -635,7 +635,7 @@ msgstr "禁用交互"
 #. Checkboxes header
 msgctxt "widget.knob.general.centraldisplay"
 msgid "Central display"
-msgstr "中央显示屏"
+msgstr "中间显示"
 
 #. Checkbox label
 msgctxt "widget.knob.general.centraldisplay.showvalue"
@@ -645,12 +645,12 @@ msgstr "显示值"
 #. Checkbox label
 msgctxt "widget.knob.general.centraldisplay.showlabel"
 msgid "Show name (below value)"
-msgstr "显示名称 (低于值)"
+msgstr "显示名称 (在值之下)"
 
 #. Tab header
 msgctxt "widget.knob.bartrack"
 msgid "Bar & Track"
-msgstr "酒吧和赛道"
+msgstr "栏和轨道"
 
 #. Section header
 msgctxt "widget.knob.bartrack.angles"
@@ -685,7 +685,7 @@ msgstr "栏"
 #. Section header
 msgctxt "widget.knob.bartrack.track"
 msgid "Track"
-msgstr "路径（Track）"
+msgstr "轨道（Track）"
 
 #. Section header
 msgctxt "widget.knob.bartrack.previousvalue"
@@ -700,7 +700,7 @@ msgstr "拖动时显示上一个值"
 #. Tab header
 msgctxt "widget.knob.scale"
 msgid "Scale"
-msgstr "规模"
+msgstr "比例"
 
 #. Checkbox header
 msgctxt "widget.knob.scale.display"
@@ -1145,7 +1145,7 @@ msgstr "色彩"
 #. Accordion header (followed by the state value)
 msgctxt "widget.timeline.colors.state"
 msgid "State"
-msgstr "州/省"
+msgstr "状态"
 
 #. Tab header
 msgctxt "widget.timeline.series"
