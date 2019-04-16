@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.3.4",
+        "version": "0.3.5",
         "news": {
+            "0.3.5": {
+                "en": "bugfix i18n",
+                "de": "Bugfix i18n",
+                "ru": "исправление i18n",
+                "pt": "bugfix i18n",
+                "nl": "bugfix i18n",
+                "fr": "correction de bug i18n",
+                "it": "bugfix i18n",
+                "es": "corrección de errores i18n",
+                "pl": "poprawiaj i18n",
+                "zh-cn": "修复国际化问题"
+            },
             "0.3.4": {
                 "en": "button widget accepts boolean; correcting charts",
                 "de": "Button Widget akzeptiert Boolean; Diagramme korrigieren",
