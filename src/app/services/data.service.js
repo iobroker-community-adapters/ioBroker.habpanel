@@ -11,11 +11,11 @@
         .value('OH2ServiceConfiguration', {})
         .service('OH2StorageService', OH2StorageService);
 
-    IOBService.$inject = ['$rootScope', '$http', '$q', '$timeout', '$interval', '$filter', '$location', 'SpeechService'];
+    IOBService.$inject = ['$rootScope', '$http', '$q', '$timeout', '$interval', '$filter', '$location', 'SpeechService', '$translate'];
     var connectPromise = null;
     var connecting = false;
 
-    function IOBService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService) {
+    function IOBService($rootScope, $http, $q, $timeout, $interval, $filter, $location, SpeechService, $translate) {
         this.getItem = getItem;
         this.getItems = getItems;
         this.getObjects = getObjects;
@@ -178,18 +178,31 @@
             } else {
                 connect().then(function () {
                     servConn.getConfig(function (err, data) {
+                        var language;
+
                         if (err) {
-                            locale = navigator.language || navigator.userLanguage;
+                            locale = navigator.languages[0];
+                            language = locale.split('-')[0];
                         } else {
                             locale = data.language;
+                            language = locale.split('-')[0];
                         }
-                        if (locale === 'ru') {
-                            locale = 'ru-RU';
-                        } else if (locale === 'de') {
-                            locale = 'de-DE';
-                        } else {
-                            locale = 'en-US';
+
+                        /* consider the region only for selected common exceptions where the date/number formats
+                        are significantly different than the language's default.
+                        If more are needed change the gulpfile.js too and run the 'vendor-angular-i18n' gulp task */
+                        if (['es-ar', 'de-at', 'en-au', 'fr-be', 'es-bo', 'pt-br', 'en-ca',
+                            'fr-ca', 'fr-ch', 'es-co', 'en-gb', 'en-hk', 'zh-hk', 'en-ie',
+                            'en-in', 'fr-lu', 'es-mx', 'en-nz', 'en-sg', 'zh-sg',
+                            'es-us', 'zh-tw', 'en-za'].indexOf(locale.toLowerCase()) < 0) {
+                            locale = language;
                         }
+
+                        if (language !== "en") {
+                            console.log('Setting interface language to: ' + language);
+                            $translate.use(language);
+                        }
+                        console.log('Setting locale to: ' + locale);
                         deferred.resolve(locale);
                     });
                 });
