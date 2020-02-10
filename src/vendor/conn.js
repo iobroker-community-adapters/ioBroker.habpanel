@@ -224,10 +224,10 @@ var servConn = {
             if (connLink) {
                 url = connLink;
                 if (typeof connLink !== 'undefined') {
-                    if (connLink[0] === ':') connLink = location.protocol + '//' + location.hostname + connLink;
+                    if (connLink[0] === ':') connLink = window.location.protocol + '//' + window.location.hostname + connLink;
                 }
             } else {
-                url = location.protocol + '//' + location.host;
+                url = window.location.protocol + '//' + window.location.host;
             }
 
             this._socket = io.connect(url, {

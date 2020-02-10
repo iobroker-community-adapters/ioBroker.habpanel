@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.4.0",
+        "version": "0.4.1",
         "news": {
-            "0.4.0": {
+            "0.4.1": {
                 "en": "compatibility with Web >= 3.0.0 added",
                 "de": "Kompatibilität mit Web >= 3.0.0 hinzugefügt",
                 "ru": "добавлена совместимость с Web >= 3.0.0",
