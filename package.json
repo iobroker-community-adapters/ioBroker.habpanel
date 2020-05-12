@@ -62,7 +62,7 @@
     "pofile": "^1.0.10",
     "through2": "^2.0.3",
     "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
-    "configstore": "^4.0.0",
+    "configstore": "^5.0.1",
     "request": "^2.88.0",
     "safe-eval": "^0.4.1",
     "mocha": "^6.0.2",
