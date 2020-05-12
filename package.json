@@ -55,7 +55,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.2",
     "gulp-sass-glob": "^1.0.9",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
     "gulp-watch": "^4.3.10",
     "gulp-webserver": "^0.9.1",
     "n3-charts": "^2.0.28",
