@@ -4,7 +4,7 @@
         "version": "0.4.3",
         "news": {
             "0.4.3": {
-                "en": "The compatibility to socket.io 3.0.13 provided ",
+                "en": "The compatibility to socket.io 3.0.13 provided",
                 "de": "Die Kompatibilität zu socket.io 3.0.13 wird bereitgestellt",
                 "ru": "Обеспечена совместимость с socket.io 3.0.13",
                 "pt": "A compatibilidade com socket.io 3.0.13 fornecida",
