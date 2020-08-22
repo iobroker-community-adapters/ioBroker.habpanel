@@ -1,7 +1,7 @@
 {
   "name": "iobroker.habpanel",
   "description": "Dashboard based on HABPanel",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": {
     "name": "Yannick Schaus",
     "email": "habpanel@schaus.net"
@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "bower": "^1.8.4",
-    "@iobroker/adapter-core": "^1.0.3"
+    "@iobroker/adapter-core": "^2.4.0"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/issues"

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "habpanel",
-        "version": "0.4.1",
+        "version": "0.4.2",
         "news": {
+            "0.4.2": {
+                "en": "The compatibility to socket.io 3.0.13 provided ",
+                "de": "Die Kompatibilität zu socket.io 3.0.13 wird bereitgestellt",
+                "ru": "Обеспечена совместимость с socket.io 3.0.13",
+                "pt": "A compatibilidade com socket.io 3.0.13 fornecida",
+                "nl": "De compatibiliteit met socket.io 3.0.13 wordt geboden",
+                "fr": "La compatibilité avec socket.io 3.0.13 fournie",
+                "it": "La compatibilità con socket.io 3.0.13 fornita",
+                "es": "La compatibilidad con socket.io 3.0.13 proporcionada",
+                "pl": "Zapewniona kompatybilność z socket.io 3.0.13",
+                "zh-cn": "提供与socket.io 3.0.13的兼容性"
+            },
             "0.4.1": {
                 "en": "compatibility with Web >= 3.0.0 added",
                 "de": "Kompatibilität mit Web >= 3.0.0 hinzugefügt",
