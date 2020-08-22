@@ -46,7 +46,7 @@ This adapter cannot be installed directly from github. Only from npm.
 
 
 ## Changelog
-### 0.4.2 (2020-08-22)
+### 0.4.3 (2020-08-22)
 * (bluefox) The compatibility to socket.io 3.0.13 provided 
 
 ### 0.4.1 (2020-02-10)
