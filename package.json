@@ -60,7 +60,7 @@
     "gulp-webserver": "^0.9.1",
     "n3-charts": "^2.0.28",
     "pofile": "^1.0.10",
-    "through2": "^2.0.3",
+    "through2": "^4.0.2",
     "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
     "configstore": "^4.0.0",
     "request": "^2.88.0",
