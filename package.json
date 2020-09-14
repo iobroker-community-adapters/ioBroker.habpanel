@@ -56,7 +56,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sass-glob": "^1.0.9",
     "gulp-uglify": "^2.0.0",
-    "gulp-watch": "^4.3.10",
+    "gulp-watch": "^5.0.1",
     "gulp-webserver": "^0.9.1",
     "n3-charts": "^2.0.28",
     "pofile": "^1.0.10",
