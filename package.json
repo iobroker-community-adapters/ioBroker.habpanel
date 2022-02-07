@@ -36,7 +36,7 @@
     "habpanel"
   ],
   "devDependencies": {
-    "babel-eslint": "^6.1.2",
+    "babel-eslint": "^10.1.0",
     "eslint": "^3.19.0",
     "eslint-config-esnext": "^1.4.3",
     "eslint-config-recommended": "^1.3.1",
