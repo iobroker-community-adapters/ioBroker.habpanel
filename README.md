@@ -50,11 +50,11 @@ This adapter cannot be installed directly from GitHub. Only from npm.
 -->
 
 ## Changelog
-### __WORK IN PROGRESS__
+### 0.5.0 (2022-02-16)
 * (jogibear9988) added on support for new websockets
 
 ### 0.4.3 (2020-08-22)
-* (bluefox) The compatibility to socket.io 3.0.13 provided 
+* (bluefox) The compatibility to socket.io 3.0.13 provided
 
 ### 0.4.1 (2020-02-10)
 * (Apollon77) compatibility to web 3.0

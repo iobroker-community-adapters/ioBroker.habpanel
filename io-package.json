@@ -1,226 +1,154 @@
 {
-    "common": {
-        "name": "habpanel",
-        "version": "0.4.3",
-        "news": {
-            "0.4.3": {
-                "en": "The compatibility to socket.io 3.0.13 provided",
-                "de": "Die Kompatibilität zu socket.io 3.0.13 wird bereitgestellt",
-                "ru": "Обеспечена совместимость с socket.io 3.0.13",
-                "pt": "A compatibilidade com socket.io 3.0.13 fornecida",
-                "nl": "De compatibiliteit met socket.io 3.0.13 wordt geboden",
-                "fr": "La compatibilité avec socket.io 3.0.13 fournie",
-                "it": "La compatibilità con socket.io 3.0.13 fornita",
-                "es": "La compatibilidad con socket.io 3.0.13 proporcionada",
-                "pl": "Zapewniona kompatybilność z socket.io 3.0.13",
-                "zh-cn": "提供与socket.io 3.0.13的兼容性"
-            },
-            "0.4.1": {
-                "en": "compatibility with Web >= 3.0.0 added",
-                "de": "Kompatibilität mit Web >= 3.0.0 hinzugefügt",
-                "ru": "добавлена совместимость с Web >= 3.0.0",
-                "pt": "compatibilidade com a Web >= 3.0.0 adicionada",
-                "nl": "compatibiliteit met Web >= 3.0.0 toegevoegd",
-                "fr": "compatibilité avec Web >= 3.0.0 ajoutée",
-                "it": "compatibilità con Web >= 3.0.0 aggiunto",
-                "es": "compatibilidad con Web >= 3.0.0 agregado",
-                "pl": "dodano kompatybilność z Internetem >= 3.0.0",
-                "zh-cn": "与Web >= 3.0.0的兼容性已添加"
-            },
-            "0.3.5": {
-                "en": "bugfix i18n",
-                "de": "Bugfix i18n",
-                "ru": "исправление i18n",
-                "pt": "bugfix i18n",
-                "nl": "bugfix i18n",
-                "fr": "correction de bug i18n",
-                "it": "bugfix i18n",
-                "es": "corrección de errores i18n",
-                "pl": "poprawiaj i18n",
-                "zh-cn": "修复国际化问题"
-            },
-            "0.3.4": {
-                "en": "button widget accepts boolean; correcting charts",
-                "de": "Button Widget akzeptiert Boolean; Diagramme korrigieren",
-                "ru": "виджет кнопки принимает логическое значение; корректирующие диаграммы",
-                "pt": "botão widget aceita booleano; corrigindo gráficos",
-                "nl": "knop widget accepteert boolean; grafieken corrigeren",
-                "fr": "bouton widget accepte booléen; corriger les graphiques",
-                "it": "il widget pulsante accetta booleano; correggere i grafici",
-                "es": "botón widget acepta booleano; corrigiendo cuadros",
-                "pl": "przycisk widget akceptuje wartość logiczną; korygowanie wykresów",
-                "zh-cn": "按钮小部件接受布尔值;纠正图表"
-            },
-            "0.3.3": {
-                "en": "button toggle functionality for true/false fixed",
-                "de": "Schaltflächenumschaltfunktion für wahr / falsch behoben",
-                "ru": "исправлена ​​функция переключения кнопок на true / false",
-                "pt": "botão alterna funcionalidade para true / false fixo",
-                "nl": "knopschakelfunctionaliteit voor waar / vals vast",
-                "fr": "bouton bascule la fonctionnalité pour vrai / faux fixe",
-                "it": "pulsante attiva la funzionalità per vero / falso fisso",
-                "es": "Botón para cambiar la funcionalidad de verdadero / falso fijo",
-                "pl": "przycisk przełącza funkcjonalność dla poprawionej wartości true / false",
-                "zh-cn": "用于真/假修复的按钮切换功能"
-            },
-            "0.3.2": {
-                "en": "chart and timeline functionality fixed",
-                "de": "Diagramm- und Timeline-Funktionalität behoben",
-                "ru": "исправлена ​​функциональность графика и графика",
-                "pt": "Funcionalidade de gráfico e cronograma fixada",
-                "nl": "kaart- en tijdlijnfunctionaliteit opgelost",
-                "fr": "fonctionnalité de graphique et de chronologie corrigée",
-                "it": "funzionalità di grafico e cronologia fissi",
-                "es": "Funcionalidad de gráfico y línea de tiempo fija",
-                "pl": "Poprawiono funkcjonalność wykresów i osi czasu",
-                "zh-cn": "图表和时间线功能已修复"
-            },
-            "0.3.1": {
-                "en": "chart and timeline functionality added",
-                "de": "Diagramm- und Zeitleistenfunktion hinzugefügt",
-                "ru": "добавлена ​​функциональность графика и графика",
-                "pt": "Funcionalidade de gráfico e cronograma adicionada",
-                "nl": "grafiek en tijdlijn functionaliteit toegevoegd",
-                "fr": "fonctionnalité de graphique et de chronologie ajoutée",
-                "it": "funzionalità di grafico e timeline aggiunta",
-                "es": "Gráfica y funcionalidad de línea de tiempo añadida",
-                "pl": "Dodano funkcję wykresu i osi czasu",
-                "zh-cn": "添加了图表和时间线功能"
-            },
-            "0.2.6": {
-                "en": "bugfix selection element",
-                "de": "Bugfix-Auswahlelement",
-                "ru": "элемент выбора исправления",
-                "pt": "elemento de seleção bugfix",
-                "nl": "bugfix selectie-element",
-                "fr": "élément de sélection de correction de bug",
-                "it": "elemento di selezione bugfix",
-                "es": "elemento de selección de corrección de errores",
-                "pl": "element wyboru błędu",
-                "zh-cn": "错误修复选择元素"
-            },
-            "0.2.5": {
-                "en": "bugfix format strings",
-                "de": "Bugfix-Formatstrings",
-                "ru": "строки формата исправления ошибок",
-                "pt": "strings de formato bugfix",
-                "nl": "formules voor bugfix-indeling",
-                "fr": "chaînes de format de correction",
-                "it": "stringhe di formato bugfix",
-                "es": "cadenas de formato de corrección de errores",
-                "pl": "ciągi zawierające poprawki błędów",
-                "zh-cn": "bugfix格式字符串"
-            },
-            "0.2.4": {
-                "en": "bugfix template widget",
-                "de": "Bugfix-Vorlagen-Widget",
-                "ru": "Исправление виджета шаблона",
-                "pt": "Widget de template bugfix",
-                "nl": "bugfix-sjabloon widget",
-                "fr": "widget de modèle de correction de bug",
-                "it": "widget modello di bugfix",
-                "es": "widget de plantilla de corrección de errores",
-                "pl": "Widżet szablonu błędu",
-                "zh-cn": "错误修正模板小部件"
-            },
-            "0.2.3": {
-                "en": "upgrade to current openhab version",
-                "de": "Update auf die aktuellen OpenHab Version",
-                "ru": "upgrade to current openhab version",
-                "pt": "atualizar para a versão atual do openhab",
-                "nl": "upgrade naar de huidige openhab-versie",
-                "fr": "passer à la version actuelle d'Openhab",
-                "it": "aggiornamento alla versione attuale di OpenHab",
-                "es": "actualizar a la versión actual de openhab",
-                "pl": "uaktualnij do obecnej wersji openhab",
-                "zh-cn": "升级到当前的openhab版本"
-            },
-            "0.1.7": {
-                "en": "add to welcome screen",
-                "de": "Zum Welcome-Screen hinzufügen",
-                "ru": "Добавлена на экран приветствия",
-                "pt": "adicionar à tela de boas vindas",
-                "nl": "toevoegen aan welkomstscherm",
-                "fr": "ajouter à l'écran d'accueil",
-                "it": "aggiungi alla schermata di benvenuto",
-                "es": "añadir a la pantalla de bienvenida",
-                "pl": "dodaj do ekranu powitalnego",
-                "zh-cn": "添加到欢迎屏幕"
-            },
-            "0.1.6": {
-                "en": "update version number",
-                "de": "update version number",
-                "ru": "update version number",
-                "pt": "atualizar número da versão",
-                "nl": "update versienummer",
-                "fr": "mettre à jour le numéro de version",
-                "it": "aggiorna il numero di versione",
-                "es": "actualizar el número de versión",
-                "pl": "zaktualizuj numer wersji",
-                "zh-cn": "更新版本号"
-            }
-        },
-        "title": "HABpanel",
-        "desc": {
-            "en": "HABpanel based ioBroker user interface",
-            "de": "ioBroker GUI mit HABpanel",
-            "ru": "ioBroker визуализация c HABpanel",
-            "pt": "Interface de usuário do ioBroker baseada em HABpanel",
-            "nl": "Op HABpanel gebaseerde gebruikersinterface van ioBroker",
-            "fr": "Interface utilisateur ioBroker basée sur HABpanel",
-            "it": "Interfaccia utente ioBroker basata su HABpanel",
-            "es": "Interfaz de usuario ioBroker basada en HABpanel",
-            "pl": "Interfejs użytkownika ioBroker oparty na HABpanel",
-            "zh-cn": "基于HABpanel的ioBroker用户界面"
-        },
-        "platform": "Javascript/Node.js",
-        "loglevel": "info",
-        "dependencies": [
-            {
-                "web": ">=3.0.12"
-            }
-        ],
-        "icon": "habpanel.png",
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.png",
-        "keywords": [
-            "user",
-            "interface",
-            "webapp",
-            "jquerymobile",
-            "ui"
-        ],
-        "readme": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/blob/master/README.md",
-        "singleton": true,
-        "welcomeScreen": {
-            "link": "habpanel/index.html",
-            "name": "HABpanel",
-            "img": "habpanel.admin/habpanel.png",
-            "color": "black",
-            "order": 3
-        },
-        "preserveSettings": "habpanel",
-        "authors": [
-            "Yannick Schaus <habpanel@schaus.net>",
-            "Kuba Wolanin <hi@kubawolanin.com>",
-            "Sam Turner <sam@digi.ltd.uk>",
-            "Ingo Sigmund <ingo.sigmund@web.de>",
-            "Andreas Gebauer <an.ge.ber.81@gmail.com>",
-            "bluefox <dogafox@gmail.com>"
-        ],
-        "localLink": "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
-        "type": "visualization",
-        "license": "EPL-1.0",
-        "noConfig": true,
-        "enabled": true,
-        "onlyWWW": true,
-        "nogit": true,
-        "mode": "extension",
-        "connectionType": "local",
-        "dataSource": "push",
-        "webExtension": "lib/habpanelapi.js"
+  "common": {
+    "name": "habpanel",
+    "version": "0.5.0",
+    "news": {
+      "0.5.0": {
+        "en": "added on support for new websockets",
+        "de": "Unterstützung für neue Websockets hinzugefügt",
+        "ru": "добавлена поддержка новых веб-сокетов",
+        "pt": "adicionado no suporte para novos websockets",
+        "nl": "toegevoegd op ondersteuning voor nieuwe websockets",
+        "fr": "ajouté à la prise en charge des nouveaux websockets",
+        "it": "aggiunto sul supporto per i nuovi websocket",
+        "es": "agregado en soporte para nuevos websockets",
+        "pl": "dodano obsługę nowych gniazd sieciowych",
+        "zh-cn": "添加了对新 websockets 的支持"
+      },
+      "0.4.3": {
+        "en": "The compatibility to socket.io 3.0.13 provided",
+        "de": "Die Kompatibilität zu socket.io 3.0.13 wird bereitgestellt",
+        "ru": "Обеспечена совместимость с socket.io 3.0.13",
+        "pt": "A compatibilidade com socket.io 3.0.13 fornecida",
+        "nl": "De compatibiliteit met socket.io 3.0.13 wordt geboden",
+        "fr": "La compatibilité avec socket.io 3.0.13 fournie",
+        "it": "La compatibilità con socket.io 3.0.13 fornita",
+        "es": "La compatibilidad con socket.io 3.0.13 proporcionada",
+        "pl": "Zapewniona kompatybilność z socket.io 3.0.13",
+        "zh-cn": "提供与socket.io 3.0.13的兼容性"
+      },
+      "0.4.1": {
+        "en": "compatibility with Web >= 3.0.0 added",
+        "de": "Kompatibilität mit Web >= 3.0.0 hinzugefügt",
+        "ru": "добавлена совместимость с Web >= 3.0.0",
+        "pt": "compatibilidade com a Web >= 3.0.0 adicionada",
+        "nl": "compatibiliteit met Web >= 3.0.0 toegevoegd",
+        "fr": "compatibilité avec Web >= 3.0.0 ajoutée",
+        "it": "compatibilità con Web >= 3.0.0 aggiunto",
+        "es": "compatibilidad con Web >= 3.0.0 agregado",
+        "pl": "dodano kompatybilność z Internetem >= 3.0.0",
+        "zh-cn": "与Web >= 3.0.0的兼容性已添加"
+      },
+      "0.3.5": {
+        "en": "bugfix i18n",
+        "de": "Bugfix i18n",
+        "ru": "исправление i18n",
+        "pt": "bugfix i18n",
+        "nl": "bugfix i18n",
+        "fr": "correction de bug i18n",
+        "it": "bugfix i18n",
+        "es": "corrección de errores i18n",
+        "pl": "poprawiaj i18n",
+        "zh-cn": "修复国际化问题"
+      },
+      "0.3.4": {
+        "en": "button widget accepts boolean; correcting charts",
+        "de": "Button Widget akzeptiert Boolean; Diagramme korrigieren",
+        "ru": "виджет кнопки принимает логическое значение; корректирующие диаграммы",
+        "pt": "botão widget aceita booleano; corrigindo gráficos",
+        "nl": "knop widget accepteert boolean; grafieken corrigeren",
+        "fr": "bouton widget accepte booléen; corriger les graphiques",
+        "it": "il widget pulsante accetta booleano; correggere i grafici",
+        "es": "botón widget acepta booleano; corrigiendo cuadros",
+        "pl": "przycisk widget akceptuje wartość logiczną; korygowanie wykresów",
+        "zh-cn": "按钮小部件接受布尔值;纠正图表"
+      },
+      "0.3.3": {
+        "en": "button toggle functionality for true/false fixed",
+        "de": "Schaltflächenumschaltfunktion für wahr / falsch behoben",
+        "ru": "исправлена ​​функция переключения кнопок на true / false",
+        "pt": "botão alterna funcionalidade para true / false fixo",
+        "nl": "knopschakelfunctionaliteit voor waar / vals vast",
+        "fr": "bouton bascule la fonctionnalité pour vrai / faux fixe",
+        "it": "pulsante attiva la funzionalità per vero / falso fisso",
+        "es": "Botón para cambiar la funcionalidad de verdadero / falso fijo",
+        "pl": "przycisk przełącza funkcjonalność dla poprawionej wartości true / false",
+        "zh-cn": "用于真/假修复的按钮切换功能"
+      },
+      "0.3.2": {
+        "en": "chart and timeline functionality fixed",
+        "de": "Diagramm- und Timeline-Funktionalität behoben",
+        "ru": "исправлена ​​функциональность графика и графика",
+        "pt": "Funcionalidade de gráfico e cronograma fixada",
+        "nl": "kaart- en tijdlijnfunctionaliteit opgelost",
+        "fr": "fonctionnalité de graphique et de chronologie corrigée",
+        "it": "funzionalità di grafico e cronologia fissi",
+        "es": "Funcionalidad de gráfico y línea de tiempo fija",
+        "pl": "Poprawiono funkcjonalność wykresów i osi czasu",
+        "zh-cn": "图表和时间线功能已修复"
+      }
     },
-    "native": {
-        "webInstance": "*"
+    "title": "HABpanel",
+    "desc": {
+      "en": "HABpanel based ioBroker user interface",
+      "de": "ioBroker GUI mit HABpanel",
+      "ru": "ioBroker визуализация c HABpanel",
+      "pt": "Interface de usuário do ioBroker baseada em HABpanel",
+      "nl": "Op HABpanel gebaseerde gebruikersinterface van ioBroker",
+      "fr": "Interface utilisateur ioBroker basée sur HABpanel",
+      "it": "Interfaccia utente ioBroker basata su HABpanel",
+      "es": "Interfaz de usuario ioBroker basada en HABpanel",
+      "pl": "Interfejs użytkownika ioBroker oparty na HABpanel",
+      "zh-cn": "基于HABpanel的ioBroker用户界面"
     },
-    "objects": []
+    "platform": "Javascript/Node.js",
+    "loglevel": "info",
+    "dependencies": [
+      {
+        "web": ">=3.0.12"
+      }
+    ],
+    "icon": "habpanel.png",
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.png",
+    "keywords": [
+      "user",
+      "interface",
+      "webapp",
+      "jquerymobile",
+      "ui"
+    ],
+    "readme": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/blob/master/README.md",
+    "singleton": true,
+    "welcomeScreen": {
+      "link": "habpanel/index.html",
+      "name": "HABpanel",
+      "img": "habpanel.admin/habpanel.png",
+      "color": "black",
+      "order": 3
+    },
+    "preserveSettings": "habpanel",
+    "authors": [
+      "Yannick Schaus <habpanel@schaus.net>",
+      "Kuba Wolanin <hi@kubawolanin.com>",
+      "Sam Turner <sam@digi.ltd.uk>",
+      "Ingo Sigmund <ingo.sigmund@web.de>",
+      "Andreas Gebauer <an.ge.ber.81@gmail.com>",
+      "bluefox <dogafox@gmail.com>"
+    ],
+    "localLink": "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
+    "type": "visualization",
+    "license": "EPL-1.0",
+    "noConfig": true,
+    "enabled": true,
+    "onlyWWW": true,
+    "nogit": true,
+    "mode": "extension",
+    "connectionType": "local",
+    "dataSource": "push",
+    "webExtension": "lib/habpanelapi.js"
+  },
+  "native": {
+    "webInstance": "*"
+  },
+  "objects": []
 }
