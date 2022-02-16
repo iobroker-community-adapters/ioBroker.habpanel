@@ -1,20 +1,20 @@
-const clean = require('gulp-clean');
+// const clean = require('gulp-clean');
 const concat = require('gulp-concat');
 const cleanCSS = require('gulp-clean-css');
 const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 // var gulpFilter = require('gulp-filter');
 // var mainBowerFiles = require('gulp-main-bower-files');
-const path = require('path');
+//const path = require('path');
 const plumber = require('gulp-plumber');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass')(require('node-sass'));
 const sassGlob = require('gulp-sass-glob');
 const uglify = require('gulp-uglify');
-const watch = require('gulp-watch');
+//const watch = require('gulp-watch');
 const webserver = require('gulp-webserver');
-const through = require('through2');
-const pofile = require('pofile');
+//const through = require('through2');
+//const pofile = require('pofile');
 
 const fs        = require('fs');
 const iopackage = require('./io-package.json');
@@ -74,12 +74,8 @@ gulp.task('sass-themes', function () {
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass())
-        .pipe(cleanCSS({
-            compatibility: '*,-properties.merging'
-        }))
-        .pipe(rename({
-            suffix: '.min'
-        }))
+        .pipe(cleanCSS({compatibility: '*,-properties.merging'}))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(dst + 'assets/styles/themes'));
 });
 
@@ -88,12 +84,8 @@ gulp.task('sass-vendor', function () {
         .pipe(plumber())
 		.pipe(sassGlob())
         .pipe(sass())
-        .pipe(cleanCSS({
-            compatibility: '*,-properties.merging'
-        }))
-        .pipe(rename({
-            suffix: '.min'
-        }))
+        .pipe(cleanCSS({compatibility: '*,-properties.merging'}))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(dst + 'vendor'));
 });
 
@@ -155,7 +147,9 @@ gulp.task('vendor-js', gulp.series('uglify-timeline', function() {
         src + 'vendor/angular-web-colorpicker.js',
         src + 'vendor/conn.js',
 		src + 'vendor/global.js'
-    ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
+    ])
+        .pipe(concat('vendor.js'))
+        .pipe(gulp.dest(dst + 'vendor'));
 }));
 
 gulp.task('vendor-edit-js', gulp.series('uglify-timeline', function() {
@@ -189,7 +183,9 @@ gulp.task('vendor-edit-js', gulp.series('uglify-timeline', function() {
         'node_modules/n3-charts/build/LineChart.js',
         src + 'vendor/angular-web-colorpicker.js',
         src + 'vendor/conn.js'
-    ]).pipe(concat('vendor.edit.js')).pipe(gulp.dest(dst + 'vendor'));
+    ])
+        .pipe(concat('vendor.edit.js'))
+        .pipe(gulp.dest(dst + 'vendor'));
 }));
 
 gulp.task('codemirror-lib', function () {
@@ -260,12 +256,12 @@ gulp.task('src-copy', function () {
 });
 
 gulp.task('codemirror', gulp.series(
-        'codemirror-lib', 
-        'codemirror-css', 
+        'codemirror-lib',
+        'codemirror-css',
         'codemirror-addon-fold',
         'codemirror-addon-mode',
-        'codemirror-addon-edit', 
-        'codemirror-mode-xml', 
+        'codemirror-addon-edit',
+        'codemirror-mode-xml',
         'codemirror-mode-javascript',
         'codemirror-theme'
     ));
@@ -314,26 +310,26 @@ gulp.task('translate', async function (done) {
 		if (iopackage.common.desc) {
 			await translateNotExisting(iopackage.common.desc)
 		}
-		
+
 		if (fs.existsSync('./admin/i18n/en/translations.json')) {
 			let enTranslations = require('./admin/i18n/en/translations.json');
 			for (let l in languages) {
 				let existing = {};
-				if (fs.existsSync('./admin/i18n/' + l +'/translations.json')) {
-					existing = require('./admin/i18n/' + l + '/translations.json');
+				if (fs.existsSync(`./admin/i18n/${l}/translations.json`)) {
+					existing = require(`./admin/i18n/${l}/translations.json`);
 				}
 				for (let t in enTranslations) {
 					if (!existing[t]) {
 						existing[t] = await translateText(enTranslations[t], l);
-					}					
+					}
 				}
-				if (!fs.existsSync('./admin/i18n/' + l +'/')) {
-					fs.mkdirSync('./admin/i18n/' + l +'/');
+				if (!fs.existsSync(`./admin/i18n/${l}/`)) {
+					fs.mkdirSync(`./admin/i18n/${l}/`);
 				}
-				fs.writeFileSync('./admin/i18n/' + l + '/translations.json', JSON.stringify(existing, null, 4));
+				fs.writeFileSync(`./admin/i18n/${l}/translations.json`, JSON.stringify(existing, null, 4));
 			}
 		}
-		
+
 	}
     fs.writeFileSync('io-package.json', JSON.stringify(iopackage, null, 4));
 });

@@ -173,7 +173,7 @@
             "pl": "Interfejs użytkownika ioBroker oparty na HABpanel",
             "zh-cn": "基于HABpanel的ioBroker用户界面"
         },
-        "platform": "javascript/Node.js",
+        "platform": "Javascript/Node.js",
         "loglevel": "info",
         "dependencies": [
             {
@@ -215,6 +215,8 @@
         "onlyWWW": true,
         "nogit": true,
         "mode": "extension",
+        "connectionType": "local",
+        "dataSource": "push",
         "webExtension": "lib/habpanelapi.js"
     },
     "native": {
