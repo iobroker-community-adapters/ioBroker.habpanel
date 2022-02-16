@@ -1,20 +1,20 @@
-var clean = require('gulp-clean');
-var concat = require('gulp-concat');
-var cleanCSS = require('gulp-clean-css');
-var eslint = require('gulp-eslint');
-var gulp = require('gulp');
+const clean = require('gulp-clean');
+const concat = require('gulp-concat');
+const cleanCSS = require('gulp-clean-css');
+const eslint = require('gulp-eslint');
+const gulp = require('gulp');
 // var gulpFilter = require('gulp-filter');
 // var mainBowerFiles = require('gulp-main-bower-files');
-var path = require('path');
-var plumber = require('gulp-plumber');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var sassGlob = require('gulp-sass-glob');
-var uglify = require('gulp-uglify');
-var watch = require('gulp-watch');
-var webserver = require('gulp-webserver');
-var through = require('through2');
-var pofile = require('pofile');
+const path = require('path');
+const plumber = require('gulp-plumber');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass')(require('node-sass'));
+const sassGlob = require('gulp-sass-glob');
+const uglify = require('gulp-uglify');
+const watch = require('gulp-watch');
+const webserver = require('gulp-webserver');
+const through = require('through2');
+const pofile = require('pofile');
 
 const fs        = require('fs');
 const iopackage = require('./io-package.json');
@@ -63,16 +63,14 @@ gulp.task('watch', function () {
     ], ['sass']);
 });
 
-gulp.task('server', [
+gulp.task('server', gulp.series(
     'watch',
-    'web-server'
-], function () {});
-
+    'web-server'));
 
 // SASS processing
 
 gulp.task('sass-themes', function () {
-    gulp.src(src + 'assets/styles/themes/**/*.scss')
+    return gulp.src(src + 'assets/styles/themes/**/*.scss')
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass())
@@ -86,7 +84,7 @@ gulp.task('sass-themes', function () {
 });
 
 gulp.task('sass-vendor', function () {
-    gulp.src(src + 'vendor/styles.scss')
+    return gulp.src(src + 'vendor/styles.scss')
         .pipe(plumber())
 		.pipe(sassGlob())
         .pipe(sass())
@@ -99,10 +97,10 @@ gulp.task('sass-vendor', function () {
         .pipe(gulp.dest(dst + 'vendor'));
 });
 
-gulp.task('sass', [
+gulp.task('sass', gulp.series(
     'sass-themes',
     'sass-vendor'
-], function () {});
+));
 
 gulp.task('vendor-fonts', function() {
     return gulp.src([
@@ -117,7 +115,7 @@ gulp.task('uglify-timeline', function () {
              .pipe(gulp.dest('bower_components/d3-timeline/dist'));
 });
 
-gulp.task('vendor-js', ['uglify-timeline'], function() {
+gulp.task('vendor-js', gulp.series('uglify-timeline', function() {
     if (!require('fs').existsSync(__dirname + '/bower_components')) {
         throw new Error('No Bower files found: please write "bower i".');
     }
@@ -150,7 +148,7 @@ gulp.task('vendor-js', ['uglify-timeline'], function() {
         'bower_components/angular-file-saver/dist/angular-file-saver.bundle.min.js',
         'bower_components/snapjs/snap.min.js',
         'bower_components/angular-snap/angular-snap.min.js',
-        'bower_components/event-source-polyfill/eventsource.min.js',
+        'bower_components/event-source-polyfill/src/eventsource.min.js',
         'bower_components/d3-timeline/dist/d3-timeline.js',
         'bower_components/aCKolor/dist/js/aCKolor.min.js',
         'node_modules/n3-charts/build/LineChart.min.js',
@@ -158,9 +156,9 @@ gulp.task('vendor-js', ['uglify-timeline'], function() {
         src + 'vendor/conn.js',
 		src + 'vendor/global.js'
     ]).pipe(concat('vendor.js')).pipe(gulp.dest(dst + 'vendor'));
-});
+}));
 
-gulp.task('vendor-edit-js', ['uglify-timeline'], function() {
+gulp.task('vendor-edit-js', gulp.series('uglify-timeline', function() {
     return gulp.src([
         'bower_components/angular/angular.js',
         'bower_components/angular-route/angular-route.js',
@@ -192,7 +190,7 @@ gulp.task('vendor-edit-js', ['uglify-timeline'], function() {
         src + 'vendor/angular-web-colorpicker.js',
         src + 'vendor/conn.js'
     ]).pipe(concat('vendor.edit.js')).pipe(gulp.dest(dst + 'vendor'));
-});
+}));
 
 gulp.task('codemirror-lib', function () {
     return gulp.src([
@@ -258,10 +256,10 @@ gulp.task('src-copy', function () {
         src + '!.csscomb.json',
         src + 'vendor/vendor.js',
         src + 'vendor/styles.min.css'
-    ], {base: src}).pipe(gulp.dest(dst));
+    ], {base: src, allowEmpty: true}).pipe(gulp.dest(dst));
 });
 
-gulp.task('codemirror', [
+gulp.task('codemirror', gulp.series(
         'codemirror-lib', 
         'codemirror-css', 
         'codemirror-addon-fold',
@@ -270,16 +268,16 @@ gulp.task('codemirror', [
         'codemirror-mode-xml', 
         'codemirror-mode-javascript',
         'codemirror-theme'
-    ], function () {});
+    ));
 
-gulp.task('vendor', [
+gulp.task('vendor', gulp.series(
     'sass-themes',
     'sass-vendor',
     'vendor-js',
 //    'vendor-edit-js',
     'vendor-fonts',
     'src-copy'
-], function () {});
+));
 
 const translate   = require('@vitalets/google-translate-api');
 
@@ -340,4 +338,4 @@ gulp.task('translate', async function (done) {
     fs.writeFileSync('io-package.json', JSON.stringify(iopackage, null, 4));
 });
 
-gulp.task('default', ['vendor', 'codemirror'], function () {});
+gulp.task('default', gulp.series('vendor', 'codemirror'));
