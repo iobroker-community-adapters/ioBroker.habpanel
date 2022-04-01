@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.1",
-    "bower": "^1.8.13"
+    "bower": "^1.8.14"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/issues"
