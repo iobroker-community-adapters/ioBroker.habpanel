@@ -69,7 +69,7 @@
     "node-sass": "^7.0.1"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.5.1",
+    "@iobroker/adapter-core": "^2.6.0",
     "bower": "^1.8.14"
   },
   "bugs": {
