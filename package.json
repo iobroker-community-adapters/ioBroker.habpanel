@@ -42,7 +42,7 @@
     "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
     "babel-eslint": "^6.1.2",
     "chai": "^4.3.7",
-    "configstore": "^4.0.0",
+    "configstore": "^6.0.0",
     "eslint": "^3.19.0",
     "eslint-config-esnext": "^1.4.3",
     "eslint-config-recommended": "^1.3.1",
