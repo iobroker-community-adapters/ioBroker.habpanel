@@ -35,6 +35,13 @@
     "web interface",
     "habpanel"
   ],
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.6.8",
+    "bower": "^1.8.14"
+  },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.9",
     "@alcalzone/release-script-plugin-iobroker": "^3.5.9",
@@ -67,10 +74,6 @@
     "request": "^2.88.2",
     "safe-eval": "^0.4.1",
     "node-sass": "^7.0.3"
-  },
-  "dependencies": {
-    "@iobroker/adapter-core": "^2.6.8",
-    "bower": "^1.8.14"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/issues"
