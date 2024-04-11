@@ -88,7 +88,19 @@
         "zh-cn": "图表和时间线功能已修复"
       }
     },
-    "title": "HABpanel",
+    "titleLang": {
+      "en": "HABpanel",
+      "de": "HABpanel",
+      "ru": "HABpanel",
+      "pt": "HABpanel",
+      "nl": "HABpanel",
+      "fr": "HABpanel",
+      "it": "HABpanel",
+      "es": "HABpanel",
+      "pl": "Panel HABPanel",
+      "uk": "ХАБпанель",
+      "zh-cn": "卫生间"
+    },
     "desc": {
       "en": "HABpanel based ioBroker user interface",
       "de": "ioBroker GUI mit HABpanel",
@@ -101,15 +113,14 @@
       "pl": "Interfejs użytkownika ioBroker oparty na HABpanel",
       "zh-cn": "基于HABpanel的ioBroker用户界面"
     },
-    "platform": "Javascript/Node.js",
-    "loglevel": "info",
-    "dependencies": [
-      {
-        "web": ">=3.0.12"
-      }
+    "authors": [
+      "Yannick Schaus <habpanel@schaus.net>",
+      "Kuba Wolanin <hi@kubawolanin.com>",
+      "Sam Turner <sam@digi.ltd.uk>",
+      "Ingo Sigmund <ingo.sigmund@web.de>",
+      "Andreas Gebauer <an.ge.ber.81@gmail.com>",
+      "bluefox <dogafox@gmail.com>"
     ],
-    "icon": "habpanel.png",
-    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.png",
     "keywords": [
       "user",
       "interface",
@@ -117,7 +128,33 @@
       "jquerymobile",
       "ui"
     ],
+    "licenseInformation": {
+      "license": "EPL-1.0",
+      "type": "free"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "habpanel.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.png",
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/blob/master/README.md",
+    "loglevel": "info",
+    "tier": 3,
+    "mode": "extension",
+    "type": "visualization",
+    "connectionType": "local",
+    "dataSource": "push",
+    "compact": false,
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.0",
+        "web": ">=3.0.12"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=5.1.13"
+      }
+    ],
     "singleton": true,
     "welcomeScreen": {
       "link": "habpanel/index.html",
@@ -127,24 +164,10 @@
       "order": 3
     },
     "preserveSettings": "habpanel",
-    "authors": [
-      "Yannick Schaus <habpanel@schaus.net>",
-      "Kuba Wolanin <hi@kubawolanin.com>",
-      "Sam Turner <sam@digi.ltd.uk>",
-      "Ingo Sigmund <ingo.sigmund@web.de>",
-      "Andreas Gebauer <an.ge.ber.81@gmail.com>",
-      "bluefox <dogafox@gmail.com>"
-    ],
     "localLink": "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
-    "type": "visualization",
-    "license": "EPL-1.0",
     "noConfig": true,
-    "enabled": true,
     "onlyWWW": true,
     "nogit": true,
-    "mode": "extension",
-    "connectionType": "local",
-    "dataSource": "push",
     "webExtension": "lib/habpanelapi.js"
   },
   "native": {
