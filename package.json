@@ -69,7 +69,7 @@
     "gulp-sass-glob": "^1.1.0",
     "gulp-uglify": "^3.0.2",
     "gulp-webserver": "^0.9.1",
-    "mocha": "^9.2.2",
+    "mocha": "^10.8.2",
     "n3-charts": "^2.0.28",
     "request": "^2.88.2",
     "safe-eval": "^0.4.1",
