@@ -48,7 +48,7 @@
     "@alcalzone/release-script-plugin-license": "^3.7.0",
     "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
     "babel-eslint": "^6.1.2",
-    "chai": "^4.3.7",
+    "chai": "^6.0.1",
     "configstore": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-esnext": "^1.4.3",
