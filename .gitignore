@@ -2,3 +2,5 @@
 node_modules
 bower_components
 www
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
