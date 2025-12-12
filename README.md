@@ -97,7 +97,7 @@ This adapter cannot be installed directly from GitHub. Only from npm.
 * (bluefox) initial commit
 
 ## License
-Copyright (c) 2024 iobroker-community-adapters <iobroker-community-adapters@gmx.de>
+Copyright (c) 2024-2025 iobroker-community-adapters <iobroker-community-adapters@gmx.de>
 Copyright 2017-2022 bluefox <dogafox@gmail.com>
 
 Eclipse Public License
