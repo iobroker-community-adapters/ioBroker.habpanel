@@ -119,7 +119,8 @@
       "Sam Turner <sam@digi.ltd.uk>",
       "Ingo Sigmund <ingo.sigmund@web.de>",
       "Andreas Gebauer <an.ge.ber.81@gmail.com>",
-      "bluefox <dogafox@gmail.com>"
+      "bluefox <dogafox@gmail.com>",
+      "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
     ],
     "keywords": [
       "user",
@@ -146,13 +147,13 @@
     "compact": false,
     "dependencies": [
       {
-        "js-controller": ">=5.0.0",
+        "js-controller": ">=6.0.11",
         "web": ">=3.0.12"
       }
     ],
     "globalDependencies": [
       {
-        "admin": ">=5.1.13"
+        "admin": ">=7.6.17"
       }
     ],
     "singleton": true,

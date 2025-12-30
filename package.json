@@ -2,27 +2,13 @@
   "name": "iobroker.habpanel",
   "description": "Dashboard based on HABPanel",
   "version": "0.5.0",
-  "author": {
-    "name": "Yannick Schaus",
-    "email": "habpanel@schaus.net"
-  },
+  "author": "Yannick Schaus <habpanel@schaus.net>",
   "contributors": [
-    {
-      "name": "Yannick Schaus",
-      "email": "habpanel@schaus.net"
-    },
-    {
-      "name": "Kuba Wolanin",
-      "email": "hi@kubawolanin.com"
-    },
-    {
-      "name": "bluefox",
-      "email": "dogafox@gmail.com"
-    },
-    {
-      "name": "jogibear9988",
-      "email": "jochen.kuehner@gmx.de"
-    }
+    "Yannick Schaus <habpanel@schaus.net>",
+    "Kuba Wolanin <hi@kubawolanin.com>",
+    "bluefox <dogafox@gmail.com>",
+    "jogibear9988 <jochen.kuehner@gmx.de>",
+    "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
   ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.habpanel",
   "repository": {
