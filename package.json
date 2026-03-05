@@ -22,7 +22,7 @@
     "habpanel"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=20"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.8",
