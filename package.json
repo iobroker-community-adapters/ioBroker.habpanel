@@ -47,7 +47,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-eslint": "^6.0.0",
-    "gulp-filter": "^7.0.0",
+    "gulp-filter": "^9.0.1",
     "gulp-main-bower-files": "1.8.2",
     "gulp-plumber": "^1.2.1",
     "gulp-rename": "^2.0.0",
