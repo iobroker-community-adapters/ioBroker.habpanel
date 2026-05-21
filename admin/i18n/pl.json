@@ -1,4 +1,4 @@
 {
-  "webInstance": "Instancja adaptera web",
-  "webInstanceHelp": "Wprowadź nazwę instancji adaptera web, której ma używać HABPanel (na przykład: web.0 lub *)."
+    "webInstance": "Instancja adaptera web",
+    "webInstanceHelp": "Wprowadź nazwę instancji adaptera web, której ma używać HABPanel (na przykład: web.0 lub *)."
 }

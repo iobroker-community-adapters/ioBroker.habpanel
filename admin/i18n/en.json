@@ -1,4 +1,4 @@
 {
-  "webInstance": "Web adapter instance",
-  "webInstanceHelp": "Enter the web adapter instance name to use for HABPanel (for example: web.0 or *)."
+	"webInstance": "Web adapter instance",
+	"webInstanceHelp": "Enter the web adapter instance name to use for HABPanel (for example: web.0 or *)."
 }
