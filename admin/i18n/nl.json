@@ -1,0 +1,4 @@
+{
+  "webInstance": "Webadapter-instantie",
+  "webInstanceHelp": "Voer de naam in van de webadapter-instantie die HABPanel moet gebruiken (bijvoorbeeld: web.0 of *)."
+}

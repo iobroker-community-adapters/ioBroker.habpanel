@@ -1,0 +1,4 @@
+{
+  "webInstance": "Instancia del adaptador web",
+  "webInstanceHelp": "Introduzca el nombre de la instancia del adaptador web que debe usar HABPanel (por ejemplo: web.0 o *)."
+}

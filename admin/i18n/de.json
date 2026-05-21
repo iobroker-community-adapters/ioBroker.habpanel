@@ -1,0 +1,4 @@
+{
+  "webInstance": "Web-Adapter-Instanz",
+  "webInstanceHelp": "Geben Sie den Namen der Web-Adapter-Instanz für HABPanel ein (zum Beispiel: web.0 oder *)."
+}

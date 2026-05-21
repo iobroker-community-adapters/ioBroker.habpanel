@@ -166,7 +166,10 @@
     },
     "preserveSettings": "habpanel",
     "localLink": "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
-    "noConfig": true,
+    "adminUI": {
+      "config": "json"
+    },
+    "noConfig": false,
     "onlyWWW": true,
     "nogit": true,
     "webExtension": "lib/habpanelapi.js"

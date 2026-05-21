@@ -75,6 +75,11 @@ describe('Test package.json and io-package.json', () => {
             }
         }
 
+        if (ioPackage.common.adminUI && ioPackage.common.adminUI.config === 'json') {
+            expect(fs.existsSync(__dirname + '/../admin/jsonConfig.json'), 'JSON Config is enabled in io-package.json, but admin/jsonConfig.json is missing!').to.be.true;
+            expect(fs.existsSync(__dirname + '/../admin/i18n/en.json'), 'JSON Config is enabled in io-package.json, but admin/i18n/en.json is missing!').to.be.true;
+        }
+
         const licenseFileExists = fs.existsSync(__dirname + '/../LICENSE');
         const fileContentReadme = fs.readFileSync(__dirname + '/../README.md', 'utf8');
         if (fileContentReadme.indexOf('## Changelog') === -1) {

@@ -1,0 +1,4 @@
+{
+  "webInstance": "Web 适配器实例",
+  "webInstanceHelp": "请输入 HABPanel 要使用的 Web 适配器实例名称（例如：web.0 或 *）。"
+}
