@@ -54,6 +54,7 @@ This adapter cannot be installed directly from GitHub. Only from npm.
 - (iobroker-bot) Adapter requires node.js >= 20 now.
 - (copilot) Adapter requires js-controller >= 6.0.11 now
 - (copilot) Adapter requires admin >= 7.6.17 now
+- (copilot) **ENHANCED**: Migrated adapter configuration UI to JSON Config with translated web instance setting.
 - (mcm1957) Adapter requires nodeJS >=18 now.
 - (mcm1957) Dependencies have been updated.
 
