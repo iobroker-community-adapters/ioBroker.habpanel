@@ -100,6 +100,8 @@ This adapter cannot be installed directly from GitHub. Only from npm.
 ### 0.1.6 (2017-05-15)
 * (bluefox) initial commit
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 Copyright (c) 2024-2026 iobroker-community-adapters <iobroker-community-adapters@gmx.de>
 Copyright 2017-2022 bluefox <dogafox@gmail.com>
