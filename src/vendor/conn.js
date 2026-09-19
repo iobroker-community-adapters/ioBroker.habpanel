@@ -1274,8 +1274,14 @@ var servConn = {
         if (!options) options = {};
         if (!options.timeout) options.timeout = 2000;
 
+        // The callback must fire exactly once. Without this guard a late answer calls it
+        // a second time, after the timeout already reported failure - the data that did
+        // arrive is then silently discarded by whoever settled on the timeout.
+        var settled = false;
         var timeout = setTimeout(function () {
             timeout = null;
+            if (settled) return;
+            settled = true;
             callback('timeout');
         }, options.timeout);
         this._socket.emit('getHistory', id, options, function (err, result) {
@@ -1283,6 +1289,8 @@ var servConn = {
                 clearTimeout(timeout);
                 timeout = null;
             }
+            if (settled) return;
+            settled = true;
             callback(err, result);
         });
     },
