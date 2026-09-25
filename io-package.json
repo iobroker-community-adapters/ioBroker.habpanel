@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "habpanel",
-    "version": "0.5.0",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "Chart series are no longer truncated to 500 values (#149)\ngetHistory no longer invokes its callback twice on a late answer\nAdapter requires node.js >= 22 now\nAdapter requires js-controller >= 6.0.11 now\nAdapter requires admin >= 7.6.17 now\nDependencies have been updated.\nSVG Logo",
+        "de": "Diagrammreihen nicht mehr auf 500 Werte (#149)\nGetHistory ruft bei verspäteter Antwort nicht mehr zweimal zurück\nAdapter benötigt jetzt node.js >= 22\nAdapter benötigt jetzt JS-Controller >= 6.0.11\nAdapter benötigt jetzt admin >= 7.6.17\nAbhängigkeiten wurden aktualisiert.\nSVG-Logo",
+        "ru": "Серии диаграмм больше не усекаются до 500 значений (#149)\nGetHistory больше не вызывает обратный вызов дважды при позднем ответе\nТеперь для адаптера требуется файл node.js >= 22\nТеперь для адаптера требуется js-контроллер >= 6.0.11\nДля адаптера теперь требуется администратор >= 7.6.17\nЗависимости обновлены.\nЛоготип SVG",
+        "pt": "A série de gráficos não é mais reduzida para 500 (#149)\nGetHistory não invoca mais duas vezes em uma resposta tardia\nO adaptador exige node.js >= 2\nO adaptador exige js-controller >= 6.0.11\nAgora o adaptador exige admin >= 7.6.17\nAs dependências foram atualizadas.\nLogo SVG",
+        "nl": "Diagramseries worden niet langer ingekort tot 500 waarden (#149)\nGetHistory wordt niet langer twee keer teruggebeld bij een te laat antwoord\nVoor de adapter is nu node.js >= 22 nodig\nVoor de adapter is nu een js-controller >= 6.0.11 nodig\nAdapter vereist nu admin >= 7.6.17\nDe afhankelijkheden zijn bijgewerkt.\nSVG-logo",
+        "fr": "Les séries de graphiques ne sont plus tronquées à 500 (#149)\nGetHistory n'invoque plus deux fois son rappel en cas de retard\nAdapter nécessite node.js >= 22\nAdapter nécessite JS-Controller >= 6.0.11\nAdapter nécessite admin >= 7.6.17\nLes dépendances ont été mises à jour.\nLogo SVG",
+        "it": "Le serie di grafici non sono più a 500 valori (#149)\nGetHistory non richiama più due volte una risposta tardiva\nAdapter richiede node.js =2 ora\nAdapter richiede js-controller >= 6.0.11 ora\nAdapter richiede admin >= 7.6.17 ora\nLe dipendenze sono aggiornate.\nLogo SVG",
+        "es": "Las series de gráficos ya no se truncan a 500 valores (#149)\nGetHistory ya no invoca su llamada dos veces en una respuesta tardía\nEl adaptador necesita node.js >= 22 ahora\nEl adaptador ahora requiere js-controller >= 6.0.11\nEl adaptador necesita admin >= 7.6.17 ahora\nSe actualizaron las dependencias.\nLogo SVG",
+        "pl": "Szereg wykresów nie jest już skrócony do wartości 500 (#149)\nGetHistory nie wywołuje już dwukrotnego wywołania zwrotnego w przypadku późnej odpowiedzi\nAdapter wymaga teraz node.js >= 22\nAdapter wymaga kontrolera js->= 6.0.11 teraz\nAdapter wymaga administratora >= 7.6.17\nZależności zostały zaktualizowane.\nLogo SVG",
+        "uk": "Серії діаграм більше не скорочуються до 500 значень (#149)\nGetHistory більше не викликає зворотний дзвінок двічі при пізній відповіді\nАдаптер вимагає node.js >= 22 зараз\nАдаптер вимагає js-контролера >= 6.0.11 зараз\nАдаптер вимагає адміністратора >= 7.6.17 зараз\nЗалежності були оновлені.\nSVG логотип",
+        "zh-cn": "图表系列不再被截断为 500 个值 (#149)\ngetHistory 不再在迟到的答案时两次调用其回调\n适配器现在需要 node.js >= 22\n适配器现在需要 js-controller >= 6.0.11\n适配器现在需要管理员 >= 7.6.17\n依赖关系已更新。\nSVG 徽标"
+      },
       "0.5.0": {
         "en": "added on support for new websockets",
         "de": "Unterstützung für neue Websockets hinzugefügt",
@@ -74,18 +87,6 @@
         "es": "Botón para cambiar la funcionalidad de verdadero / falso fijo",
         "pl": "przycisk przełącza funkcjonalność dla poprawionej wartości true / false",
         "zh-cn": "用于真/假修复的按钮切换功能"
-      },
-      "0.3.2": {
-        "en": "chart and timeline functionality fixed",
-        "de": "Diagramm- und Timeline-Funktionalität behoben",
-        "ru": "исправлена ​​функциональность графика и графика",
-        "pt": "Funcionalidade de gráfico e cronograma fixada",
-        "nl": "kaart- en tijdlijnfunctionaliteit opgelost",
-        "fr": "fonctionnalité de graphique et de chronologie corrigée",
-        "it": "funzionalità di grafico e cronologia fissi",
-        "es": "Funcionalidad de gráfico y línea de tiempo fija",
-        "pl": "Poprawiono funkcjonalność wykresów i osi czasu",
-        "zh-cn": "图表和时间线功能已修复"
       }
     },
     "titleLang": {
