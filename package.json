@@ -22,44 +22,33 @@
     "habpanel"
   ],
   "engines": {
-    "node": ">=22"
+    "node": ">=22.19.0"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.8",
-    "bower": "^1.8.14"
+    "@iobroker/adapter-core": "^3.4.3"
   },
   "devDependencies": {
-    "@alcalzone/release-script": "^5.1.1",
-    "@alcalzone/release-script-plugin-iobroker": "^5.1.2",
-    "@alcalzone/release-script-plugin-license": "^5.1.1",
-    "@vitalets/google-translate-api": "github:vitalets/google-translate-api",
-    "babel-eslint": "^6.1.2",
-    "chai": "^4.3.7",
-    "configstore": "^4.0.0",
-    "eslint": "^3.19.0",
-    "eslint-config-esnext": "^1.4.3",
-    "eslint-config-recommended": "^1.3.1",
-    "eslint-plugin-babel": "^3.3.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-native": "^2.3.2",
+    "@alcalzone/release-script": "^5.2.1",
+    "@alcalzone/release-script-plugin-iobroker": "^5.2.0",
+    "@alcalzone/release-script-plugin-license": "^5.2.2",
+    "@iobroker/eslint-config": "^2.3.4",
+    "@iobroker/testing": "^6.2.2",
+    "@tsconfig/node22": "^22.0.6",
+    "angular-file-saver": "^1.1.3",
+    "bower": "^1.8.14",
+    "eslint": "^9.39.5",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-eslint": "^6.0.0",
-    "gulp-filter": "^7.0.0",
-    "gulp-main-bower-files": "1.8.2",
     "gulp-plumber": "^1.2.1",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sass-glob": "^1.1.0",
     "gulp-uglify": "^3.0.2",
     "gulp-webserver": "^0.9.1",
-    "mocha": "^9.2.2",
+    "mocha": "^12.0.2",
     "n3-charts": "^2.0.28",
-    "request": "^2.88.2",
-    "safe-eval": "^0.4.1",
-    "node-sass": "^7.0.3"
+    "sass": "^1.105.0"
   },
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/issues"
@@ -74,14 +63,19 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --exit",
-    "bower": "node node_modules/bower/bin/bower i",
-    "prepublish1": "node node_modules/gulp/bin/gulp default",
-    "build": "node node_modules/gulp/bin/gulp default",
+    "test:package": "mocha test/testPackageFiles.js --exit",
+    "test": "mocha --exit",
+    "lint": "eslint -c eslint.config.mjs . --no-error-on-unmatched-pattern",
+    "bower": "bower i",
+    "prepublish1": "gulp default",
+    "prebuild": "bower install --config.interactive=false",
+    "build": "gulp default",
     "release": "release-script",
     "release-patch": "release-script patch --yes",
     "release-minor": "release-script minor --yes",
-    "release-major": "release-script major --yes"
+    "release-major": "release-script major --yes",
+    "update-packages": "npx -y npm-check-updates --upgrade",
+    "npm": "npm i"
   },
   "license": "EPL-1.0"
 }

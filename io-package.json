@@ -134,9 +134,9 @@
       "type": "free"
     },
     "platform": "Javascript/Node.js",
-    "icon": "habpanel.png",
+    "icon": "habpanel.svg",
     "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.png",
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.habpanel/master/admin/habpanel.svg",
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.habpanel/blob/master/README.md",
     "loglevel": "info",
     "tier": 3,
@@ -157,15 +157,26 @@
       }
     ],
     "singleton": true,
-    "welcomeScreen": {
-      "link": "habpanel/index.html",
-      "name": "HABpanel",
-      "img": "habpanel.admin/habpanel.png",
-      "color": "black",
-      "order": 3
-    },
+    "welcomeScreen": [
+      {
+        "link": "habpanel/index.html",
+        "name": "HABpanel",
+        "img": "habpanel.admin/habpanel.png",
+        "color": "black",
+        "order": 3
+      }
+    ],
     "preserveSettings": "habpanel",
-    "localLink": "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
+    "localLinks": {
+      "_default": {
+        "link": "%web_protocol%://%ip%:%web_port%/habpanel/index.html",
+        "name": "HABpanel",
+        "color": "black",
+        "icon": "habpanel.admin/habpanel.png",
+        "intro": true,
+        "order": 3
+      }
+    },
     "onlyWWW": true,
     "nogit": true,
     "webExtension": "lib/habpanelapi.js",

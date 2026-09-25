@@ -1,4 +1,4 @@
-![Logo](admin/habpanel.png)
+![Logo](admin/habpanel.svg)
 # ioBroker.habpanel
 
 ![Number of Installations](http://iobroker.live/badges/habpanel-installed.svg) ![Number of Installations](http://iobroker.live/badges/habpanel-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.habpanel.svg)](https://www.npmjs.com/package/iobroker.habpanel)
@@ -54,12 +54,10 @@ This adapter cannot be installed directly from GitHub. Only from npm.
 - (nowrap) Chart series are no longer truncated to 500 values (#149)
 - (nowrap) getHistory no longer invokes its callback twice on a late answer
 - (copilot) Adapter requires node.js >= 22 now
-- (iobroker-bot) Adapter requires node.js >= 22 now.
-- (iobroker-bot) Adapter requires node.js >= 20 now.
 - (copilot) Adapter requires js-controller >= 6.0.11 now
 - (copilot) Adapter requires admin >= 7.6.17 now
-- (mcm1957) Adapter requires nodeJS >=18 now.
 - (mcm1957) Dependencies have been updated.
+- (@GermanBluefox) SVG Logo
 
 ### 0.5.0 (2022-02-16)
 * (jogibear9988) added on support for new websockets

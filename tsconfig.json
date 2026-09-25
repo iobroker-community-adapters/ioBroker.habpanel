@@ -1,0 +1,37 @@
+{
+    "extends": "@tsconfig/node22/tsconfig.json",
+    "compilerOptions": {
+        "strict": true,
+        "strictNullChecks": true,
+        "module": "node16",
+        "target": "esnext",
+        "moduleResolution": "node16",
+        "allowSyntheticDefaultImports": true,
+        "checkJs": false,
+        "noEmit": false,
+        "outDir": "./build",
+        "rootDir": "./src",
+        "sourceMap": true,
+        "sourceRoot": "./src",
+        "noImplicitAny": true,
+        "skipLibCheck": true,
+        "lib": ["es2018", "DOM"],
+        "jsx": "react",
+        "types": ["@iobroker/types", "node"],
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "exclude": [
+        "**/node_modules",
+        "**/build",
+        "adminWww/**",
+        // Generated / third-party trees. Without these the project service pulls every
+        // minified bundle below them into the program and eslint never finishes.
+        "bower_components/**",
+        "www/**"
+    ],
+    "include": ["**/*.js", "**/*.ts", "**/*.d.ts",
+        "eslint.config.mjs"
+    ],
+}
