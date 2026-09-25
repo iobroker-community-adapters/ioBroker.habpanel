@@ -51,6 +51,8 @@ This adapter cannot be installed directly from GitHub. Only from npm.
 -->
 
 ### **WORK IN PROGRESS**
+- (nowrap) Chart series are no longer truncated to 500 values (#149)
+- (nowrap) getHistory no longer invokes its callback twice on a late answer
 - (copilot) Adapter requires node.js >= 22 now
 - (iobroker-bot) Adapter requires node.js >= 22 now.
 - (iobroker-bot) Adapter requires node.js >= 20 now.

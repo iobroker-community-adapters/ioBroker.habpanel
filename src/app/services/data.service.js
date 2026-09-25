@@ -131,6 +131,11 @@
             return deferred.promise;
         }
 
+        // Upper bound of values a single chart series may request from the history
+        // adapter - high enough to never cut a real series, low enough to stay sane.
+        var maxHistoryValues = 100000;
+        var historyTimeout = 30000;
+
         function getTimeSeries(service, item, start, end) {
             var deferred = $q.defer();
 
@@ -140,8 +145,20 @@
                     start:    start,
                     end:      end,
                     ignoreNull: true,
-                    aggregate: 'onchange' //minmax
+                    aggregate: 'onchange', //minmax
+                    // Without an explicit count the history adapters fall back to 500 values -
+                    // influxdb does so even for aggregate 'onchange'. They keep the OLDEST 500
+                    // of the requested range and then append a border value at 'end', so a busy
+                    // series is silently cut off and drawn as a flat line to the right edge.
+                    count:    maxHistoryValues,
+                    // conn.js defaults to a 2s timeout, too short for long periods
+                    timeout:  historyTimeout
                 }, function (err, dataIOB) { // values from IOB have val and ts instead of state and time
+                    if (err || !dataIOB) {
+                        console.error('getHistory failed for ' + item + ': ' + err);
+                        deferred.resolve({data: {name: item, data: []}});
+                        return;
+                    }
                     var  dataOHAB= dataIOB.map(obj =>{ var newArr = {}; newArr['state'] = obj.val; newArr['time'] = obj.ts; return newArr; });
                     deferred.resolve({data: {name: item, data: dataOHAB}});
                 });
